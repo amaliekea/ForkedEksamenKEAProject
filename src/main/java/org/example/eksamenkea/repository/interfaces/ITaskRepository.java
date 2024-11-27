@@ -12,4 +12,6 @@ public interface ITaskRepository {
 
     List<Task> getTaskBySubprojectId(int subprojectId) throws Errorhandling;
 
+    List<Task> getTasklistByEmployeeId(int employeeId) throws Errorhandling;
+
 }
