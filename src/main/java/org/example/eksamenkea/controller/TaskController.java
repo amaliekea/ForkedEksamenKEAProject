@@ -1,10 +1,7 @@
 package org.example.eksamenkea.controller;
 
 import jakarta.servlet.http.HttpSession;
-import org.example.eksamenkea.model.Employee;
-import org.example.eksamenkea.model.Role;
-import org.example.eksamenkea.model.Subproject;
-import org.example.eksamenkea.model.Task;
+import org.example.eksamenkea.model.*;
 import org.example.eksamenkea.service.Errorhandling;
 import org.example.eksamenkea.service.TaskService;
 import org.slf4j.Logger;
@@ -49,5 +46,22 @@ public class TaskController {
             model.addAttribute("errorMessage", e.getMessage());
             return "error/error";
         }
+    }
+    @GetMapping("/worker-overview-task")
+    public String showWorkerOverview(HttpSession session, Model model) throws Errorhandling {
+        Role employeeRole = (Role) session.getAttribute("userRole");
+        Employee employee = (Employee) session.getAttribute("employee");
+
+        System.out.println("Employee in session: " + session.getAttribute("employee"));
+        System.out.println("UserRole in session: " + session.getAttribute("userRole"));
+        System.out.println(employee.getEmployee_id());
+
+        if (employeeRole == Role.WORKER) {
+            List<Task> taskslist = taskService.getTaskBySubprojectId(employee.getEmployee_id());
+            model.addAttribute("tasklist", taskslist);
+
+            return "worker-overview";
+        }
+        throw new Errorhandling("User is not authorized to view this page.");
     }
 }
