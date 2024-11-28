@@ -1,10 +1,84 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<link th:href="@{/main.css}" rel="stylesheet">
 <head>
-    <title>Project Leader Overview</title>
+    <title>Worker Overview</title>
     <link th:href="@{/main.css}" rel="stylesheet">
 </head>
 <body>
+<h1>Worker Overview</h1>
+<h1 th:text="${employee.getEmail()}"></h1>
 
+<h2 th:text="${project.project_name}">Project</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Project Name</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+
+
+
+    <th:block th:if="${project == null}">
+        <span>No project available</span>
+    </th:block>
+
+    <th:block th:if="${project != null}">
+        <td th:text="${project.project_name}"></td>
+        <td th:text="${project.project_description}"></td>
+    </th:block>
+
+    </tbody>
+</table>
+
+<h2>Subprojects</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Subproject Name</th>
+        <th>Description</th>
+        <th>Parent Project ID</th>
+    </tr>
+    </thead>
+    <th:block th:if="${subprojects == null}">
+        <span>No subproject available</span>
+    </th:block>
+    <tbody>
+    <tr th:each="subproject : ${subprojects}">
+        <td th:text="${subproject.subproject_name}"></td>
+        <td th:text="${subproject.subproject_description}"></td>
+        <td th:text="${subproject.project_id}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Tasks</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Task Name</th>
+        <th>Start date</th>
+        <th>End date</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <th:block th:if="${subprojects == null}">
+        <span>No subproject available</span>
+    </th:block>
+    <tbody>
+    <tr th:each="task : ${tasklist}">
+        <td th:text="${task.getTask_name()}"></td>
+        <td th:text="${task.startdate}"></td>
+        <td th:text="${task.enddate}"></td>
+        <td th:text="${task.status}"></td>
+
+    </tr>
+    </tbody>
+</table>
+<form action="/logout" method="get">
+    <button type="submit">Log out</button>
+</form>
 </body>
 </html>

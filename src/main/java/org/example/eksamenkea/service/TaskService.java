@@ -25,6 +25,10 @@ public class TaskService {
         return taskRepository.getTaskBySubprojectId(subprojectId);
     }
 
+    public List<Task> getTasklistByEmployeeId(int employeeId) throws Errorhandling {
+        return taskRepository.getTasklistByEmployeeId(employeeId);
+    }
+
 
 
 

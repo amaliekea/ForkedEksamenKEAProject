@@ -14,6 +14,7 @@ public class Task {
 
     public Task(int task_id, String task_name, LocalDate startdate, LocalDate enddate, Status status,
                 int subproject_id, int estimated_hours, int actual_hours) {
+
         this.task_id = task_id;
         this.task_name = task_name;
         this.startdate = startdate;
