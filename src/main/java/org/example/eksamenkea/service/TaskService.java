@@ -35,7 +35,12 @@ public class TaskService {
     public void createTask(Task task) throws Errorhandling {
         taskRepository.createTask(task);
     }
+
     public void deleteTaskById(int taskId, int employeeId) throws Errorhandling {
-        taskRepository.deleteTaskById(taskId,employeeId);
+        taskRepository.deleteTaskById(taskId, employeeId);
+    }
+
+    public int getTaskIdByTaskName(String taskName) throws Errorhandling {
+        return taskRepository.getTaskIdByTaskName(taskName);
     }
 }
