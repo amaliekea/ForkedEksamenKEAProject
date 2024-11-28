@@ -7,11 +7,11 @@ public class Task {
     private String task_name;
     private LocalDate startdate;
     private LocalDate enddate;
-    private Status status;
+    private Status status = Status.NOTSTARTED; //antagelse / standardværdi
     private int subproject_id; // FK
     private int employee_id; // FK
     private int estimated_hours; // Antal forventede timer
-    private int actual_hours; // Antal faktiske timer brugt
+    private int actual_hours =0; // Antal faktiske timer brugt
 
     //delete i join
     public Task(int task_id, String task_name, LocalDate startdate, LocalDate enddate, Status status,
@@ -25,6 +25,9 @@ public class Task {
         this.estimated_hours = estimated_hours;
         this.actual_hours = actual_hours;
         this.employee_id = employee_id;
+    }
+    public Task() {
+
     }
 
     public int getEmployee_id() {

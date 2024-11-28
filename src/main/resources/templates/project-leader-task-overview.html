@@ -51,7 +51,13 @@
     </tbody>
 </table>
 
+<form action="/project-leader-subproject-overview" method="get">
+    <button type="submit">Back to subproject Overview</button>
+</form>
+<form action="/add-task" method="get">
+    <input type="hidden" name="subprojectName" th:value="${subprojectName}" />
+    <button type="submit">Add Task</button>
+</form>
 
-<a th:href="@{'/project-leader-overview'}" class="btn">Back to Project Overview</a>
 </body>
 </html>

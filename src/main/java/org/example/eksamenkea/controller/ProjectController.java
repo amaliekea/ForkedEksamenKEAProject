@@ -64,7 +64,6 @@ public class ProjectController {
             // Hent projectId baseret på projectName
             int projectId = projectService.getProjectIdByProjectName(projectName);
 
-
             // Henter subprojekter baseret på det fundne projectId
             List<Subproject> subprojects = projectService.getSubjectsByProjectId(projectId);
             model.addAttribute("subprojects", subprojects);
@@ -81,7 +80,6 @@ public class ProjectController {
         Project project = new Project();
         Role userRole = (Role) session.getAttribute("userRole");  // Henter "userrole" fra sessionen.
         Employee employee = (Employee) session.getAttribute("employee");  // Henter "user" fra sessionen.
-        System.out.println("Employee in session: " + session.getAttribute("employee"));
 
         if (userRole == Role.PROJECTLEADER) {
             model.addAttribute("project", project);
