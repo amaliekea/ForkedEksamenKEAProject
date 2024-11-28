@@ -15,8 +15,24 @@ import java.util.List;
 public class TaskRepository implements ITaskRepository {
 
     @Override
-    public void createTask() throws Errorhandling {
+    public void createTask(Task task) throws Errorhandling {
+        String sqlAddTask = "INSERT INTO task(task_name, start_date, end_date, status, employee_id, actual_hours, estimated_hours, subproject_id) VALUES (?, ?, ?, ?, ?, ?,?,?)";
+        try {
+            Connection con = ConnectionManager.getConnection();
+            PreparedStatement statement = con.prepareStatement(sqlAddTask);
 
+            statement.setString(1, task.getTask_name());
+            statement.setDate(2, Date.valueOf(task.getStartdate())); //konverterer en LocalDate til en SQL-kompatibel java.sql.Date.
+            statement.setDate(3, Date.valueOf(task.getEnddate()));
+            statement.setInt(4, task.getStatus().ordinal()); // ordinal() er en metode, der returnerer det numeriske indeks (0-baseret) af en enum-værdi.
+            statement.setInt(5, task.getEmployee_id());
+            statement.setInt(6, task.getActual_hours());
+            statement.setInt(7, task.getEstimated_hours());
+            statement.setInt(8, task.getSubproject_id());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to add task: " + e.getMessage());
+        }
     }
 
     public List<Task> getTaskBySubprojectId(int subprojectId) throws Errorhandling {
@@ -42,9 +58,9 @@ public class TaskRepository implements ITaskRepository {
                             resultSet.getInt("subproject_id"),
                             resultSet.getInt("estimated_hours"),
                             resultSet.getInt("actual_hours"),
-                            resultSet.getObject("employee_id") != null ? resultSet.getInt("employee_id") : 0
+                            resultSet.getObject("employee_id") != null ? resultSet.getInt("employee_id") : 0 //hvorfor er det her object?
 
-                            ));
+                    ));
                 }
             }
         } catch (SQLException e) {
@@ -80,7 +96,7 @@ public class TaskRepository implements ITaskRepository {
                             resultSet.getInt("estimated_hours"),
                             resultSet.getInt("actual_hours"),
                             resultSet.getObject("employee_id") != null ? resultSet.getInt("employee_id") : 0
-                            ));
+                    ));
                 }
             }
         } catch (SQLException e) {
@@ -89,6 +105,7 @@ public class TaskRepository implements ITaskRepository {
 
         return tasks;
     }
+
     public int getSubprojectIdBySubprojectName(String subprojectName) throws Errorhandling {
         String query = "SELECT subproject_id FROM subproject WHERE subproject_name = ?";
 
@@ -109,8 +126,8 @@ public class TaskRepository implements ITaskRepository {
         }
     }
 
-    public void deleteTaskByID(int taskId) throws Errorhandling{
-        String query ="DELETE FROM task WHERE task_id = ?";
+    public void deleteTaskByID(int taskId) throws Errorhandling {
+        String query = "DELETE FROM task WHERE task_id = ?";
 
 
     }
