@@ -17,10 +17,11 @@ INSERT INTO subproject (subproject_name, subproject_description, project_id) VAL
                                                                                  ('Beta Subproject A', 'Beta A desc', 2);
 
 -- Indsæt data i Task-tabellen
-INSERT INTO task (task_name, start_date, end_date, estimated_hours, status, actual_hours, subproject_id) VALUES
-                                                                                                             ('Task 1', '2024-11-01', '2024-11-05', 10, 'INPROGRESS', 5, 1),
-                                                                                                             ('Task 2', '2024-11-02', '2024-11-06', 20, 'NOTSTARTED', 0, 2),
-                                                                                                             ('Task 3', '2024-11-03', '2024-11-07', 15, 'COMPLETE', 15, 3);
+INSERT INTO task (task_name, start_date, end_date, status, employee_id, actual_hours, estimated_hours, subproject_id)
+VALUES
+    ('Task 1', '2024-11-01', '2024-11-05', 'INPROGRESS', 3, 5, 10, 1), -- Tildeler medarbejder med ID 3
+    ('Task 2', '2024-11-02', '2024-11-06', 'NOTSTARTED', 4, 0, 20, 2), -- Tildeler medarbejder med ID 4
+    ('Task 3', '2024-11-03', '2024-11-07', 'COMPLETE', NULL, 15, 15, 3); -- Ingen medarbejder tildelt
 
 -- Indsæt data i Employee_Task-tabellen
 INSERT INTO employee_task (employee_id, task_id) VALUES

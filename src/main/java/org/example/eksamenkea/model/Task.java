@@ -13,6 +13,7 @@ public class Task {
     private int estimated_hours; // Antal forventede timer
     private int actual_hours; // Antal faktiske timer brugt
 
+    //delete i join
     public Task(int task_id, String task_name, LocalDate startdate, LocalDate enddate, Status status,
                 int subproject_id, int estimated_hours, int actual_hours, int employee_id) {
         this.task_id = task_id;

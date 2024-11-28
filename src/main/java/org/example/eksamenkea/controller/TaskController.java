@@ -23,12 +23,11 @@ public class TaskController {
     }
 
     @GetMapping("/project-leader-tasks")
-    public String getTaskBySubprojectId(@RequestParam("subproject_id") int subprojectId,
-                                        @RequestParam("subprojectName") String subprojectName,
-                                        HttpSession session, Model model) throws Errorhandling {
-        logger.info("Fetching tasks for subproject ID: {}", subprojectId);
+    public String getTaskBySubprojectName(@RequestParam("subprojectName") String subprojectName,
+                                          HttpSession session, Model model) throws Errorhandling {
+        logger.info("Fetching tasks for subproject: {}", subprojectName);
 
-        // Henter brugerens rolle fra sessionen
+        // Hent brugerens rolle fra sessionen
         Role employeeRole = (Role) session.getAttribute("userRole");
         if (employeeRole != Role.PROJECTLEADER) {
             logger.warn("Access denied for user role: {}", employeeRole);
@@ -36,10 +35,16 @@ public class TaskController {
         }
 
         try {
-            // Henter tasks for det angivne subproject_id
+            // Hent subproject ID baseret på subproject name
+            int subprojectId = taskService.getSubprojectIdBySubprojectName(subprojectName);
+
+            // Hent tasks for det fundne subproject ID
             List<Task> tasks = taskService.getTaskBySubprojectId(subprojectId);
-            model.addAttribute("tasks", tasks); // Tilføjer listen af tasks til modellen
-            model.addAttribute("subprojectName", subprojectName); // Tilføjer subprojectName til modellen
+
+            // Tilføj tasks og subprojectName til modellen
+            model.addAttribute("tasks", tasks);
+            model.addAttribute("subprojectName", subprojectName);
+
             return "project-leader-task-overview";
         } catch (Errorhandling e) {
             logger.error("Error fetching tasks: {}", e.getMessage());
@@ -47,6 +52,7 @@ public class TaskController {
             return "error/error";
         }
     }
+
 //    @GetMapping("/worker-overview-task")
 //    public String showWorkerOverview(HttpSession session, Model model) throws Errorhandling {
 //        Role employeeRole = (Role) session.getAttribute("userRole");
