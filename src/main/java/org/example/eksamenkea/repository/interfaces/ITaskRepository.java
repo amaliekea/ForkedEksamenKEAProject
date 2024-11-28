@@ -18,4 +18,5 @@ public interface ITaskRepository {
 
     void deleteTaskByID(int taskId) throws Errorhandling;
 
+    void createTask() throws Errorhandling;
 }

@@ -14,6 +14,10 @@ import java.util.List;
 @Repository
 public class TaskRepository implements ITaskRepository {
 
+    @Override
+    public void createTask() throws Errorhandling {
+
+    }
 
     public List<Task> getTaskBySubprojectId(int subprojectId) throws Errorhandling {
         List<Task> tasks = new ArrayList<>();
