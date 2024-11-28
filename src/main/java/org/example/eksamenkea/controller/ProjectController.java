@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import org.example.eksamenkea.model.*;
 import org.example.eksamenkea.service.Errorhandling;
 import org.example.eksamenkea.service.ProjectService;
+import org.example.eksamenkea.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +17,11 @@ import java.util.List;
 @Controller
 public class ProjectController {
     private ProjectService projectService;
+    private TaskService taskService;
 
-    public ProjectController(ProjectService projectService) {
+    public ProjectController(ProjectService projectService, TaskService taskService) {
         this.projectService = projectService;
+        this.taskService = taskService;
     }
 
     @GetMapping("/project-leader-overview")
@@ -98,10 +101,12 @@ public class ProjectController {
         if (employeeRole == Role.WORKER) {
             Project project = projectService.getWorkerProjectFromEmployeeId(employee.getEmployee_id());
             List<Subproject> subprojects = projectService.getSubjectsByProjectId(project.getProject_id());
+            List<Task> taskList = taskService.getTasklistByEmployeeId(employee.getEmployee_id());
             model.addAttribute("project", project);
             model.addAttribute("employee",employee);
             model.addAttribute("subprojects", subprojects);
             model.addAttribute("projectName", project.getProject_name());
+            model.addAttribute("tasklist", taskList);
 
             return "worker-overview";
         }

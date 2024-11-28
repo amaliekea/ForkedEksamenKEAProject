@@ -20,10 +20,8 @@ public class TaskRepository implements ITaskRepository {
 
     public List<Task> getTaskBySubprojectId(int subprojectId) throws Errorhandling {
         List<Task> tasks = new ArrayList<>();
-        String query = "SELECT t.task_id, t.task_name, t.start_date, t.end_date, t.status, t.duration, t.subproject_id, et.employee_id, t.estimated_hours, t.actual_hours " +
-                "FROM task t " +
-                "LEFT JOIN employee_task et ON t.task_id = et.task_id " +
-                "WHERE t.subproject_id = ?";
+        String query = "SELECT t.task_id, t.task_name, t.start_date, t.end_date, t.estimated_hours, t.status, t.duration, t.actual_hours FROM employee_task et INNER JOIN task t ON et.task_id = t.task_id WHERE et.employee_id = ?";
+
 
         try (Connection connection = ConnectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -93,7 +91,7 @@ public class TaskRepository implements ITaskRepository {
     @Override
     public List<Task> getTasklistByEmployeeId(int employeeId) throws Errorhandling {
         List<Task> taskList = new ArrayList<>();
-        String query = "SELECT t.task_id, t.task_name, t.start_date, t.end_date, t.estimated_hours, t.status, t.actual_hours FROM employee_task et INNER JOIN task t ON et.task_id = t.task_id WHERE et.employee_id = ?";
+        String query = "SELECT t.task_id, t.task_name, t.start_date, t.end_date, t.status, t.duration, t.subproject_id, t.estimated_hours, t.actual_hours FROM employee_task et INNER JOIN task t ON et.task_id = t.task_id WHERE et.employee_id = ?";
 
         try (Connection connection = ConnectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
