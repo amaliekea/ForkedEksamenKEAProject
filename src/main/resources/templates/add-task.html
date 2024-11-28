@@ -37,12 +37,6 @@
          placeholder="Enter estimated hours" required />
   <br>
 
-  <label for="actual_hours">Actual Hours:</label>
-  <input id="actual_hours" class="form-control"
-         type="number"
-         th:field="*{actual_hours}"
-         placeholder="Enter actual hours" />
-  <br>
   <input type="hidden"  name="subproject_id" th:value="${subprojectId}" />
 
   <input type="hidden" name="employee_id" th:value="${employeeId}" />
