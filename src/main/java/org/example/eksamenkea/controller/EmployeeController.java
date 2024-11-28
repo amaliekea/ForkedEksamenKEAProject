@@ -45,6 +45,7 @@ public class EmployeeController {
             // sider og udføre handlinger
             session.setAttribute("employee", employee); //gemmer brugeren i sessionen
             session.setAttribute("userRole", employee.getRole()); // Tilføj denne linje
+            session.setAttribute("employeeId", employee.getEmployee_id()); // Gemmer employeeId separat
             return "redirect:/logged_in";
         } else {
             throw new Errorhandling("Enter valid username and password");

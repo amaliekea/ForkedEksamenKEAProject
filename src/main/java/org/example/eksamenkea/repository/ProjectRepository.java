@@ -11,9 +11,29 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
+@Repository("IPROJECTREPOSITORY")
 public class ProjectRepository implements IProjectRepository {
 
+    // CREATE------------------------------------------------------------------------------
+    @Override
+    public void addProject(Project project) throws Errorhandling {
+        String sqlAddProject = "INSERT INTO project(project_name, budget, project_description, employee_id, material_cost, employee_cost) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection con = ConnectionManager.getConnection();
+             PreparedStatement statement = con.prepareStatement(sqlAddProject)) {
+
+            statement.setString(1, project.getProject_name());
+            statement.setDouble(2, project.getBudget());
+            statement.setString(3, project.getProject_description());
+            statement.setInt(4, project.getEmployee_id());
+            statement.setDouble(5, project.getMaterial_cost());
+            statement.setDouble(6, project.getEmployee_cost());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to add project: " + e.getMessage());
+        }
+    }
+
+    // READ--------------------------------------------------------------------------------
     @Override
     public List<Project> getProjectsByEmployeeId(int employeeId) throws Errorhandling {
         List<Project> projects = new ArrayList<>();
@@ -64,8 +84,6 @@ public class ProjectRepository implements IProjectRepository {
     }
 
 
-
-
     @Override
     public List<Subproject> getSubjectsByProjectId(int projectId) throws Errorhandling {
         List<Subproject> subprojects = new ArrayList<>();
@@ -92,23 +110,6 @@ public class ProjectRepository implements IProjectRepository {
         return subprojects;
     }
 
-    @Override
-    public void addProject(Project project) throws Errorhandling {
-        String sqlAddProject = "INSERT INTO project(project_name, budget, project_description, employee_id, material_cost, employee_cost) VALUES (?, ?, ?, ?, ?, ?)";
-        try (Connection con = ConnectionManager.getConnection();
-             PreparedStatement statement = con.prepareStatement(sqlAddProject)) {
-
-            statement.setString(1, project.getProject_name());
-            statement.setDouble(2, project.getBudget());
-            statement.setString(3, project.getProject_description());
-            statement.setInt(4, project.getEmployee_id());
-            statement.setDouble(5, project.getMaterial_cost()); // Rettet til double
-            statement.setDouble(6, project.getEmployee_cost()); // Rettet til double
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new Errorhandling("Failed to add project: " + e.getMessage());
-        }
-    }
 
     @Override
     public Project getWorkerProjectFromEmployeeId(int employeeId) throws Errorhandling {
@@ -138,4 +139,5 @@ public class ProjectRepository implements IProjectRepository {
         }
         return project;
     }
+
 }

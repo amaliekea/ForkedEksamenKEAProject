@@ -28,15 +28,22 @@
         <td th:text="${task.status}"></td>
         <td th:text="${task.estimated_hours}"></td>
         <td th:text="${task.actual_hours}"></td>
-       <!-- <td>
-             Slet-knap
-            <a th:href="@{'/delete-task?taskId=' + ${task.task_id}}" class="btn btn-danger">Slet</a>
-        </td>-->
+        <td>
+            <!-- Link til bekræftelsesside -->
+            <a th:href="@{'/confirm-delete-task?taskId=' + ${task.task_id} + '&subprojectName=' + ${subprojectName}}" class="btn btn-danger">Delete</a>
+
+        </td>
     </tr>
     </tbody>
 </table>
 
+<form action="/project-leader-subproject-overview" method="get">
+    <button type="submit">Back to subproject Overview</button>
+</form>
+<form action="/add-task" method="get">
+    <input type="hidden" name="subprojectName" th:value="${subprojectName}" />
+    <button type="submit">Add Task</button>
+</form>
 
-<a th:href="@{'/project-leader-overview'}" class="btn">Back to Project Overview</a>
 </body>
 </html>
