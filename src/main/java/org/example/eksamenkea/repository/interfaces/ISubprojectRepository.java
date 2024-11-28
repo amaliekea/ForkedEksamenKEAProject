@@ -7,4 +7,3 @@ public interface ISubprojectRepository {
     int getSubprojectIdBySubprojectName(String subprojectName) throws Errorhandling;
 
 }
-//slet mig
