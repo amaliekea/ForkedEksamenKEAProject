@@ -15,13 +15,12 @@ import java.util.List;
 public class TaskRepository implements ITaskRepository {
 
 
-    // hente en liste af tasks for et specifikt subprojekt
-
-
     public List<Task> getTaskBySubprojectId(int subprojectId) throws Errorhandling {
         List<Task> tasks = new ArrayList<>();
-        String query = "SELECT t.task_id, t.task_name, t.start_date, t.end_date, t.estimated_hours,t.status,  t.actual_hours, t.subproject_id, t.employee_id FROM employee_task et INNER JOIN task t ON et.task_id = t.task_id WHERE et.employee_id = ?";
-
+        String query = "SELECT t.task_id, t.task_name, t.start_date, t.end_date, t.status, " +
+                "t.subproject_id, t.estimated_hours, t.actual_hours " +
+                "FROM task t " +
+                "WHERE t.subproject_id = ?";
 
         try (Connection connection = ConnectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -37,7 +36,6 @@ public class TaskRepository implements ITaskRepository {
                             resultSet.getDate("end_date") != null ? resultSet.getDate("end_date").toLocalDate() : null,
                             Status.valueOf(resultSet.getString("status").toUpperCase()),
                             resultSet.getInt("subproject_id"),
-                            resultSet.getObject("employee_id") != null ? resultSet.getInt("employee_id") : 0, // Returner 0 hvis employee_id er null
                             resultSet.getInt("estimated_hours"),
                             resultSet.getInt("actual_hours")
                     ));
@@ -73,7 +71,6 @@ public class TaskRepository implements ITaskRepository {
                             resultSet.getDate("end_date") != null ? resultSet.getDate("end_date").toLocalDate() : null,
                             Status.valueOf(resultSet.getString("status").toUpperCase()),
                             resultSet.getInt("subproject_id"),
-                            resultSet.getObject("employee_id") != null ? resultSet.getInt("employee_id") : 0,
                             resultSet.getInt("estimated_hours"),
                             resultSet.getInt("actual_hours")
                     ));
