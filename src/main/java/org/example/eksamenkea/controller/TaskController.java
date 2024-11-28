@@ -17,16 +17,19 @@ import java.util.List;
 @Controller
 public class TaskController {
     private final TaskService taskService;
+    private final SubprojectService subprojectService;
 
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService, SubprojectService subprojectService) {
         this.taskService = taskService;
+        this.subprojectService = subprojectService;
     }
 
+    //CREATE--------------------------------------------------------------
     @GetMapping("/add-task")
     public String addTask(@RequestParam("subprojectName") String subprojectName, HttpSession session, Model model) throws Errorhandling {
         Task task = new Task();
         Employee employee = (Employee) session.getAttribute("employee");  // Henter "user" fra sessionen.
-        int subprojectId = taskService.getSubprojectIdBySubprojectName(subprojectName);
+        int subprojectId = subprojectService.getSubprojectIdBySubprojectName(subprojectName);
 
             model.addAttribute("task", task);
             model.addAttribute("employeeId", employee.getEmployee_id());
@@ -42,11 +45,12 @@ public class TaskController {
         return "redirect:/project-leader-tasks?subprojectName=" + subprojectName;
     }
 
+    //READ------------------------------------------------------------------
     @GetMapping("/project-leader-tasks")
     public String getTaskBySubprojectName(@RequestParam("subprojectName") String subprojectName, HttpSession session, Model model) throws Errorhandling {
 
             // Hent subproject ID baseret på subproject name
-            int subprojectId = taskService.getSubprojectIdBySubprojectName(subprojectName);
+            int subprojectId = subprojectService.getSubprojectIdBySubprojectName(subprojectName);
 
             // Hent tasks for det fundne subproject ID
             List<Task> tasks = taskService.getTaskBySubprojectId(subprojectId);
@@ -58,4 +62,24 @@ public class TaskController {
             return "project-leader-task-overview";
     }
 
+
+    //DELETE-----------------------------------------------------------------
+    //Vise bekræftelsessiden
+    @GetMapping("/confirm-delete-task")
+    public String showConfirmDeleteTask(@RequestParam("taskId") int taskId, @RequestParam("subprojectName") String subprojectName, HttpSession session, Model model) throws Errorhandling {
+        // Tilføj taskId og subprojectName til modellen
+        model.addAttribute("taskId", taskId);
+        model.addAttribute("subprojectName", subprojectName);
+        return "confirm-delete-task";
+    }
+
+    //metode til at slette task
+    @PostMapping("/delete-task")
+    public String deleteTask(@RequestParam("taskId") int taskId, @RequestParam("subprojectName") String subprojectName, HttpSession session, Model model) throws Errorhandling {
+        int employeeId = (int) session.getAttribute("employeeId");
+        taskService.deleteTaskById(taskId, employeeId);
+
+        // Returnér til Task Overview med subprojectName
+        return "redirect:/project-leader-tasks?subprojectName=" + subprojectName;
+    }
 }

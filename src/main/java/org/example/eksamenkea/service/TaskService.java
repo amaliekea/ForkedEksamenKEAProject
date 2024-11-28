@@ -31,11 +31,11 @@ public class TaskService {
         return taskRepository.getTasklistByEmployeeId(employeeId);
     }
 
-    public int getSubprojectIdBySubprojectName(String subprojectName) throws Errorhandling {
-        return taskRepository.getSubprojectIdBySubprojectName(subprojectName);
-    }
 
     public void createTask(Task task) throws Errorhandling {
         taskRepository.createTask(task);
+    }
+    public void deleteTaskById(int taskId, int employeeId) throws Errorhandling {
+        taskRepository.deleteTaskById(taskId,employeeId);
     }
 }
