@@ -19,8 +19,6 @@ import java.util.List;
 public class TaskController {
     private final TaskService taskService;
 
-    private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
-
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
@@ -31,35 +29,25 @@ public class TaskController {
         Role userRole = (Role) session.getAttribute("userRole");  // Henter "userrole" fra sessionen.
         Employee employee = (Employee) session.getAttribute("employee");  // Henter "user" fra sessionen.
         int subprojectId = taskService.getSubprojectIdBySubprojectName(subprojectName);
-        System.out.println("subprojectid !!!"+subprojectId);
 
         if (userRole == Role.PROJECTLEADER) {
             model.addAttribute("task", task);
             model.addAttribute("employeeId", employee.getEmployee_id());
             model.addAttribute("subprojectId", subprojectId);
+            model.addAttribute("subprojectName", subprojectName);
             return "add-task";
         }
         throw new Errorhandling("cant add task");
     }
 
     @PostMapping("/task-added") //Amalie
-    public String addedTask(@ModelAttribute Task task) throws Errorhandling {
-        System.out.println("subproject_id: " + task.getSubproject_id());
+    public String addedTask(@RequestParam("subprojectName") String subprojectName, @ModelAttribute Task task) throws Errorhandling {
         taskService.createTask(task);
-        return "redirect:/project-leader-tasks";
+        return "redirect:/project-leader-tasks?subprojectName=" + subprojectName;
     }
 
     @GetMapping("/project-leader-tasks")
     public String getTaskBySubprojectName(@RequestParam("subprojectName") String subprojectName, HttpSession session, Model model) throws Errorhandling {
-        logger.info("Fetching tasks for subproject: {}", subprojectName); //kan denne slettes?
-
-        // Hent brugerens rolle fra sessionen
-        Role employeeRole = (Role) session.getAttribute("userRole");
-        if (employeeRole != Role.PROJECTLEADER) {
-            logger.warn("Access denied for user role: {}", employeeRole);
-            return "error/error";
-        }
-
         try {
             // Hent subproject ID baseret på subproject name
             int subprojectId = taskService.getSubprojectIdBySubprojectName(subprojectName);
@@ -73,7 +61,6 @@ public class TaskController {
 
             return "project-leader-task-overview";
         } catch (Errorhandling e) {
-            logger.error("Error fetching tasks: {}", e.getMessage());
             model.addAttribute("errorMessage", e.getMessage());
             return "error/error";
         }

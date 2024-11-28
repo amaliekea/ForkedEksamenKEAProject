@@ -48,7 +48,10 @@
   <input type="hidden" name="employee_id" th:value="${employeeId}" />
   <input type="hidden" th:field="*{status}" value="NOTSTARTED" /> <!--da det er ny task antager vi at den ikke er startet-->
 
+  <input type="hidden"  name="subprojectName" th:value="${subprojectName}" />
+
   <button type="submit" class="btn btn-primary">Add Task</button>
+
 </form>
 
 </body>
