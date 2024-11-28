@@ -14,10 +14,12 @@ public interface ITaskRepository {
 
     List<Task> getTasklistByEmployeeId(int employeeId) throws Errorhandling;
 
-    int getSubprojectIdBySubprojectName(String subprojectName) throws Errorhandling;
 
-    void deleteTaskByID(int taskId) throws Errorhandling;
+    void createTask(Task task) throws Errorhandling;
 
-    public void assignWorkerIdToTask (int taskId, int employeeId) throws Errorhandling;
+    void deleteTaskById(int taskId, int employeeId) throws Errorhandling;
 
-    }
+    void updateTask(Task task) throws Errorhandling;
+
+    int getTaskIdByTaskName(String taskName) throws Errorhandling;
+}
