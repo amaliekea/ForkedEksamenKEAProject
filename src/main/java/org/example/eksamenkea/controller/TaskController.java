@@ -23,7 +23,7 @@ public class TaskController {
         this.taskService = taskService;
         this.subprojectService = subprojectService;
     }
-
+//slet mig
     //CREATE--------------------------------------------------------------
     @GetMapping("/add-task")
     public String addTask(@RequestParam("subprojectName") String subprojectName, HttpSession session, Model model) throws Errorhandling {
