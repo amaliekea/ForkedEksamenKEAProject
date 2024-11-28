@@ -66,20 +66,32 @@ public class TaskController {
     //DELETE-----------------------------------------------------------------
     //Vise bekræftelsessiden
     @GetMapping("/confirm-delete-task")
-    public String showConfirmDeleteTask(@RequestParam("taskId") int taskId, @RequestParam("subprojectName") String subprojectName, HttpSession session, Model model) throws Errorhandling {
-        // Tilføj taskId og subprojectName til modellen
+    public String showConfirmDeleteTask(@RequestParam("taskName") String taskName, @RequestParam("subprojectName") String subprojectName, HttpSession session, Model model) throws Errorhandling {
+        //  hente taskId
+        int taskId = taskService.getTaskIdByTaskName(taskName);
+
+        //  taskId og subprojectName tilføjes til modellen
         model.addAttribute("taskId", taskId);
         model.addAttribute("subprojectName", subprojectName);
+        model.addAttribute("taskName", taskName);
         return "confirm-delete-task";
     }
 
-    //metode til at slette task
+
+    // Metode til at slette task
     @PostMapping("/delete-task")
-    public String deleteTask(@RequestParam("taskId") int taskId, @RequestParam("subprojectName") String subprojectName, HttpSession session, Model model) throws Errorhandling {
+    public String deleteTask(@RequestParam("taskName") String taskName, @RequestParam("subprojectName") String subprojectName,
+            HttpSession session) throws Errorhandling {
+        // Hent taskId baseret på taskName
+        int taskId = taskService.getTaskIdByTaskName(taskName);
+
+        // Hent employeeId fra session
         int employeeId = (int) session.getAttribute("employeeId");
+
+        // Slet task baseret på taskId og employeeId
         taskService.deleteTaskById(taskId, employeeId);
 
-        // Returnér til Task Overview med subprojectName
+        // Returner til Task Overview med subprojectName
         return "redirect:/project-leader-tasks?subprojectName=" + subprojectName;
     }
 }

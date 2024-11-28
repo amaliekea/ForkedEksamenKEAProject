@@ -30,7 +30,7 @@
         <td th:text="${task.actual_hours}"></td>
         <td>
             <!-- Link til bekræftelsesside -->
-            <a th:href="@{'/confirm-delete-task?taskId=' + ${task.task_id} + '&subprojectName=' + ${subprojectName}}" class="btn btn-danger">Delete</a>
+            <a th:href="@{'/confirm-delete-task?taskName=' + ${task.task_name} + '&subprojectName=' + ${subprojectName}}">Delete</a>
 
         </td>
     </tr>

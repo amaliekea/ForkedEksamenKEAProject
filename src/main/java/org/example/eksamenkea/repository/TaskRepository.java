@@ -106,6 +106,7 @@ public class TaskRepository implements ITaskRepository {
         return tasks;
     }
 
+    @Override
     public int getTaskIdByTaskName(String taskName) throws Errorhandling {
         String query = "SELECT task_id FROM task WHERE task_name = ?";
 
@@ -126,14 +127,6 @@ public class TaskRepository implements ITaskRepository {
         }
     }
 
-
-
-
-    public void deleteTaskByID(int taskId) throws Errorhandling {
-        String query = "DELETE FROM task WHERE task_id = ?";
-
-
-    }
 
 
     @Override
@@ -206,4 +199,7 @@ public class TaskRepository implements ITaskRepository {
         String editwishSql = "DELETE FROM employee_task WHERE task_id = ?";
 
     }
+
+
+
 }
