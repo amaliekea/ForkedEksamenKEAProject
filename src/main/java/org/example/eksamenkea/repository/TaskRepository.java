@@ -37,8 +37,10 @@ public class TaskRepository implements ITaskRepository {
                             Status.valueOf(resultSet.getString("status").toUpperCase()),
                             resultSet.getInt("subproject_id"),
                             resultSet.getInt("estimated_hours"),
-                            resultSet.getInt("actual_hours")
-                    ));
+                            resultSet.getInt("actual_hours"),
+                            resultSet.getObject("employee_id") != null ? resultSet.getInt("employee_id") : 0
+
+                            ));
                 }
             }
         } catch (SQLException e) {
@@ -72,8 +74,9 @@ public class TaskRepository implements ITaskRepository {
                             Status.valueOf(resultSet.getString("status").toUpperCase()),
                             resultSet.getInt("subproject_id"),
                             resultSet.getInt("estimated_hours"),
-                            resultSet.getInt("actual_hours")
-                    ));
+                            resultSet.getInt("actual_hours"),
+                            resultSet.getObject("employee_id") != null ? resultSet.getInt("employee_id") : 0
+                            ));
                 }
             }
         } catch (SQLException e) {
