@@ -100,10 +100,6 @@ public class ProjectController {
         Role employeeRole = (Role) session.getAttribute("userRole");
         Employee employee = (Employee) session.getAttribute("employee");
 
-        System.out.println("Employee in session: " + session.getAttribute("employee"));
-        System.out.println("UserRole in session: " + session.getAttribute("userRole"));
-        System.out.println(employee.getEmployee_id());
-
         if (employeeRole == Role.WORKER) {
             Project project = projectService.getWorkerProjectFromEmployeeId(employee.getEmployee_id());
             List<Subproject> subprojects = projectService.getSubjectsByProjectId(project.getProject_id());
@@ -111,7 +107,6 @@ public class ProjectController {
             model.addAttribute("project", project);
             model.addAttribute("employee",employee);
             model.addAttribute("subprojects", subprojects);
-            model.addAttribute("projectName", project.getProject_name());
             model.addAttribute("tasklist", taskList);
 
             return "worker-overview";
