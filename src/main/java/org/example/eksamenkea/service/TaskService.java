@@ -16,12 +16,11 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-
     public List<Task> getTasksByProjectId(int projectId) throws Errorhandling {
         return taskRepository.getTasksByProjectId(projectId);
     }
 
-    public List<Task> getTaskBySubprojectId(int subprojectId) throws Errorhandling{
+    public List<Task> getTaskBySubprojectId(int subprojectId) throws Errorhandling {
         return taskRepository.getTaskBySubprojectId(subprojectId);
     }
 
@@ -29,11 +28,11 @@ public class TaskService {
         return taskRepository.getTasklistByEmployeeId(employeeId);
     }
 
-    public int getSubprojectIdBySubprojectName(String subprojectName) throws Errorhandling{
+    public int getSubprojectIdBySubprojectName(String subprojectName) throws Errorhandling {
         return taskRepository.getSubprojectIdBySubprojectName(subprojectName);
     }
 
-
-
-
+    public void createTask(Task task) throws Errorhandling {
+        taskRepository.createTask(task);
+    }
 }

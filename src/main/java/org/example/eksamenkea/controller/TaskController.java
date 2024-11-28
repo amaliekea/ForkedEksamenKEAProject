@@ -53,21 +53,4 @@ public class TaskController {
         }
     }
 
-//    @GetMapping("/worker-overview-task")
-//    public String showWorkerOverview(HttpSession session, Model model) throws Errorhandling {
-//        Role employeeRole = (Role) session.getAttribute("userRole");
-//        Employee employee = (Employee) session.getAttribute("employee");
-//
-//        System.out.println("Employee in session: " + session.getAttribute("employee"));
-//        System.out.println("UserRole in session: " + session.getAttribute("userRole"));
-//        System.out.println(employee.getEmployee_id());
-//
-//        if (employeeRole == Role.WORKER) {
-//            List<Task> taskslist = taskService.getTaskBySubprojectId(employee.getEmployee_id());
-//            model.addAttribute("tasklist", taskslist);
-//
-//            return "worker-overview";
-//        }
-//        throw new Errorhandling("User is not authorized to view this page.");
-//    }
 }
