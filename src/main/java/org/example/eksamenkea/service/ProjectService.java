@@ -3,17 +3,22 @@ package org.example.eksamenkea.service;
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.repository.ProjectRepository;
+import org.example.eksamenkea.repository.interfaces.IEmployeeRepository;
+import org.example.eksamenkea.repository.interfaces.IProjectRepository;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ProjectService {
-    private final ProjectRepository projectRepository;
+    private final IProjectRepository projectRepository;
 
-    public ProjectService(ProjectRepository projectRepository) {
-        this.projectRepository = projectRepository;
+    public ProjectService(ApplicationContext context, @Value("IPROJECTREPOSITORY") String impl) {
+        this.projectRepository = (IProjectRepository) context.getBean(impl);
     }
+
 
 
     public List<Project> getAllProjectsByEmployeeId(int employeeId) throws Errorhandling {

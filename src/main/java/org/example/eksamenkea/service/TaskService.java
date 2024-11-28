@@ -2,6 +2,10 @@ package org.example.eksamenkea.service;
 
 import org.example.eksamenkea.model.Task;
 import org.example.eksamenkea.repository.TaskRepository;
+import org.example.eksamenkea.repository.interfaces.IProjectRepository;
+import org.example.eksamenkea.repository.interfaces.ITaskRepository;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -9,11 +13,10 @@ import java.util.List;
 
 @Service
 public class TaskService {
-    private final TaskRepository taskRepository;
+    private final ITaskRepository taskRepository;
 
-
-    public TaskService(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
+    public TaskService(ApplicationContext context, @Value("ITASKREPOSITORY") String impl) {
+        this.taskRepository = (ITaskRepository) context.getBean(impl);
     }
 
 
