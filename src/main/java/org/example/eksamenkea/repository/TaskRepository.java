@@ -219,27 +219,23 @@ public class TaskRepository implements ITaskRepository {
             preparedStatement.setString(1, taskName);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 task = new Task(
-                                resultSet.getInt("task_id"),
-                                resultSet.getString("task_name"),
-                                resultSet.getDate("start_date").toLocalDate(),
-                                resultSet.getDate("end_date").toLocalDate(),
-                                Status.valueOf(resultSet.getString("status").toUpperCase()),
-                                resultSet.getInt("subproject_id"),
-                                resultSet.getInt("estimated_hours"),
-                                resultSet.getInt("employee_id")
-                        );
-            } else {
-                throw new Errorhandling("No task found with name: " + taskName);
+                        resultSet.getInt("task_id"),
+                        resultSet.getString("task_name"),
+                        resultSet.getDate("start_date").toLocalDate(),
+                        resultSet.getDate("end_date").toLocalDate(),
+                        Status.valueOf(resultSet.getString("status").toUpperCase()),
+                        resultSet.getInt("subproject_id"),
+                        resultSet.getInt("estimated_hours"),
+                        resultSet.getInt("employee_id")
+                );
+
             }
 
-
         } catch (SQLException e) {
-            throw new Errorhandling("Failed to fetch task by name: " + e.getMessage());
+            throw new Errorhandling("Failed to get task: " + e.getMessage());
         }
-
         return task;
     }
-
 }
