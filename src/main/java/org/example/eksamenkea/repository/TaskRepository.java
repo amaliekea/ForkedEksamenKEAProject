@@ -14,27 +14,29 @@ import java.util.List;
 @Repository("ITASKREPOSITORY")
 public class TaskRepository implements ITaskRepository {
 
+    // CREATE-------------------------------------------------------------------
     @Override
     public void createTask(Task task) throws Errorhandling {
-        String sqlAddTask = "INSERT INTO task(task_name, start_date, end_date, status, employee_id, actual_hours, estimated_hours, subproject_id) VALUES (?, ?, ?, ?, ?, ?,?,?)";
-        try {
-            Connection con = ConnectionManager.getConnection();
-            PreparedStatement statement = con.prepareStatement(sqlAddTask);
+        String sqlAddTask = "INSERT INTO task(task_name, start_date, end_date, status, employee_id, estimated_hours, subproject_id, actual_hours) VALUES (?, ?, ?, ?, ?, ?, ?, 0)";
+        try (Connection con = ConnectionManager.getConnection();
+             PreparedStatement statement = con.prepareStatement(sqlAddTask)) {
 
             statement.setString(1, task.getTask_name());
-            statement.setDate(2, Date.valueOf(task.getStartdate())); //konverterer en LocalDate til en SQL-kompatibel java.sql.Date.
+            statement.setDate(2, Date.valueOf(task.getStartdate())); // Konverter LocalDate til java.sql.Date
             statement.setDate(3, Date.valueOf(task.getEnddate()));
-            statement.setInt(4, task.getStatus().ordinal()); // ordinal() er en metode, der returnerer det numeriske indeks (0-baseret) af en enum-værdi.
+            statement.setInt(4, task.getStatus().ordinal()); // Enum-værdi
             statement.setInt(5, task.getEmployee_id());
-            statement.setInt(6, task.getActual_hours());
-            statement.setInt(7, task.getEstimated_hours());
-            statement.setInt(8, task.getSubproject_id());
+            statement.setInt(6, task.getEstimated_hours());
+            statement.setInt(7, task.getSubproject_id());
+
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new Errorhandling("Failed to add task: " + e.getMessage());
         }
     }
 
+
+    // READ------------------------------------------------------------------
     public List<Task> getTaskBySubprojectId(int subprojectId) throws Errorhandling {
         List<Task> tasks = new ArrayList<>();
         String query = "SELECT t.task_id, t.task_name, t.start_date, t.end_date, t.status, " +
@@ -49,18 +51,17 @@ public class TaskRepository implements ITaskRepository {
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                    tasks.add(new Task(
-                            resultSet.getInt("task_id"),
-                            resultSet.getString("task_name"),
-                            resultSet.getDate("start_date") != null ? resultSet.getDate("start_date").toLocalDate() : null,
-                            resultSet.getDate("end_date") != null ? resultSet.getDate("end_date").toLocalDate() : null,
-                            Status.valueOf(resultSet.getString("status").toUpperCase()),
-                            resultSet.getInt("subproject_id"),
-                            resultSet.getInt("estimated_hours"),
-                            resultSet.getInt("actual_hours"),
-                            resultSet.getObject("employee_id") != null ? resultSet.getInt("employee_id") : 0 //hvorfor er det her object?
+                            tasks.add(new Task(
+                                    resultSet.getInt("task_id"),
+                                    resultSet.getString("task_name"),
+                                    resultSet.getDate("start_date") != null ? resultSet.getDate("start_date").toLocalDate() : null,
+                                    resultSet.getDate("end_date") != null ? resultSet.getDate("end_date").toLocalDate() : null,
+                                    Status.valueOf(resultSet.getString("status").toUpperCase()),
+                                    resultSet.getInt("subproject_id"),
+                                    resultSet.getInt("estimated_hours"),
+                                    resultSet.getInt("employee_id") // Fjern actual_hours
+                            ));
 
-                    ));
                 }
             }
         } catch (SQLException e) {
@@ -94,7 +95,6 @@ public class TaskRepository implements ITaskRepository {
                             Status.valueOf(resultSet.getString("status").toUpperCase()),
                             resultSet.getInt("subproject_id"),
                             resultSet.getInt("estimated_hours"),
-                            resultSet.getInt("actual_hours"),
                             resultSet.getObject("employee_id") != null ? resultSet.getInt("employee_id") : 0
                     ));
                 }
@@ -106,31 +106,27 @@ public class TaskRepository implements ITaskRepository {
         return tasks;
     }
 
-    public int getSubprojectIdBySubprojectName(String subprojectName) throws Errorhandling {
-        String query = "SELECT subproject_id FROM subproject WHERE subproject_name = ?";
+    @Override
+    public int getTaskIdByTaskName(String taskName) throws Errorhandling {
+        String query = "SELECT task_id FROM task WHERE task_name = ?";
 
         try (Connection connection = ConnectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setString(1, subprojectName);
+            preparedStatement.setString(1, taskName);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    return resultSet.getInt("subproject_id");
+                    return resultSet.getInt("task_id");
                 } else {
-                    throw new Errorhandling("Subproject not found for name: " + subprojectName);
+                    throw new Errorhandling("Task not found for name: " + taskName);
                 }
             }
         } catch (SQLException e) {
-            throw new Errorhandling("Failed to get subproject ID by subproject name: " + e.getMessage());
+            throw new Errorhandling("Failed to get task ID by task name: " + e.getMessage());
         }
     }
 
-    public void deleteTaskByID(int taskId) throws Errorhandling {
-        String query = "DELETE FROM task WHERE task_id = ?";
-
-
-    }
 
 
     @Override
@@ -153,8 +149,7 @@ public class TaskRepository implements ITaskRepository {
                             Status.valueOf(resultSet.getString("status").toUpperCase()),
                             resultSet.getInt("subproject_id"),
                             resultSet.getObject("employee_id") != null ? resultSet.getInt("employee_id") : 0,
-                            resultSet.getInt("estimated_hours"),
-                            resultSet.getInt("actual_hours")
+                            resultSet.getInt("estimated_hours")
                     ));
                 }
                 return taskList;
@@ -163,20 +158,48 @@ public class TaskRepository implements ITaskRepository {
             throw new Errorhandling("Failed to fetch tasks for employee ID " + employeeId + ": " + e.getMessage());
         }
     }
+    @Override
+    public void deleteTaskById(int taskId, int employeeId) throws Errorhandling {
+        String deleteEmployeeTaskQuery = "DELETE FROM employee_task WHERE task_id = ?";
+        String deleteTaskQuery = "DELETE FROM task WHERE task_id = ? AND subproject_id IN " +
+                "(SELECT sp.subproject_id FROM subproject sp JOIN project p ON sp.project_id = p.project_id WHERE p.employee_id = ?)";
 
-    public void assignWorkerIdToTask (int taskId, int employeeId) throws Errorhandling {
-        String SQLquery = "UPDATE project_management.employee_task SET employee_id = ? WHERE task_id = ?";
+        try (Connection connection = ConnectionManager.getConnection()) {
+            // Start transaktion
+            connection.setAutoCommit(false);
 
-        try (Connection con = ConnectionManager.getConnection();
-        PreparedStatement preStat = con.prepareStatement(SQLquery)) {
-            preStat.setInt(1, employeeId);
-            preStat.setInt(2, taskId);
-            preStat.executeUpdate();
+            // Slet fra employee_task
+            try (PreparedStatement deleteEmployeeTaskStmt = connection.prepareStatement(deleteEmployeeTaskQuery)) {
+                deleteEmployeeTaskStmt.setInt(1, taskId);
+                deleteEmployeeTaskStmt.executeUpdate();
+            }
+
+            // Slet fra task
+            try (PreparedStatement deleteTaskStmt = connection.prepareStatement(deleteTaskQuery)) {
+                deleteTaskStmt.setInt(1, taskId);
+                deleteTaskStmt.setInt(2, employeeId);
+                int rowsAffected = deleteTaskStmt.executeUpdate();
+
+                if (rowsAffected == 0) {
+                    connection.rollback();
+                    throw new Errorhandling("Task not found or user not authorized.");
+                }
+            }
+
+            // Commit transaktion
+            connection.commit();
 
         } catch (SQLException e) {
-            throw new Errorhandling("Failed to fetch tasks for employee ID " + employeeId + ": " + e.getMessage());
+            throw new Errorhandling("Failed to delete task: " + e.getMessage());
         }
+    }
 
+    @Override
+    public void updateTask(Task task) throws Errorhandling {
+        String editwishSql = "DELETE FROM employee_task WHERE task_id = ?";
 
     }
+
+
+
 }

@@ -2,86 +2,96 @@ package org.example.eksamenkea.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.eksamenkea.model.*;
-import org.example.eksamenkea.service.EmployeeService;
 import org.example.eksamenkea.service.Errorhandling;
+import org.example.eksamenkea.service.SubprojectService;
 import org.example.eksamenkea.service.TaskService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+
 @Controller
 public class TaskController {
     private final TaskService taskService;
-    private final EmployeeService employeeService;
+    private final SubprojectService subprojectService;
 
-    private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
-
-    public TaskController(TaskService taskService, EmployeeService employeeService) {
+    public TaskController(TaskService taskService, SubprojectService subprojectService) {
         this.taskService = taskService;
-        this.employeeService = employeeService;
+        this.subprojectService = subprojectService;
+    }
+//slet mig
+    //CREATE--------------------------------------------------------------
+    @GetMapping("/add-task")
+    public String addTask(@RequestParam("subprojectName") String subprojectName, HttpSession session, Model model) throws Errorhandling {
+        Task task = new Task();
+        Employee employee = (Employee) session.getAttribute("employee");  // Henter "user" fra sessionen.
+        int subprojectId = subprojectService.getSubprojectIdBySubprojectName(subprojectName);
+
+            model.addAttribute("task", task);
+            model.addAttribute("employeeId", employee.getEmployee_id());
+            model.addAttribute("subprojectId", subprojectId);
+            model.addAttribute("subprojectName", subprojectName);
+            return "add-task";
+
     }
 
+    @PostMapping("/task-added") //Amalie
+    public String addedTask(@RequestParam("subprojectName") String subprojectName, @ModelAttribute Task task) throws Errorhandling {
+        taskService.createTask(task);
+        return "redirect:/project-leader-tasks?subprojectName=" + subprojectName;
+    }
+
+    //READ------------------------------------------------------------------
     @GetMapping("/project-leader-tasks")
-    public String getTaskBySubprojectName(@RequestParam("subprojectName") String subprojectName,
-                                          HttpSession session, Model model) throws Errorhandling {
-        logger.info("Fetching tasks for subproject: {}", subprojectName);
+    public String getTaskBySubprojectName(@RequestParam("subprojectName") String subprojectName, HttpSession session, Model model) throws Errorhandling {
 
-        // Hent brugerens rolle fra sessionen
-        Role employeeRole = (Role) session.getAttribute("userRole");
-        if (employeeRole != Role.PROJECTLEADER) {
-            logger.warn("Access denied for user role: {}", employeeRole);
-            return "error/error";
-        }
-
-        try {
             // Hent subproject ID baseret på subproject name
-            int subprojectId = taskService.getSubprojectIdBySubprojectName(subprojectName);
+            int subprojectId = subprojectService.getSubprojectIdBySubprojectName(subprojectName);
 
             // Hent tasks for det fundne subproject ID
             List<Task> tasks = taskService.getTaskBySubprojectId(subprojectId);
-            List<Employee> employeeList = employeeService.getAllEmployees();
-            model.addAttribute("employeeList", employeeList);
 
             // Tilføj tasks og subprojectName til modellen
             model.addAttribute("tasks", tasks);
             model.addAttribute("subprojectName", subprojectName);
 
             return "project-leader-task-overview";
-        } catch (Errorhandling e) {
-            logger.error("Error fetching tasks: {}", e.getMessage());
-            model.addAttribute("errorMessage", e.getMessage());
-            return "error/error";
-        }
     }
 
-    @PostMapping("/assign-worker")
-    public String assignEmployeeToTask(@RequestParam("subprojectName") String subprojectName, Model model, HttpSession session) throws Errorhandling {
-       Employee employee = (Employee) session.getAttribute("employee");
-        //taskService.assignEmployeeToTask(employee.getEmployee_id());
+
+    //DELETE-----------------------------------------------------------------
+    //Vise bekræftelsessiden
+    @GetMapping("/confirm-delete-task")
+    public String showConfirmDeleteTask(@RequestParam("taskName") String taskName, @RequestParam("subprojectName") String subprojectName, HttpSession session, Model model) throws Errorhandling {
+        //  hente taskId
+        int taskId = taskService.getTaskIdByTaskName(taskName);
+
+        //  taskId og subprojectName tilføjes til modellen
+        model.addAttribute("taskId", taskId);
         model.addAttribute("subprojectName", subprojectName);
-        return "redirect:/project-leader-task-overview?subprojectName=" + subprojectName;
+        model.addAttribute("taskName", taskName);
+        return "confirm-delete-task";
     }
 
-//    @GetMapping("/worker-overview-task")
-//    public String showWorkerOverview(HttpSession session, Model model) throws Errorhandling {
-//        Role employeeRole = (Role) session.getAttribute("userRole");
-//        Employee employee = (Employee) session.getAttribute("employee");
-//
-//        System.out.println("Employee in session: " + session.getAttribute("employee"));
-//        System.out.println("UserRole in session: " + session.getAttribute("userRole"));
-//        System.out.println(employee.getEmployee_id());
-//
-//        if (employeeRole == Role.WORKER) {
-//            List<Task> taskslist = taskService.getTaskBySubprojectId(employee.getEmployee_id());
-//            model.addAttribute("tasklist", taskslist);
-//
-//            return "worker-overview";
-//        }
-//        throw new Errorhandling("User is not authorized to view this page.");
-//    }
+
+    // Metode til at slette task
+    @PostMapping("/delete-task")
+    public String deleteTask(@RequestParam("taskName") String taskName, @RequestParam("subprojectName") String subprojectName,
+            HttpSession session) throws Errorhandling {
+        // Hent taskId baseret på taskName
+        int taskId = taskService.getTaskIdByTaskName(taskName);
+
+        // Hent employeeId fra session
+        int employeeId = (int) session.getAttribute("employeeId");
+
+        // Slet task baseret på taskId og employeeId
+        taskService.deleteTaskById(taskId, employeeId);
+
+        // Returner til Task Overview med subprojectName
+        return "redirect:/project-leader-tasks?subprojectName=" + subprojectName;
+    }
 }

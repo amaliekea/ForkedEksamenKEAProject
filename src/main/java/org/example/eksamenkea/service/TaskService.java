@@ -19,12 +19,11 @@ public class TaskService {
         this.taskRepository = (ITaskRepository) context.getBean(impl);
     }
 
-
     public List<Task> getTasksByProjectId(int projectId) throws Errorhandling {
         return taskRepository.getTasksByProjectId(projectId);
     }
 
-    public List<Task> getTaskBySubprojectId(int subprojectId) throws Errorhandling{
+    public List<Task> getTaskBySubprojectId(int subprojectId) throws Errorhandling {
         return taskRepository.getTaskBySubprojectId(subprojectId);
     }
 
@@ -32,15 +31,16 @@ public class TaskService {
         return taskRepository.getTasklistByEmployeeId(employeeId);
     }
 
-    public int getSubprojectIdBySubprojectName(String subprojectName) throws Errorhandling{
-        return taskRepository.getSubprojectIdBySubprojectName(subprojectName);
+
+    public void createTask(Task task) throws Errorhandling {
+        taskRepository.createTask(task);
     }
 
-    public void assignEmployeeToTask(int taskId,int employeeId) throws Errorhandling {
-        taskRepository.assignWorkerIdToTask(taskId, employeeId);
-    };
+    public void deleteTaskById(int taskId, int employeeId) throws Errorhandling {
+        taskRepository.deleteTaskById(taskId, employeeId);
+    }
 
-
-
-
+    public int getTaskIdByTaskName(String taskName) throws Errorhandling {
+        return taskRepository.getTaskIdByTaskName(taskName);
+    }
 }
