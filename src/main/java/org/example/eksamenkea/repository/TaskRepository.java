@@ -13,6 +13,11 @@ import java.util.List;
 
 @Repository("ITASKREPOSITORY")
 public class TaskRepository implements ITaskRepository {
+    private final SubprojectRepository subprojectRepository;
+
+    public TaskRepository(SubprojectRepository subprojectRepository) {
+        this.subprojectRepository = subprojectRepository;
+    }
 
     // CREATE-------------------------------------------------------------------
     @Override
@@ -42,7 +47,8 @@ public class TaskRepository implements ITaskRepository {
         String query = "SELECT t.task_id, t.task_name, t.start_date, t.end_date, t.status, " +
                 "t.subproject_id, t.estimated_hours, t.actual_hours , t.employee_id " +
                 "FROM task t " +
-                "WHERE t.subproject_id = ?";
+                "WHERE t.subproject_id = ? AND t.status != 'COMPLETE'";
+
 
         try (Connection connection = ConnectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -159,56 +165,6 @@ public class TaskRepository implements ITaskRepository {
     }
 
     @Override
-    public void deleteTaskById(int taskId, int employeeId) throws Errorhandling {
-        String deleteEmployeeTaskQuery = "DELETE FROM employee_task WHERE task_id = ?";
-        String deleteTaskQuery = "DELETE FROM task WHERE task_id = ? AND subproject_id IN " +
-                "(SELECT sp.subproject_id FROM subproject sp JOIN project p ON sp.project_id = p.project_id WHERE p.employee_id = ?)";
-
-        try (Connection connection = ConnectionManager.getConnection()) {
-            // Start transaktion
-            connection.setAutoCommit(false);
-
-            // Slet fra employee_task
-            try (PreparedStatement deleteEmployeeTaskStmt = connection.prepareStatement(deleteEmployeeTaskQuery)) {
-                deleteEmployeeTaskStmt.setInt(1, taskId);
-                deleteEmployeeTaskStmt.executeUpdate();
-            }
-
-            // Slet fra task
-            try (PreparedStatement deleteTaskStmt = connection.prepareStatement(deleteTaskQuery)) {
-                deleteTaskStmt.setInt(1, taskId);
-                deleteTaskStmt.setInt(2, employeeId);
-                int rowsAffected = deleteTaskStmt.executeUpdate();
-
-                if (rowsAffected == 0) {
-                    connection.rollback();
-                    throw new Errorhandling("Task not found or user not authorized.");
-                }
-            }
-
-            // Commit transaktion
-            connection.commit();
-
-        } catch (SQLException e) {
-            throw new Errorhandling("Failed to delete task: " + e.getMessage());
-        }
-    }
-
-    @Override
-    public void updateTask(Task task) throws Errorhandling {
-        String updateSql = "UPDATE task SET status = ? WHERE task_id = ?";
-        try {
-            Connection connection = ConnectionManager.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(updateSql);
-            preparedStatement.setString(1, task.getStatus().name());
-            preparedStatement.setInt(2, task.getTask_id());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new Errorhandling("Failed to update task: " + e.getMessage());
-        }
-    }
-
-    @Override
     public Task getTaskByName(String taskName) throws Errorhandling {
         String query = "SELECT * FROM task WHERE task_name = ?";
         Task task = null;
@@ -238,4 +194,46 @@ public class TaskRepository implements ITaskRepository {
         }
         return task;
     }
+
+
+
+    //UPDATE------------------------------------------------------------------------------------
+    @Override
+    public void updateTask(Task task) throws Errorhandling {
+        String updateSql = "UPDATE task SET status = ? WHERE task_id = ?";
+        try {
+            Connection connection = ConnectionManager.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(updateSql);
+            preparedStatement.setString(1, task.getStatus().name());
+            preparedStatement.setInt(2, task.getTask_id());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to update task: " + e.getMessage());
+        }
+    }
+
+    //DELETE----------------------------------------------------------------------------------------
+    // Metode til at markere en task som "Complete" og arkivere den i databasen
+    @Override
+    public void markTaskAsComplete(String taskName, String subprojectName) throws Errorhandling {//ZUZU
+        //SQL-forespørgsel til at finde den task baseret på taskName og subprojectName
+        String query = "UPDATE task t " +
+                "JOIN subproject s ON t.subproject_id = s.subproject_id " + // Finder task via subproject.
+                "SET t.status = 'COMPLETE', t.is_archived = TRUE " +       // Sætter status og arkiverer.
+                "WHERE t.task_name = ? AND s.subproject_name = ?";         // Filtrerer baseret på input.
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, taskName);
+            preparedStatement.setString(2, subprojectName);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new Errorhandling("No task found with name: " + taskName + " in subproject: " + subprojectName);
+            }
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to mark task as complete and archived: " + e.getMessage());
+        }
+    }
+
 }
