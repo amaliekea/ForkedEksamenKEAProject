@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository("IUSERREPOSITORY")
 @Lazy // Angiver, at denne bean kun bliver initialiseret, når den er nødvendig, og ikke ved opstart
@@ -43,4 +45,31 @@ public class EmployeeRepository implements IEmployeeRepository {
         }
         return employee;
     }
+
+    @Override
+    public List<Employee> getAllEmployees() throws Errorhandling {
+        List<Employee> employees = new ArrayList<Employee>();
+        String SQLstring = "SELECT * FROM employee";
+
+        try (Connection con = ConnectionManager.getConnection();
+             PreparedStatement preSta = con.prepareStatement(SQLstring);) {
+            try (ResultSet resultSet = preSta.executeQuery()) {
+                while (resultSet.next()) {
+                    employees.add(new Employee(
+                            resultSet.getInt("employee_id"),
+                            resultSet.getString("email"),
+                            resultSet.getString("password"),
+                            Role.valueOf(resultSet.getString("role")),
+                            resultSet.getInt("employee_rate"),
+                            resultSet.getInt("max_hours")
+                    ));
+                }
+                return employees;
+            }
+        } catch (SQLException e) {
+            throw new Errorhandling("Cant get list of employees" + e.getMessage());
+        }
+    }
+
+
 }

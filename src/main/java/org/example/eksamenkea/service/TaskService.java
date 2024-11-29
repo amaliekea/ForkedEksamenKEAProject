@@ -33,6 +33,10 @@ public class TaskService {
         return taskRepository.getSubprojectIdBySubprojectName(subprojectName);
     }
 
+    public void assignEmployeeToTask(int taskId,int employeeId) throws Errorhandling {
+        taskRepository.assignWorkerIdToTask(taskId, employeeId);
+    };
+
 
 
 
