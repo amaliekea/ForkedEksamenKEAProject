@@ -1,8 +1,6 @@
 package org.example.eksamenkea.service;
 
 import org.example.eksamenkea.model.Task;
-import org.example.eksamenkea.repository.TaskRepository;
-import org.example.eksamenkea.repository.interfaces.IProjectRepository;
 import org.example.eksamenkea.repository.interfaces.ITaskRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -42,5 +40,11 @@ public class TaskService {
 
     public int getTaskIdByTaskName(String taskName) throws Errorhandling {
         return taskRepository.getTaskIdByTaskName(taskName);
+    }
+    public void updateTask(Task task) throws Errorhandling {
+        taskRepository.updateTask(task);
+    }
+    public Task getTaskByName(String taskName) throws Errorhandling {
+        return taskRepository.getTaskByName(taskName);
     }
 }

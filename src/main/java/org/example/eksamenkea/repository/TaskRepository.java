@@ -51,16 +51,16 @@ public class TaskRepository implements ITaskRepository {
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                            tasks.add(new Task(
-                                    resultSet.getInt("task_id"),
-                                    resultSet.getString("task_name"),
-                                    resultSet.getDate("start_date") != null ? resultSet.getDate("start_date").toLocalDate() : null,
-                                    resultSet.getDate("end_date") != null ? resultSet.getDate("end_date").toLocalDate() : null,
-                                    Status.valueOf(resultSet.getString("status").toUpperCase()),
-                                    resultSet.getInt("subproject_id"),
-                                    resultSet.getInt("estimated_hours"),
-                                    resultSet.getInt("employee_id") // Fjern actual_hours
-                            ));
+                    tasks.add(new Task(
+                            resultSet.getInt("task_id"),
+                            resultSet.getString("task_name"),
+                            resultSet.getDate("start_date") != null ? resultSet.getDate("start_date").toLocalDate() : null,
+                            resultSet.getDate("end_date") != null ? resultSet.getDate("end_date").toLocalDate() : null,
+                            Status.valueOf(resultSet.getString("status").toUpperCase()),
+                            resultSet.getInt("subproject_id"),
+                            resultSet.getInt("estimated_hours"),
+                            resultSet.getInt("employee_id") // Fjern actual_hours
+                    ));
 
                 }
             }
@@ -128,7 +128,6 @@ public class TaskRepository implements ITaskRepository {
     }
 
 
-
     @Override
     public List<Task> getTasklistByEmployeeId(int employeeId) throws Errorhandling {
         List<Task> taskList = new ArrayList<>();
@@ -158,6 +157,7 @@ public class TaskRepository implements ITaskRepository {
             throw new Errorhandling("Failed to fetch tasks for employee ID " + employeeId + ": " + e.getMessage());
         }
     }
+
     @Override
     public void deleteTaskById(int taskId, int employeeId) throws Errorhandling {
         String deleteEmployeeTaskQuery = "DELETE FROM employee_task WHERE task_id = ?";
@@ -196,10 +196,50 @@ public class TaskRepository implements ITaskRepository {
 
     @Override
     public void updateTask(Task task) throws Errorhandling {
-        String editwishSql = "DELETE FROM employee_task WHERE task_id = ?";
-
+        String updateSql = "UPDATE task SET status = ? WHERE task_id = ?";
+        try {
+            Connection connection = ConnectionManager.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(updateSql);
+            preparedStatement.setString(1, task.getStatus().name());
+            preparedStatement.setInt(2, task.getTask_id());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to update task: " + e.getMessage());
+        }
     }
 
+    @Override
+    public Task getTaskByName(String taskName) throws Errorhandling {
+        String query = "SELECT * FROM task WHERE task_name = ?";
+        Task task = null;
 
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, taskName);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                task = new Task(
+                                resultSet.getInt("task_id"),
+                                resultSet.getString("task_name"),
+                                resultSet.getDate("start_date").toLocalDate(),
+                                resultSet.getDate("end_date").toLocalDate(),
+                                Status.valueOf(resultSet.getString("status").toUpperCase()),
+                                resultSet.getInt("subproject_id"),
+                                resultSet.getInt("estimated_hours"),
+                                resultSet.getInt("employee_id")
+                        );
+            } else {
+                throw new Errorhandling("No task found with name: " + taskName);
+            }
+
+
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to fetch task by name: " + e.getMessage());
+        }
+
+        return task;
+    }
 
 }
