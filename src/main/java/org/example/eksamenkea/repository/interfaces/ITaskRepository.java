@@ -22,4 +22,6 @@ public interface ITaskRepository {
     void updateTask(Task task) throws Errorhandling;
 
     int getTaskIdByTaskName(String taskName) throws Errorhandling;
+
+    Task getTaskByName(String taskName) throws Errorhandling;
 }

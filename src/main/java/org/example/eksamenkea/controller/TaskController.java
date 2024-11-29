@@ -23,7 +23,7 @@ public class TaskController {
         this.taskService = taskService;
         this.subprojectService = subprojectService;
     }
-//slet mig
+
     //CREATE--------------------------------------------------------------
     @GetMapping("/add-task")
     public String addTask(@RequestParam("subprojectName") String subprojectName, HttpSession session, Model model) throws Errorhandling {
@@ -31,11 +31,11 @@ public class TaskController {
         Employee employee = (Employee) session.getAttribute("employee");  // Henter "user" fra sessionen.
         int subprojectId = subprojectService.getSubprojectIdBySubprojectName(subprojectName);
 
-            model.addAttribute("task", task);
-            model.addAttribute("employeeId", employee.getEmployee_id());
-            model.addAttribute("subprojectId", subprojectId);
-            model.addAttribute("subprojectName", subprojectName);
-            return "add-task";
+        model.addAttribute("task", task);
+        model.addAttribute("employeeId", employee.getEmployee_id());
+        model.addAttribute("subprojectId", subprojectId);
+        model.addAttribute("subprojectName", subprojectName);
+        return "add-task";
 
     }
 
@@ -49,19 +49,31 @@ public class TaskController {
     @GetMapping("/project-leader-tasks")
     public String getTaskBySubprojectName(@RequestParam("subprojectName") String subprojectName, HttpSession session, Model model) throws Errorhandling {
 
-            // Hent subproject ID baseret på subproject name
-            int subprojectId = subprojectService.getSubprojectIdBySubprojectName(subprojectName);
+        // Hent subproject ID baseret på subproject name
+        int subprojectId = subprojectService.getSubprojectIdBySubprojectName(subprojectName);
 
-            // Hent tasks for det fundne subproject ID
-            List<Task> tasks = taskService.getTaskBySubprojectId(subprojectId);
+        // Hent tasks for det fundne subproject ID
+        List<Task> tasks = taskService.getTaskBySubprojectId(subprojectId);
 
-            // Tilføj tasks og subprojectName til modellen
-            model.addAttribute("tasks", tasks);
-            model.addAttribute("subprojectName", subprojectName);
+        // Tilføj tasks og subprojectName til modellen
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("subprojectName", subprojectName);
 
-            return "project-leader-task-overview";
+        return "project-leader-task-overview";
     }
 
+    //UPDATE------------------------------------------------------------------
+    @GetMapping("/task-status")
+    public String updateTaskStatus(@RequestParam("taskName") String taskName, HttpSession session, Model model) throws Errorhandling {
+        model.addAttribute("task", taskService.getTaskByName(taskName));
+        return "task-edit-status";
+    }
+
+    @PostMapping("/task-status")
+    public String updatedTask(@ModelAttribute Task task) throws Errorhandling {
+        taskService.updateTask(task);
+        return "redirect:/worker-overview";
+    }
 
     //DELETE-----------------------------------------------------------------
     //Vise bekræftelsessiden
@@ -81,7 +93,7 @@ public class TaskController {
     // Metode til at slette task
     @PostMapping("/delete-task")
     public String deleteTask(@RequestParam("taskName") String taskName, @RequestParam("subprojectName") String subprojectName,
-            HttpSession session) throws Errorhandling {
+                             HttpSession session) throws Errorhandling {
         // Hent taskId baseret på taskName
         int taskId = taskService.getTaskIdByTaskName(taskName);
 
