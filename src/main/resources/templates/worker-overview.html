@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Worker Overview</h1>
-<h1 th:text="${employee.getEmail()}"></h1>
+<h1 th:text="${employee.email}"></h1>
 
 <h2 th:text="${project.project_name}">Project</h2>
 <table>
@@ -18,8 +18,6 @@
     </tr>
     </thead>
     <tbody>
-
-
 
     <th:block th:if="${project == null}">
         <span>No project available</span>

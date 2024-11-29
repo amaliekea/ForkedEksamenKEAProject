@@ -129,13 +129,13 @@ public class ProjectRepository implements IProjectRepository {
                             resultSet.getDouble("budget"),
                             resultSet.getString("project_description"),
                             resultSet.getInt("employee_id"),
-                            resultSet.getInt("material_cost"), // Rettet til double
+                            resultSet.getInt("material_cost"),// Rettet til double
                             resultSet.getInt("employee_cost") // Rettet til double
                     );
                 }
             }
         } catch (SQLException e) {
-            throw new Errorhandling("Failed to fetch project for user ID " + employeeId + ": " + e.getMessage());
+            throw new Errorhandling("Failed to fetch project for employee ID " + employeeId + ": " + e.getMessage());
         }
         return project;
     }
