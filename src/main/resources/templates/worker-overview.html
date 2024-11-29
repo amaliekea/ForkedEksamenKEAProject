@@ -59,9 +59,10 @@
     <thead>
     <tr>
         <th>Task Name</th>
-        <th>Start date</th>
-        <th>End date</th>
+        <th>Start Date</th>
+        <th>End Date</th>
         <th>Status</th>
+        <th>Assign Employee</th>
     </tr>
     </thead>
     <th:block th:if="${subprojects == null}">
@@ -73,7 +74,6 @@
         <td th:text="${task.startdate}"></td>
         <td th:text="${task.enddate}"></td>
         <td th:text="${task.status}"></td>
-
     </tr>
     </tbody>
 </table>

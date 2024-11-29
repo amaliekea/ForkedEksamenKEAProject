@@ -18,4 +18,6 @@ public interface ITaskRepository {
 
     void deleteTaskByID(int taskId) throws Errorhandling;
 
-}
+    public void assignWorkerIdToTask (int taskId, int employeeId) throws Errorhandling;
+
+    }

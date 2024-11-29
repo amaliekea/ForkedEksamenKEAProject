@@ -2,6 +2,7 @@ package org.example.eksamenkea.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.eksamenkea.model.*;
+import org.example.eksamenkea.service.EmployeeService;
 import org.example.eksamenkea.service.Errorhandling;
 import org.example.eksamenkea.service.ProjectService;
 import org.example.eksamenkea.service.TaskService;
@@ -18,10 +19,12 @@ import java.util.List;
 public class ProjectController {
     private ProjectService projectService;
     private TaskService taskService;
+    private EmployeeService employeeService;
 
-    public ProjectController(ProjectService projectService, TaskService taskService) {
+    public ProjectController(ProjectService projectService, TaskService taskService, EmployeeService employeeService) {
         this.projectService = projectService;
         this.taskService = taskService;
+        this.employeeService = employeeService;
     }
 
     @GetMapping("/project-leader-overview")
@@ -64,7 +67,6 @@ public class ProjectController {
 
             // Henter subprojekter baseret på det fundne projectId
             List<Subproject> subprojects = projectService.getSubjectsByProjectId(projectId);
-
             model.addAttribute("subprojects", subprojects);
             model.addAttribute("projectName", projectName);
 
@@ -104,8 +106,9 @@ public class ProjectController {
             Project project = projectService.getWorkerProjectFromEmployeeId(employee.getEmployee_id());
             List<Subproject> subprojects = projectService.getSubjectsByProjectId(project.getProject_id());
             List<Task> taskList = taskService.getTasklistByEmployeeId(employee.getEmployee_id());
+
             model.addAttribute("project", project);
-            model.addAttribute("employee",employee);
+            model.addAttribute("employee", employee);
             model.addAttribute("subprojects", subprojects);
             model.addAttribute("tasklist", taskList);
 
@@ -113,4 +116,6 @@ public class ProjectController {
         }
         throw new Errorhandling("User is not authorized to view this page.");
     }
+
+
 }

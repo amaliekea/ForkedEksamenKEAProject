@@ -35,6 +35,7 @@
     <td>
       <form action="/project-leader-tasks" method="get">
         <input type="hidden" name="subprojectName" th:value="${subproject.subproject_name}" />
+        <input type="hidden" name="subproject" th:value="${subproject}" />
         <button type="submit">View Tasks</button>
       </form>
     </td>

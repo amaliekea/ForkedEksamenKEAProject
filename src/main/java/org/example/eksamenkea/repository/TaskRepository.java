@@ -142,4 +142,20 @@ public class TaskRepository implements ITaskRepository {
             throw new Errorhandling("Failed to fetch tasks for employee ID " + employeeId + ": " + e.getMessage());
         }
     }
+
+    public void assignWorkerIdToTask (int taskId, int employeeId) throws Errorhandling {
+        String SQLquery = "UPDATE project_management.employee_task SET employee_id = ? WHERE task_id = ?";
+
+        try (Connection con = ConnectionManager.getConnection();
+        PreparedStatement preStat = con.prepareStatement(SQLquery)) {
+            preStat.setInt(1, employeeId);
+            preStat.setInt(2, taskId);
+            preStat.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to fetch tasks for employee ID " + employeeId + ": " + e.getMessage());
+        }
+
+
+    }
 }
