@@ -29,9 +29,11 @@
         <td th:text="${task.estimated_hours}"></td>
         <td th:text="${task.actual_hours}"></td>
         <td>
-            <!-- Link til bekræftelsesside -->
-            <a th:href="@{'/confirm-delete-task?taskName=' + ${task.task_name} + '&subprojectName=' + ${subprojectName}}">Delete</a>
-
+            <form action="/confirm-delete-task" method="get">
+                <input type="hidden" name="taskName" th:value="${task.task_name}" />
+                <input type="hidden" name="subprojectName" th:value="${subprojectName}" />
+                <button type="submit">Delete</button>
+            </form>
         </td>
         <td>
             <form action="/add-task" method="get">
