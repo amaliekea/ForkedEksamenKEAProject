@@ -33,6 +33,12 @@
             <a th:href="@{'/confirm-delete-task?taskName=' + ${task.task_name} + '&subprojectName=' + ${subprojectName}}">Delete</a>
 
         </td>
+        <td>
+            <form action="/add-task" method="get">
+                <input type="hidden" name="subprojectName" th:value="${subprojectName}" />
+                <button type="submit">Add Task</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
@@ -40,10 +46,7 @@
 <form action="/project-leader-subproject-overview" method="get">
     <button type="submit">Back to subproject Overview</button>
 </form>
-<form action="/add-task" method="get">
-    <input type="hidden" name="subprojectName" th:value="${subprojectName}" />
-    <button type="submit">Add Task</button>
-</form>
+
 
 </body>
 </html>
