@@ -33,7 +33,7 @@
             <form action="/mark-task-complete" method="post" style="display:inline;">
                 <input type="hidden" name="taskName" th:value="${task.task_name}" />
                 <input type="hidden" name="subprojectName" th:value="${subprojectName}" />
-                <button type="submit" th:disabled="${task.status == 'COMPLETE'}">Complete</button>
+                <button type="submit" th:disabled="${task.status == 'COMPLETE'}">Archive</button>
             </form>
         </td>
     </tr>
