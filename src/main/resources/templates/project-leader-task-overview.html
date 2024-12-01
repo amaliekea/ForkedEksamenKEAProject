@@ -8,7 +8,6 @@
 <body>
 <h1>Tasks for Subproject: <span th:text="${subprojectName}"></span></h1>
 
-
 <table>
     <thead>
     <tr>
@@ -18,6 +17,7 @@
         <th>Status</th>
         <th>Estimated Hours</th>
         <th>Actual Hours</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -29,16 +29,11 @@
         <td th:text="${task.estimated_hours}"></td>
         <td th:text="${task.actual_hours}"></td>
         <td>
-            <form action="/confirm-delete-task" method="get">
+            <!-- Mark Task as Complete -->
+            <form action="/mark-task-complete" method="post" style="display:inline;">
                 <input type="hidden" name="taskName" th:value="${task.task_name}" />
                 <input type="hidden" name="subprojectName" th:value="${subprojectName}" />
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-        <td>
-            <form action="/add-task" method="get">
-                <input type="hidden" name="subprojectName" th:value="${subprojectName}" />
-                <button type="submit">Add Task</button>
+                <button type="submit" th:disabled="${task.status == 'COMPLETE'}">Archive</button>
             </form>
         </td>
     </tr>
@@ -48,7 +43,6 @@
 <form action="/project-leader-subproject-overview" method="get">
     <button type="submit">Back to subproject Overview</button>
 </form>
-
 
 </body>
 </html>

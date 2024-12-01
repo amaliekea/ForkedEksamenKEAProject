@@ -41,6 +41,7 @@ CREATE TABLE task (
                       start_date DATE,
                       end_date DATE,
                       status ENUM('INPROGRESS', 'COMPLETE', 'OVERDUE', 'NOTSTARTED') DEFAULT 'NOTSTARTED',
+                      is_archived BOOLEAN DEFAULT FALSE, -- Ny kolonne til arkivering
                       employee_id INT, -- Employee ID som foreign key
                       actual_hours INT DEFAULT 0,
                       estimated_hours INT DEFAULT 0,
