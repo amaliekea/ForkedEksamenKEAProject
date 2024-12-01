@@ -24,4 +24,8 @@ public class EmployeeService  {
     public List<Employee> getAllWorkers() throws Errorhandling{
         return iEmployeeRepository.getAllWorkers();
     }
+
+    public Employee getEmployeeByEmail(String email) throws Errorhandling{
+        return iEmployeeRepository.getEmployeeByEmail(email);
+    }
 }

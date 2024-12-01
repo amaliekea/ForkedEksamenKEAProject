@@ -116,14 +116,13 @@ public class TaskController {
     }
 
     @PostMapping("/assign-worker")
-    public String assignEmployeeToTask(@RequestParam("subprojectName") String subprojectName, @RequestParam("taskName") String taskName ,Model model, HttpSession session) throws Errorhandling {
-        Employee employee = (Employee) session.getAttribute("employee");
+    public String assignEmployeeToTask(@RequestParam("subprojectName") String subprojectName, @RequestParam("taskName") String taskName, @RequestParam ("employeeEmail") String employeeEmail, Model model, HttpSession session) throws Errorhandling {
+        Employee employee = employeeService.getEmployeeByEmail(employeeEmail);
+        employee.setEmployee_id(employee.getEmployee_id());
         int taskId = taskService.getTaskIdByTaskName(taskName);
-        if (employee.getRole() == Role.WORKER) {
         taskService.assignEmployeeToTask(taskId, employee.getEmployee_id());
         model.addAttribute("subprojectName", subprojectName);
         model.addAttribute("taskId", taskId);
-        }
-        return "redirect:/project-leader-task-overview?subprojectName=" + subprojectName;
+        return "redirect:/project-leader-tasks?subprojectName=" + subprojectName;
     }
 }
