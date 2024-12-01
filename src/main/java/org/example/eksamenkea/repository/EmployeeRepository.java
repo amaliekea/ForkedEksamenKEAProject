@@ -43,4 +43,55 @@ public class EmployeeRepository implements IEmployeeRepository {
         }
         return employee;
     }
+
+    @Override
+    public java.util.List<Employee> getAllWorkers() throws Errorhandling {
+        java.util.List<Employee> workerList = new java.util.ArrayList<>();
+        String query = "SELECT * FROM employee WHERE role = 'Worker'";
+
+        try (Connection con = ConnectionManager.getConnection();
+        PreparedStatement preSta = con.prepareStatement(query)) {
+            try (ResultSet resultSet = preSta.executeQuery()) {
+                while (resultSet.next()) {
+                    workerList.add(new Employee(
+                            resultSet.getInt("employee_id"),
+                            resultSet.getString("email"),
+                            resultSet.getString("password"),
+                            Role.valueOf(resultSet.getString("role").toUpperCase()),
+                            resultSet.getInt("employee_rate"),
+                            resultSet.getInt("max_hours")
+                    ));
+                }
+                return workerList;
+            }
+
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to get all workers: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public Employee getEmployeeByEmail(String email) throws Errorhandling {
+        Employee employee = null;
+        String query = "SELECT * FROM employee WHERE email = ?";
+        try (Connection con = ConnectionManager.getConnection();
+             PreparedStatement preSta = con.prepareStatement(query)) {
+            preSta.setString(1, email);
+            try (ResultSet resultSet = preSta.executeQuery()) {
+                if (resultSet.next()) {
+                    employee = new Employee(
+                            resultSet.getInt("employee_id"),
+                            resultSet.getString("email"),
+                            resultSet.getString("password"),
+                            Role.valueOf(resultSet.getString("role").toUpperCase()),
+                            resultSet.getInt("employee_rate"),
+                            resultSet.getInt("max_hours")
+                    );
+                }
+                return employee;
+            }
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to get worker: " + e.getMessage());
+        }
+    }
 }

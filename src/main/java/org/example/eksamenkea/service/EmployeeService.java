@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EmployeeService  {
     private final IEmployeeRepository iEmployeeRepository;
@@ -17,5 +19,13 @@ public class EmployeeService  {
     //Sign in
     public Employee signIn(String email, String password) throws Errorhandling{
         return iEmployeeRepository.signIn(email, password);
+    }
+
+    public List<Employee> getAllWorkers() throws Errorhandling{
+        return iEmployeeRepository.getAllWorkers();
+    }
+
+    public Employee getEmployeeByEmail(String email) throws Errorhandling{
+        return iEmployeeRepository.getEmployeeByEmail(email);
     }
 }

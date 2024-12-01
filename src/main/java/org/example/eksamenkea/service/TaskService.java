@@ -49,4 +49,7 @@ public class TaskService {
     public Task getTaskByName(String taskName) throws Errorhandling {
         return taskRepository.getTaskByName(taskName);
     }
+    public void assignEmployeeToTask(int taskId,int employeeId) throws Errorhandling {
+        taskRepository.assignWorkerToTask(taskId, employeeId);
+    }
 }

@@ -36,6 +36,19 @@
                 <button type="submit" th:disabled="${task.status == 'COMPLETE'}">Archive</button>
             </form>
         </td>
+        <td>
+            <form th:action="@{/assign-worker}" th:method="post">
+                <input type="hidden" name="taskName" th:value="${task.task_name}" />
+                <input type="hidden" name="subprojectName" th:value="${subprojectName}" />
+                <select name="employeeEmail" required onchange="this.form.submit()">
+                    <option value="" disabled selected>Select a worker</option>
+                    <option th:each="employee : ${employeeList}"
+                            th:value="${employee.email}"
+                            th:text="${employee.email}">
+                    </option>
+                </select>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>

@@ -236,4 +236,18 @@ public class TaskRepository implements ITaskRepository {
         }
     }
 
+    @Override
+    public void assignWorkerToTask(int taskId, int employeeId) throws Errorhandling {
+        String updateSql = "UPDATE task SET employee_id = ? WHERE task_id = ?";
+        try {
+            Connection connection = ConnectionManager.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(updateSql);
+            preparedStatement.setInt(1, employeeId);
+            preparedStatement.setInt(2, taskId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to assign worker to task: " + e.getMessage());
+        }
+    }
+
 }
