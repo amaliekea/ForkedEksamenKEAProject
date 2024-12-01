@@ -2,6 +2,7 @@ package org.example.eksamenkea.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.eksamenkea.model.*;
+import org.example.eksamenkea.service.EmployeeService;
 import org.example.eksamenkea.service.Errorhandling;
 import org.example.eksamenkea.service.SubprojectService;
 import org.example.eksamenkea.service.TaskService;
@@ -18,10 +19,12 @@ import java.util.List;
 public class TaskController {
     private final TaskService taskService;
     private final SubprojectService subprojectService;
+    private final EmployeeService employeeService;
 
-    public TaskController(TaskService taskService, SubprojectService subprojectService) {
+    public TaskController(TaskService taskService, SubprojectService subprojectService, EmployeeService employeeService) {
         this.taskService = taskService;
         this.subprojectService = subprojectService;
+        this.employeeService = employeeService;
     }
 
     //CREATE--------------------------------------------------------------
@@ -52,12 +55,17 @@ public class TaskController {
         // Hent subproject ID baseret på subproject name
         int subprojectId = subprojectService.getSubprojectIdBySubprojectName(subprojectName);
 
+
         // Hent tasks for det fundne subproject ID
         List<Task> tasks = taskService.getTaskBySubprojectId(subprojectId);
+
+        //Hent liste af employees
+        List<Employee> employeeList = employeeService.getAllWorkers();
 
         // Tilføj tasks og subprojectName til modellen
         model.addAttribute("tasks", tasks);
         model.addAttribute("subprojectName", subprojectName);
+        model.addAttribute("employeeList", employeeList);
 
         return "project-leader-task-overview";
     }
@@ -105,5 +113,17 @@ public class TaskController {
 
         // Returner til Task Overview med subprojectName
         return "redirect:/project-leader-tasks?subprojectName=" + subprojectName;
+    }
+
+    @PostMapping("/assign-worker")
+    public String assignEmployeeToTask(@RequestParam("subprojectName") String subprojectName, @RequestParam("taskName") String taskName ,Model model, HttpSession session) throws Errorhandling {
+        Employee employee = (Employee) session.getAttribute("employee");
+        int taskId = taskService.getTaskIdByTaskName(taskName);
+        if (employee.getRole() == Role.WORKER) {
+        taskService.assignEmployeeToTask(taskId, employee.getEmployee_id());
+        model.addAttribute("subprojectName", subprojectName);
+        model.addAttribute("taskId", taskId);
+        }
+        return "redirect:/project-leader-task-overview?subprojectName=" + subprojectName;
     }
 }

@@ -41,6 +41,20 @@
                 <button type="submit">Add Task</button>
             </form>
         </td>
+        <td>
+            <form th:action="@{/assign-worker}" th:method="post">
+                <input type="hidden" name="taskName" th:value="${task.task_name}" />
+                <select name="employeeId" required onchange="this.form.submit()">
+                    <option value="" disabled selected>Select a worker</option>
+                    <option th:each="employee : ${employeeList}"
+                            th:value="${employee.employee_id}"
+                            th:text="${employee.email}">
+                    </option>
+                </select>
+
+                <input type="hidden" name="subprojectName" th:value="${subprojectName}" />
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>

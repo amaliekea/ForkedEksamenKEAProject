@@ -24,4 +24,6 @@ public interface ITaskRepository {
     int getTaskIdByTaskName(String taskName) throws Errorhandling;
 
     Task getTaskByName(String taskName) throws Errorhandling;
+
+    void assignWorkerToTask(int taskId, int employeeId) throws Errorhandling;
 }
