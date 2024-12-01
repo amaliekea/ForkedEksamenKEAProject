@@ -84,36 +84,14 @@ public class TaskController {
     }
 
     //DELETE-----------------------------------------------------------------
-    //Vise bekræftelsessiden
-    @GetMapping("/confirm-delete-task")
-    public String showConfirmDeleteTask(@RequestParam("taskName") String taskName, @RequestParam("subprojectName") String subprojectName, HttpSession session, Model model) throws Errorhandling {
-        //  hente taskId
-        int taskId = taskService.getTaskIdByTaskName(taskName);
-
-        //  taskId og subprojectName tilføjes til modellen
-        model.addAttribute("taskId", taskId);
-        model.addAttribute("subprojectName", subprojectName);
-        model.addAttribute("taskName", taskName);
-        return "confirm-delete-task";
-    }
-
-
-    // Metode til at slette task
-    @PostMapping("/delete-task")
-    public String deleteTask(@RequestParam("taskName") String taskName, @RequestParam("subprojectName") String subprojectName,
-                             HttpSession session) throws Errorhandling {
-        // Hent taskId baseret på taskName
-        int taskId = taskService.getTaskIdByTaskName(taskName);
-
-        // Hent employeeId fra session
-        int employeeId = (int) session.getAttribute("employeeId");
-
-        // Slet task baseret på taskId og employeeId
-        taskService.deleteTaskById(taskId, employeeId);
-
-        // Returner til Task Overview med subprojectName
+    // Metode til at markere en task som "Complete" og arkivere den
+    @PostMapping("/mark-task-complete")
+    public String markTaskAsComplete(@RequestParam("taskName") String taskName,
+                                     @RequestParam("subprojectName") String subprojectName) throws Errorhandling {
+        taskService.markTaskAsComplete(taskName, subprojectName);
         return "redirect:/project-leader-tasks?subprojectName=" + subprojectName;
     }
+
 
     @PostMapping("/assign-worker")
     public String assignEmployeeToTask(@RequestParam("subprojectName") String subprojectName, @RequestParam("taskName") String taskName, @RequestParam ("employeeEmail") String employeeEmail, Model model, HttpSession session) throws Errorhandling {
@@ -125,4 +103,6 @@ public class TaskController {
         model.addAttribute("taskId", taskId);
         return "redirect:/project-leader-tasks?subprojectName=" + subprojectName;
     }
+
+
 }

@@ -34,16 +34,18 @@ public class TaskService {
         taskRepository.createTask(task);
     }
 
-    public void deleteTaskById(int taskId, int employeeId) throws Errorhandling {
-        taskRepository.deleteTaskById(taskId, employeeId);
+    public void markTaskAsComplete(String taskName, String subprojectName) throws Errorhandling {
+        taskRepository.markTaskAsComplete(taskName, subprojectName);
     }
 
     public int getTaskIdByTaskName(String taskName) throws Errorhandling {
         return taskRepository.getTaskIdByTaskName(taskName);
     }
+
     public void updateTask(Task task) throws Errorhandling {
         taskRepository.updateTask(task);
     }
+
     public Task getTaskByName(String taskName) throws Errorhandling {
         return taskRepository.getTaskByName(taskName);
     }
