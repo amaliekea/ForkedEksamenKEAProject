@@ -79,6 +79,7 @@ public class TaskController {
 
     @PostMapping("/task-status")
     public String updatedTask(@ModelAttribute Task task) throws Errorhandling {
+        System.out.println("Received Actual Hours: " + task.getActual_hours());
         taskService.updateTask(task);
         return "redirect:/worker-overview";
     }

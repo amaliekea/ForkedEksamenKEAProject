@@ -11,7 +11,7 @@ public class Task {
     private int subproject_id; // FK
     private int employee_id; // FK
     private int estimated_hours; // Antal forventede timer
-    private int actual_hours =0; // Standardværdi (kan ikke ændres ved oprettelse)
+    private int actual_hours; // Standardværdi (kan ikke ændres ved oprettelse)
 
     //delete i join
     public Task(int task_id, String task_name, LocalDate startdate, LocalDate enddate, Status status,
@@ -111,6 +111,7 @@ public class Task {
                 ", enddate=" + enddate +
                 ", status=" + status +
                 ", subproject_id=" + subproject_id +
+                ", employee_id=" + employee_id +
                 ", estimated_hours=" + estimated_hours +
                 ", actual_hours=" + actual_hours +
                 '}';
