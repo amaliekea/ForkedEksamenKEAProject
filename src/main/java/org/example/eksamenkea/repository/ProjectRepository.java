@@ -38,7 +38,7 @@ public class ProjectRepository implements IProjectRepository {
     @Override
     public List<Project> getProjectsByEmployeeId(int employeeId) throws Errorhandling {
         List<Project> projects = new ArrayList<>();
-        String query = "SELECT * FROM project WHERE employee_id = ?";
+        String query = "SELECT * FROM project WHERE employee_id = ? AND is_archived = FALSE";
 
         try (Connection connection = ConnectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -142,15 +142,15 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
-    public List<Project> getArchivedProjects() throws Errorhandling{
+    public List<Project> getArchivedProjects() throws Errorhandling {
         List<Project> archivedProjects = new ArrayList<>();
-        String query="SELECT * FROM project WHERE is_archived = TRUE";
+        String query = "SELECT * FROM project WHERE is_archived = TRUE";
 
-        try(Connection connection = ConnectionManager.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 archivedProjects.add(new Project(
                         resultSet.getInt("project_id"),
                         resultSet.getString("project_name"),
@@ -168,22 +168,49 @@ public class ProjectRepository implements IProjectRepository {
 
 
     }
+
     //DELETE-----------------------------------------------------------------------
     @Override
     public void archiveProject(int projectId) throws Errorhandling {
-        String query = "UPDATE project SET is_archived = TRUE WHERE project_id = ?";
-        try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, projectId);
-            int rowsAffected = preparedStatement.executeUpdate();
+        String archiveProjectQuery = "UPDATE project SET is_archived = TRUE WHERE project_id = ?";
+        String archiveSubprojectQuery = "UPDATE subproject SET is_archived = TRUE WHERE project_id = ?";
+        String archiveTaskQuery = "UPDATE task t " +
+                "JOIN subproject sp ON t.subproject_id = sp.subproject_id " +
+                "SET t.is_archived = TRUE " +
+                "WHERE sp.project_id = ?";
 
-            if (rowsAffected == 0) {
-                throw new Errorhandling("No project found with project ID: " + projectId);
+        try (Connection connection = ConnectionManager.getConnection()) {
+            connection.setAutoCommit(false); // Start transaktion
+
+            try (PreparedStatement projectStmt = connection.prepareStatement(archiveProjectQuery);
+                 PreparedStatement subprojectStmt = connection.prepareStatement(archiveSubprojectQuery);
+                 PreparedStatement taskStmt = connection.prepareStatement(archiveTaskQuery)) {
+
+                // Arkiver projekt
+                projectStmt.setInt(1, projectId);
+                int projectRows = projectStmt.executeUpdate();
+                if (projectRows == 0) {
+                    throw new Errorhandling("No project found with ID: " + projectId);
+                }
+
+                // Arkiver tilknyttede subprojekter
+                subprojectStmt.setInt(1, projectId);
+                subprojectStmt.executeUpdate();
+
+                // Arkiver tilknyttede tasks
+                taskStmt.setInt(1, projectId);
+                taskStmt.executeUpdate();
+
+                connection.commit(); // Udfør transaktionen
+            } catch (SQLException e) {
+                connection.rollback(); // Rul tilbage ved fejl
+                throw new Errorhandling("Failed to archive project and related data: " + e.getMessage());
             }
         } catch (SQLException e) {
-            throw new Errorhandling("Failed to archive project: " + e.getMessage());
+            throw new Errorhandling("Database error during archiving: " + e.getMessage());
         }
     }
+
 
 
 }

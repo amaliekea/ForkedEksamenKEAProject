@@ -90,8 +90,11 @@ public class ProjectController {
         //Arkiver
         projectService.archiveProject(projectId);
 
-        model.addAttribute("Message", "idk");
-        return "archived-project-overview";
+        // Refresh listen af aktive projekter
+        List<Project> projects = projectService.getAllProjectsByEmployeeId(employee.getEmployee_id());
+        model.addAttribute("projects", projects);
+
+        return "project-leader-overview";
     }
 
 }

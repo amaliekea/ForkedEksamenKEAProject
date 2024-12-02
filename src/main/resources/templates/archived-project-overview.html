@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <link th:href="@{/main.css}" rel="stylesheet">
 <head>
-    <meta charset="UTF-8">
     <title>Archived Projects</title>
 </head>
 <body>
-<h1>Archived Projects:</h1>
+<h1>Archived Projects</h1>
 <table>
     <thead>
     <tr>
@@ -16,62 +15,21 @@
     </tr>
     </thead>
     <tbody>
-    <!-- Iterere over arkiverede projekter-->
+    <!-- Iterere over arkiverede projekter -->
+    <tr th:if="${#lists.isEmpty(archivedProjects)}">
+        <td colspan="3">No archived projects available.</td>
+    </tr>
     <tr th:each="project : ${archivedProjects}">
         <td th:text="${project.project_name}"></td>
         <td th:text="${project.budget}"></td>
-
+        <td th:text="${project.project_description}"></td>
     </tr>
-
     </tbody>
 </table>
 
-
-
+<!-- Tilbage til projekt oversigt -->
 <form action="/project-leader-overview" method="get">
-    <button type="submit">Back to project overview</button>
+    <button type="submit">Back to Project Overview</button>
 </form>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
-
-    <tr th:each="project : ${archivedProjects}">
-        <td th:text="${project.project_name}">Project Name</td>
-        <td th:text="${project.budget}">Budget</td>
-        <td th:text="${project.project_description}">Description</td>
-    </tr>
-    </tbody>
-</table>
-
-Tilbage til oversigt
-<form action="/project-leader-overview" method="get">
-    <button type="submit">Back to project overview</button>
-</form>
-</body>
---->

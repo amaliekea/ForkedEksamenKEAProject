@@ -34,10 +34,6 @@ public class TaskService {
         taskRepository.createTask(task);
     }
 
-    public void markTaskAsComplete(String taskName, String subprojectName) throws Errorhandling {
-        taskRepository.markTaskAsComplete(taskName, subprojectName);
-    }
-
     public int getTaskIdByTaskName(String taskName) throws Errorhandling {
         return taskRepository.getTaskIdByTaskName(taskName);
     }

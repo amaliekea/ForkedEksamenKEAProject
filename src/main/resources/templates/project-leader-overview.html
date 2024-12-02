@@ -7,6 +7,10 @@
 </head>
 <body>
 <h1>Project Leader Overview</h1>
+<!-- Knap til at se arkiverede projekter -->
+<form action="/archived-project-overview" method="get">
+    <button type="submit">View Archived Projects</button>
+</form>
 
 <h2>Projects</h2>
 <table>
@@ -33,11 +37,11 @@
             <button type="submit">See subprojects</button>
         </form>
         <!-- Arkiver projekt knap -->
-        <form action="/archive-project" method="post" >
-            <input type="hidden" name="projectName" th:value="${project.project_name}"/>
+        <form action="/archive-project" method="post">
+            <input type="hidden" name="projectName" th:value="${project.project_name}" />
             <button type="submit">Archive project</button>
-
         </form>
+
     </td>
     </tr>
 
