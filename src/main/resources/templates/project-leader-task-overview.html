@@ -28,14 +28,7 @@
         <td th:text="${task.status}"></td>
         <td th:text="${task.estimated_hours}"></td>
         <td th:text="${task.actual_hours}"></td>
-        <td>
-            <!-- Mark Task as Complete -->
-            <form action="/mark-task-complete" method="post" style="display:inline;">
-                <input type="hidden" name="taskName" th:value="${task.task_name}" />
-                <input type="hidden" name="subprojectName" th:value="${subprojectName}" />
-                <button type="submit" th:disabled="${task.status == 'COMPLETE'}">Archive</button>
-            </form>
-        </td>
+
         <!-- Assign worker to task -->
         <td>
             <form th:action="@{/assign-worker}" th:method="post">

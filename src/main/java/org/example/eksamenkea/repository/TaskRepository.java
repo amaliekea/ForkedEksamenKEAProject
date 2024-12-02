@@ -219,29 +219,6 @@ public class TaskRepository implements ITaskRepository {
     }
 
     //DELETE----------------------------------------------------------------------------------------
-    // Metode til at markere en task som "Complete" og arkivere den i databasen
-    @Override
-    public void markTaskAsComplete(String taskName, String subprojectName) throws Errorhandling {//ZUZU
-        //SQL-forespørgsel til at finde den task baseret på taskName og subprojectName
-        String query = "UPDATE task t " +
-                "JOIN subproject s ON t.subproject_id = s.subproject_id " + // Finder task via subproject.
-                "SET t.status = 'COMPLETE', t.is_archived = TRUE " +       // Sætter status og arkiverer.
-                "WHERE t.task_name = ? AND s.subproject_name = ?";         // Filtrerer baseret på input.
-        try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setString(1, taskName);
-            preparedStatement.setString(2, subprojectName);
-
-            int rowsAffected = preparedStatement.executeUpdate();
-            if (rowsAffected == 0) {
-                throw new Errorhandling("No task found with name: " + taskName + " in subproject: " + subprojectName);
-            }
-        } catch (SQLException e) {
-            throw new Errorhandling("Failed to mark task as complete and archived: " + e.getMessage());
-        }
-    }
-
     @Override
     public void assignWorkerToTask(int taskId, int employeeId) throws Errorhandling {
         String updateSql = "UPDATE task SET employee_id = ? WHERE task_id = ?";

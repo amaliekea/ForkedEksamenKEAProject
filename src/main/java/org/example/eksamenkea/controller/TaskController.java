@@ -84,15 +84,6 @@ public class TaskController {
         return "redirect:/worker-overview";
     }
 
-    //DELETE-----------------------------------------------------------------
-    // Metode til at markere en task som "Complete" og arkivere den
-    @PostMapping("/mark-task-complete")
-    public String markTaskAsComplete(@RequestParam("taskName") String taskName,
-                                     @RequestParam("subprojectName") String subprojectName) throws Errorhandling {
-        taskService.markTaskAsComplete(taskName, subprojectName);
-        return "redirect:/project-leader-tasks?subprojectName=" + subprojectName;
-    }
-
 
     @PostMapping("/assign-worker")
     public String assignEmployeeToTask(@RequestParam("subprojectName") String subprojectName, @RequestParam("taskName") String taskName, @RequestParam ("employeeEmail") String employeeEmail, Model model, HttpSession session) throws Errorhandling {

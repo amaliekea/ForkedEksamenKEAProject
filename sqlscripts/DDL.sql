@@ -22,6 +22,7 @@ CREATE TABLE project (
                          employee_id INT, -- Reference til employee_id fra Employee tabellen (projektlederen)
                          material_cost DECIMAL(10, 2) DEFAULT 0.00, -- Materialeomkostninger med standardværdi
                          employee_cost DECIMAL(10, 2) DEFAULT 0.00, -- Ansatteomkostninger med standardværdi
+                         is_archived BOOLEAN DEFAULT FALSE, -- Ny kolonne til arkivering
                          FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
 );
 
@@ -30,9 +31,11 @@ CREATE TABLE subproject (
                             subproject_id INT AUTO_INCREMENT PRIMARY KEY,
                             subproject_name VARCHAR(255) NOT NULL,
                             subproject_description VARCHAR(255) NOT NULL,
-                            project_id INT NOT NULL, -- Reference til project_id fra Project tabellen
+                            is_archived BOOLEAN DEFAULT FALSE,
+                            project_id INT NOT NULL,
                             FOREIGN KEY (project_id) REFERENCES project(project_id)
 );
+
 
 -- Opret Task tabel
 CREATE TABLE task (
@@ -41,11 +44,11 @@ CREATE TABLE task (
                       start_date DATE,
                       end_date DATE,
                       status ENUM('INPROGRESS', 'COMPLETE', 'OVERDUE', 'NOTSTARTED') DEFAULT 'NOTSTARTED',
-                      is_archived BOOLEAN DEFAULT FALSE, -- Ny kolonne til arkivering
-                      employee_id INT, -- Employee ID som foreign key
+                      is_archived BOOLEAN DEFAULT FALSE,
+                      employee_id INT,
                       actual_hours INT DEFAULT 0,
                       estimated_hours INT DEFAULT 0,
-                      subproject_id INT, -- Subproject ID som foreign key
+                      subproject_id INT,
                       FOREIGN KEY (subproject_id) REFERENCES subproject(subproject_id),
-                      FOREIGN KEY (employee_id) REFERENCES employee(employee_id) -- Definer relationen
+                      FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
 );

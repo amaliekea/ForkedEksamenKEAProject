@@ -57,6 +57,7 @@ public class ProjectController {
         return "redirect:/project-leader-overview";
     }
 
+
     @GetMapping("/worker-overview")
     public String showWorkerOverview(HttpSession session, Model model) throws Errorhandling {
         Employee employee = (Employee) session.getAttribute("employee");
@@ -65,4 +66,28 @@ public class ProjectController {
 
         return "worker-overview";
     }
+
+    @GetMapping("/archived-project-overview")
+    public String showArchivedProjects(Model model) throws Errorhandling {
+        List<Project> archivedProjects = projectService.getArchivedProjects(); // hent arkiverede projekter
+        model.addAttribute("archivedProjects", archivedProjects); // Tilføj til model
+        return "archived-project-overview";
+    }
+
+
+    @PostMapping("/archive-project")
+    public String archiveProjectOverview(@RequestParam("projectName") String projectName, HttpSession session, Model model) throws Errorhandling {
+        Employee employee = (Employee) session.getAttribute("employee");
+        int projectId = projectService.getProjectIdByProjectName(projectName);
+
+        //Arkiver
+        projectService.archiveProject(projectId);
+
+        // Refresh listen af aktive projekter
+        List<Project> projects = projectService.getAllProjectsByEmployeeId(employee.getEmployee_id());
+        model.addAttribute("projects", projects);
+
+        return "project-leader-overview";
+    }
+
 }
