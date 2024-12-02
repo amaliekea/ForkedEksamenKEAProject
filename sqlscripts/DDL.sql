@@ -41,20 +41,11 @@ CREATE TABLE task (
                       start_date DATE,
                       end_date DATE,
                       status ENUM('INPROGRESS', 'COMPLETE', 'OVERDUE', 'NOTSTARTED') DEFAULT 'NOTSTARTED',
+                      is_archived BOOLEAN DEFAULT FALSE, -- Ny kolonne til arkivering
                       employee_id INT, -- Employee ID som foreign key
                       actual_hours INT DEFAULT 0,
                       estimated_hours INT DEFAULT 0,
                       subproject_id INT, -- Subproject ID som foreign key
                       FOREIGN KEY (subproject_id) REFERENCES subproject(subproject_id),
                       FOREIGN KEY (employee_id) REFERENCES employee(employee_id) -- Definer relationen
-);
-
-
--- Opret Employee_Task tabel (til mange-til-mange forhold mellem Employee og Task)
-CREATE TABLE employee_task (
-                               employee_id INT NOT NULL,
-                               task_id INT NOT NULL,
-                               PRIMARY KEY (employee_id, task_id), -- Kombineret primær nøgle
-                               FOREIGN KEY (employee_id) REFERENCES employee(employee_id),
-                               FOREIGN KEY (task_id) REFERENCES task(task_id)
 );

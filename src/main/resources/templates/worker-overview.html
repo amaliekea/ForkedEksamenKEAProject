@@ -2,14 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <link th:href="@{/main.css}" rel="stylesheet">
 <head>
-    <title>Worker Overview</title>
     <link th:href="@{/main.css}" rel="stylesheet">
 </head>
 <body>
 <h1>Worker Overview</h1>
-<h1 th:text="${employee.getEmail()}"></h1>
+<!--<h1 th:text="${employee.email}"></h1>-->
 
-<h2 th:text="${project.project_name}">Project</h2>
+<!--<h2 th:text="${project.project_name}">Project</h2>-->
 <table>
     <thead>
     <tr>
@@ -18,8 +17,6 @@
     </tr>
     </thead>
     <tbody>
-
-
 
     <th:block th:if="${project == null}">
         <span>No project available</span>
@@ -39,7 +36,6 @@
     <tr>
         <th>Subproject Name</th>
         <th>Description</th>
-        <th>Parent Project ID</th>
     </tr>
     </thead>
     <th:block th:if="${subprojects == null}">
@@ -49,7 +45,6 @@
     <tr th:each="subproject : ${subprojects}">
         <td th:text="${subproject.subproject_name}"></td>
         <td th:text="${subproject.subproject_description}"></td>
-        <td th:text="${subproject.project_id}"></td>
     </tr>
     </tbody>
 </table>
@@ -59,26 +54,29 @@
     <thead>
     <tr>
         <th>Task Name</th>
-        <th>Start Date</th>
-        <th>End Date</th>
+        <th>Start date</th>
+        <th>End date</th>
         <th>Status</th>
-        <th>Assign Employee</th>
     </tr>
     </thead>
-    <th:block th:if="${subprojects == null}">
-        <span>No subproject available</span>
-    </th:block>
     <tbody>
     <tr th:each="task : ${tasklist}">
-        <td th:text="${task.getTask_name()}"></td>
+        <td th:text="${task.task_name}"></td>
         <td th:text="${task.startdate}"></td>
         <td th:text="${task.enddate}"></td>
         <td th:text="${task.status}"></td>
+        <td>
+        <form action="/task-status" method="get">
+            <input type="hidden" name="taskName" th:value="${task.task_name}" />
+            <button type="submit">Change task status</button>
+        </form>
+        </td>
     </tr>
     </tbody>
 </table>
 <form action="/logout" method="get">
     <button type="submit">Log out</button>
 </form>
+
 </body>
 </html>

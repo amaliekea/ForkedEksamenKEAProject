@@ -46,6 +46,7 @@ public class ProjectController {
     public String addNewProject(HttpSession session, Model model) throws Errorhandling {
         Project project = new Project();
         Employee employee = (Employee) session.getAttribute("employee");  // Henter "user" fra sessionen.
+        System.out.println("Employee ID: " + employee.getEmployee_id());
         model.addAttribute("project", project);
         model.addAttribute("employeeId", employee.getEmployee_id());
         return "add-project-form";
@@ -60,14 +61,16 @@ public class ProjectController {
     @GetMapping("/worker-overview")
     public String showWorkerOverview(HttpSession session, Model model) throws Errorhandling {
         Employee employee = (Employee) session.getAttribute("employee");
-            Project project = projectService.getWorkerProjectFromEmployeeId(employee.getEmployee_id());
-            List<Subproject> subprojects = projectService.getSubjectsByProjectId(project.getProject_id());
-            List<Task> taskList = taskService.getTasklistByEmployeeId(employee.getEmployee_id());
-            model.addAttribute("project", project);
-            model.addAttribute("employee", employee);
-            model.addAttribute("subprojects", subprojects);
-            model.addAttribute("tasklist", taskList);
+       // Project project = projectService.getWorkerProjectFromEmployeeId(employee.getEmployee_id());
+        List<Task> taskList = taskService.getTasklistByEmployeeId(employee.getEmployee_id());
+        model.addAttribute("tasklist", taskList);
+//        if (project != null) {
+//            List<Subproject> subprojects = projectService.getSubjectsByProjectId(project.getProject_id());
+//            model.addAttribute("project", project);
+//            //model.addAttribute("employee", employee);
+//            model.addAttribute("subprojects", subprojects);
+//        }
 
-            return "worker-overview";
+        return "worker-overview";
     }
 }

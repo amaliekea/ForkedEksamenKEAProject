@@ -9,8 +9,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Repository("IUSERREPOSITORY")
 @Lazy // Angiver, at denne bean kun bliver initialiseret, når den er nødvendig, og ikke ved opstart
@@ -47,29 +45,53 @@ public class EmployeeRepository implements IEmployeeRepository {
     }
 
     @Override
-    public List<Employee> getAllEmployees() throws Errorhandling {
-        List<Employee> employees = new ArrayList<Employee>();
-        String SQLstring = "SELECT * FROM employee";
+    public java.util.List<Employee> getAllWorkers() throws Errorhandling {
+        java.util.List<Employee> workerList = new java.util.ArrayList<>();
+        String query = "SELECT * FROM employee WHERE role = 'Worker'";
 
         try (Connection con = ConnectionManager.getConnection();
-             PreparedStatement preSta = con.prepareStatement(SQLstring);) {
+        PreparedStatement preSta = con.prepareStatement(query)) {
             try (ResultSet resultSet = preSta.executeQuery()) {
                 while (resultSet.next()) {
-                    employees.add(new Employee(
+                    workerList.add(new Employee(
                             resultSet.getInt("employee_id"),
                             resultSet.getString("email"),
                             resultSet.getString("password"),
-                            Role.valueOf(resultSet.getString("role")),
+                            Role.valueOf(resultSet.getString("role").toUpperCase()),
                             resultSet.getInt("employee_rate"),
                             resultSet.getInt("max_hours")
                     ));
                 }
-                return employees;
+                return workerList;
             }
+
         } catch (SQLException e) {
-            throw new Errorhandling("Cant get list of employees" + e.getMessage());
+            throw new Errorhandling("Failed to get all workers: " + e.getMessage());
         }
     }
 
-
+    @Override
+    public Employee getEmployeeByEmail(String email) throws Errorhandling {
+        Employee employee = null;
+        String query = "SELECT * FROM employee WHERE email = ?";
+        try (Connection con = ConnectionManager.getConnection();
+             PreparedStatement preSta = con.prepareStatement(query)) {
+            preSta.setString(1, email);
+            try (ResultSet resultSet = preSta.executeQuery()) {
+                if (resultSet.next()) {
+                    employee = new Employee(
+                            resultSet.getInt("employee_id"),
+                            resultSet.getString("email"),
+                            resultSet.getString("password"),
+                            Role.valueOf(resultSet.getString("role").toUpperCase()),
+                            resultSet.getInt("employee_rate"),
+                            resultSet.getInt("max_hours")
+                    );
+                }
+                return employee;
+            }
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to get worker: " + e.getMessage());
+        }
+    }
 }

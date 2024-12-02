@@ -62,7 +62,7 @@ public class EmployeeController {
         if (employee.getRole() == Role.PROJECTLEADER) {    // Tjek brugerens rolle
             return "redirect:/project-leader-overview"; //retuner til skabelonen
         } else if (employee.getRole() == Role.WORKER) {
-            return "redirect:/worker-overview";//ikke lavet endnu
+            return "redirect:/worker-overview";
         }
         throw new Errorhandling("no role found"); //
     }

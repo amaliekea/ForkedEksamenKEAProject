@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/main.css}" rel="stylesheet">
+    <title>Task Status Update</title>
+</head>
+<body>
+<h1>Update Task Status</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Task Name</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+        <td th:text="${task.task_name}"></td>
+        <td>
+            <form th:action="@{/task-status}" th:object="${task}" method="post">
+                <!-- Hidden fields da worker kun kan editere status -->
+                <input type="hidden" name="task_id" th:value="${task.task_id}" />
+                <input type="hidden" name="subproject_id" th:value="${task.subproject_id}" />
+                <input type="hidden" name="employee_id" th:value="${task.employee_id}" />
+                <input type="hidden" name="estimated_hours" th:value="${task.estimated_hours}" />
+                <input type="hidden" name="actual_hours" th:value="${task.actual_hours}" />
+
+                <select name="status" th:field="*{status}">
+                    <option value="NOTSTARTED">Not Started</option>
+                    <option value="INPROGRESS">In Progress</option>
+                    <option value="COMPLETE">Complete</option>
+                    <option value="OVERDUE">Overdue</option>
+                </select>
+
+                <button type="submit">Update status</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

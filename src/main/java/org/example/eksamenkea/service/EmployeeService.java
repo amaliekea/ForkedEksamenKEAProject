@@ -21,7 +21,11 @@ public class EmployeeService  {
         return iEmployeeRepository.signIn(email, password);
     }
 
-    public List<Employee> getAllEmployees() throws Errorhandling{
-        return iEmployeeRepository.getAllEmployees();
+    public List<Employee> getAllWorkers() throws Errorhandling{
+        return iEmployeeRepository.getAllWorkers();
+    }
+
+    public Employee getEmployeeByEmail(String email) throws Errorhandling{
+        return iEmployeeRepository.getEmployeeByEmail(email);
     }
 }
