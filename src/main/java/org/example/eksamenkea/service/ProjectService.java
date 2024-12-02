@@ -49,4 +49,11 @@ public class ProjectService {
     public List<Project> getArchivedProjects() throws Errorhandling{
         return projectRepository.getArchivedProjects();
     }
-}
+    public Project getProjectFromProjectId(int projectId) throws Errorhandling {
+        return projectRepository.getProjectFromProjectId(projectId);
+    }
+    public void updateProject(Project project) throws Errorhandling {
+        projectRepository.updateProject(project);
+    }
+
+    }

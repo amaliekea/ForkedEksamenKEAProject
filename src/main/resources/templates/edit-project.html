@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link th:href="@{/main.css}" rel="stylesheet">
+<head>
+    <title>Edit Project</title>
+    <link th:href="@{/main.css}" rel="stylesheet">
+</head>
+<body>
+
+<h1>Edit Project</h1>
+<form th:action="@{/edit-project}" th:object="${project}" method="post">
+    <label for="name">Name</label>
+    <input id="name"
+           type="text"
+           th:field="*{project_name}"
+           placeholder="Enter project name..." />
+    <br>
+    <label for="description">Description</label>
+    <input id="description"
+           type="text"
+           th:field="*{project_description}"
+           placeholder="Enter project description..." />
+
+    <label for="employeeCost">Employee Cost</label>
+    <input id="employeeCost"
+           type="text"
+           th:field="*{employee_cost}"
+           placeholder="Enter employee cost..." />
+
+      <label for="materialCost">Material Cost</label>
+    <input id="materialCost"
+           type="text"
+           th:field="*{material_cost}"
+           placeholder="Enter material cost..." />
+
+          <label for="budget">Budget</label>
+    <input id="budget"
+           type="text"
+           th:field="*{budget}"
+           placeholder="Enter budget..." />
+
+    <br>
+    <input type="hidden" th:field="*{project_id}" />
+    <input type="hidden" th:field="*{employee_id}" />
+    <button type="submit">Edit Subproject</button>
+</form>
+
+</body>
+</html>
