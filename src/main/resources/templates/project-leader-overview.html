@@ -33,7 +33,9 @@
             <button type="submit">See subprojects</button>
         </form>
         <!-- Arkiver projekt knap -->
-        <form>
+        <form action="/archive-project" method="post" >
+            <input type="hidden" name="projectName" th:value="${project.project_name}"/>
+            <button type="submit">Archive project</button>
 
         </form>
     </td>
@@ -50,3 +52,5 @@
 </form>
 </body>
 </html>
+
+

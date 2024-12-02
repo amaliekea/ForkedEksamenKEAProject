@@ -5,10 +5,11 @@ INSERT INTO employee (email, password, role, employee_rate, max_hours) VALUES
                                                                            ('worker1@example.com', 'password123', 'WORKER', 25, 30), -- Arbejder 1
                                                                            ('worker2@example.com', 'password456', 'WORKER', 30, 25); -- Arbejder 2
 
--- Indsæt data i Project-tabellen
-INSERT INTO project (project_name, budget, project_description, employee_id, material_cost, employee_cost) VALUES
-                                                                                                               ('Project Alpha', 100000, 'Alpha description', 1, 2000.00, 5000.00), -- Tilknyttet Projektleder 1
-                                                                                                               ('Project Beta', 50000, 'Beta description', 2, 1500.00, 3000.00);  -- Tilknyttet Projektleder 2
+INSERT INTO project (project_name, budget, project_description, employee_id, material_cost, employee_cost, is_archived)
+VALUES
+    ('Project Alpha', 100000, 'Alpha description', 1, 2000.00, 5000.00, FALSE), -- Aktivt projekt
+    ('Project Beta', 50000, 'Beta description', 2, 1500.00, 3000.00, FALSE),   -- Aktivt projekt
+    ('Project Gamma', 75000, 'Gamma description', 1, 1000.00, 4000.00, False);  -- Arkiveret projekt
 
 -- Indsæt data i Subproject-tabellen
 INSERT INTO subproject (subproject_name, subproject_description, project_id) VALUES

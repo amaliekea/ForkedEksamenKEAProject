@@ -14,8 +14,7 @@ public class SubprojectService {
         this.subprojectRepository = (ISubprojectRepository) context.getBean(impl);
     }
 
-
-    public int i(String subprojectName) throws Errorhandling {
+    public int getSubprojectIdBySubprojectName(String subprojectName) throws Errorhandling {
         return subprojectRepository.getSubprojectIdBySubprojectName(subprojectName);
     }
 }

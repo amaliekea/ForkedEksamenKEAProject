@@ -58,10 +58,11 @@ public class ProjectController {
         return "redirect:/project-leader-overview";
     }
 
+
     @GetMapping("/worker-overview")
     public String showWorkerOverview(HttpSession session, Model model) throws Errorhandling {
         Employee employee = (Employee) session.getAttribute("employee");
-       // Project project = projectService.getWorkerProjectFromEmployeeId(employee.getEmployee_id());
+        // Project project = projectService.getWorkerProjectFromEmployeeId(employee.getEmployee_id());
         List<Task> taskList = taskService.getTasklistByEmployeeId(employee.getEmployee_id());
         model.addAttribute("tasklist", taskList);
 //        if (project != null) {
@@ -73,4 +74,25 @@ public class ProjectController {
 
         return "worker-overview";
     }
+
+    @GetMapping("/archived-project-overview")
+    public String showArchivedProjects(Model model) throws Errorhandling {
+        List<Project> archivedProjects = projectService.getArchivedProjects(); // hent arkiverede projekter
+        model.addAttribute("archivedProjects", archivedProjects); // Tilføj til model
+        return "archived-project-overview";
+    }
+
+
+    @PostMapping("/archive-project")
+    public String archiveProjectOverview(@RequestParam("projectName") String projectName, HttpSession session, Model model) throws Errorhandling {
+        Employee employee = (Employee) session.getAttribute("employee");
+        int projectId = projectService.getProjectIdByProjectName(projectName);
+
+        //Arkiver
+        projectService.archiveProject(projectId);
+
+        model.addAttribute("Message", "idk");
+        return "archived-project-overview";
+    }
+
 }

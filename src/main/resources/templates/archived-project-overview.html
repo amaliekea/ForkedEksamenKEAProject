@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<link th:href="@{/main.css}" rel="stylesheet">
+<head>
+    <meta charset="UTF-8">
+    <title>Archived Projects</title>
+</head>
+<body>
+<h1>Archived Projects:</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Project Name</th>
+        <th>Budget</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterere over arkiverede projekter-->
+    <tr th:each="project : ${archivedProjects}">
+        <td th:text="${project.project_name}"></td>
+        <td th:text="${project.budget}"></td>
+
+    </tr>
+
+    </tbody>
+</table>
+
+
+
+<form action="/project-leader-overview" method="get">
+    <button type="submit">Back to project overview</button>
+</form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
+    <tr th:each="project : ${archivedProjects}">
+        <td th:text="${project.project_name}">Project Name</td>
+        <td th:text="${project.budget}">Budget</td>
+        <td th:text="${project.project_description}">Description</td>
+    </tr>
+    </tbody>
+</table>
+
+Tilbage til oversigt
+<form action="/project-leader-overview" method="get">
+    <button type="submit">Back to project overview</button>
+</form>
+</body>
+--->

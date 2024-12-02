@@ -1,5 +1,6 @@
 package org.example.eksamenkea.repository;
 
+import org.apache.tomcat.jni.Pool;
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.repository.interfaces.IProjectRepository;
@@ -139,20 +140,50 @@ public class ProjectRepository implements IProjectRepository {
         }
         return project;
     }
-    //DELETE-----------------------------------------------------------------------
+
     @Override
-    public void archiveProject(int projectId) throws Errorhandling{
-        String query ="UPDATE project SET is_archived = TRUE WHERE project_id = ?";
+    public List<Project> getArchivedProjects() throws Errorhandling{
+        List<Project> archivedProjects = new ArrayList<>();
+        String query="SELECT * FROM project WHERE is_archived = TRUE";
+
         try(Connection connection = ConnectionManager.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, projectId);
-            int rowsAffected = preparedStatement.executeUpdate();
-            if(rowsAffected == 0){
-                throw new Errorhandling("no project found with project id: " + projectId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()){
+                archivedProjects.add(new Project(
+                        resultSet.getInt("project_id"),
+                        resultSet.getString("project_name"),
+                        resultSet.getDouble("budget"),
+                        resultSet.getString("project_description"),
+                        resultSet.getInt("employee_id"),
+                        resultSet.getInt("material_cost"),
+                        resultSet.getInt("employee_cost")
+                ));
             }
         } catch (SQLException e) {
-            throw new Errorhandling(("Failed to archive project: " + e.getMessage()));
+            throw new Errorhandling("Failed to get any archievd projects: " + e.getMessage());
+        }
+        return archivedProjects;
+
+
+    }
+    //DELETE-----------------------------------------------------------------------
+    @Override
+    public void archiveProject(int projectId) throws Errorhandling {
+        String query = "UPDATE project SET is_archived = TRUE WHERE project_id = ?";
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, projectId);
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected == 0) {
+                throw new Errorhandling("No project found with project ID: " + projectId);
+            }
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to archive project: " + e.getMessage());
         }
     }
+
 
 }
