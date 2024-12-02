@@ -25,8 +25,6 @@ public class ProjectService {
         return projectRepository.getProjectsByEmployeeId(employeeId);
 
     }
-
-
     public Project getWorkerProjectFromEmployeeId(int employeeId) throws Errorhandling {
         return projectRepository.getWorkerProjectFromEmployeeId(employeeId);
     }
