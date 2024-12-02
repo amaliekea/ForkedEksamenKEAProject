@@ -197,13 +197,22 @@ public class TaskRepository implements ITaskRepository {
     //UPDATE------------------------------------------------------------------------------------
     @Override
     public void updateTask(Task task) throws Errorhandling {
-        String updateSql = "UPDATE task SET status = ? WHERE task_id = ?";
-        try {
-            Connection connection = ConnectionManager.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(updateSql);
+        String updateSql = "UPDATE task SET status = ?, actual_hours = ? WHERE task_id = ?";
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(updateSql)) {
             preparedStatement.setString(1, task.getStatus().name());
-            preparedStatement.setInt(2, task.getTask_id());
-            preparedStatement.executeUpdate();
+            preparedStatement.setInt(2, task.getActual_hours());
+            preparedStatement.setInt(3, task.getTask_id());
+
+            // Log SQL-forespørgslen for debugging
+            System.out.println("Executing SQL: " + preparedStatement.toString());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            System.out.println("Rows affected: " + rowsAffected);
+
+            if (rowsAffected == 0) {
+                throw new Errorhandling("No rows were updated. Check if task_id exists.");
+            }
         } catch (SQLException e) {
             throw new Errorhandling("Failed to update task: " + e.getMessage());
         }

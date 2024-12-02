@@ -2,7 +2,7 @@
 INSERT INTO employee (email, password, role, employee_rate, max_hours) VALUES
                                                                            ('ama', '123', 'PROJECTLEADER', 50, 40), -- Projektleder 1
                                                                            ('zuzu', '1234', 'PROJECTLEADER', 20, 35), -- Projektleder 2
-                                                                           ('worker1@example.com', 'password123', 'WORKER', 25, 30), -- Arbejder 1
+                                                                           ('worker', '123', 'WORKER', 25, 30), -- Arbejder 1
                                                                            ('worker2@example.com', 'password456', 'WORKER', 30, 25); -- Arbejder 2
 
 -- Indsæt data i Project-tabellen
