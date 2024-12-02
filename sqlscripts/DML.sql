@@ -5,12 +5,12 @@ VALUES ('ama', '123', 'PROJECTLEADER', 50, 40),   -- Projektleder 1
        ('worker', '123', 'WORKER', 25, 30),       -- Arbejder 1
        ('worker2@example.com', 'password456', 'WORKER', 30, 25); -- Arbejder 2
 
-INSERT INTO project (project_name, budget, project_description, employee_id, material_cost, employee_cost, is_archived)
-VALUES ('Project Alpha', 100000, 'Alpha description', 1, 2000.00, 5000.00, FALSE), -- Aktivt projekt
-       ('Project Beta', 50000, 'Beta description', 2, 1500.00, 3000.00, FALSE),    -- Aktivt projekt
-       ('Project Gamma', 75000, 'Gamma description', 1, 1000.00, 4000.00, False),
-       ('Project Delta', 60000, 'Delta description', 2, 1200.00, 2500.00, TRUE);
--- Arkiveret projekt
+-- Indsæt data i Project-tabellen
+INSERT INTO project (project_name, budget, project_description, employee_id, employee_cost, is_archived)
+VALUES ('Project Alpha', 100000, 'Alpha description', 1, 5000.00, FALSE), -- Aktivt projekt
+       ('Project Beta', 50000, 'Beta description', 2, 3000.00, FALSE),    -- Aktivt projekt
+       ('Project Gamma', 75000, 'Gamma description', 1, 4000.00, FALSE),
+       ('Project Delta', 60000, 'Delta description', 2, 2500.00, TRUE);   -- Arkiveret projekt
 
 -- Indsæt data i Subproject-tabellen
 INSERT INTO subproject (subproject_name, subproject_description, project_id, is_archived)
@@ -20,6 +20,7 @@ VALUES ('Alpha Subproject A', 'Alpha A desc', 1, FALSE),
        ('Zuzu Subproject A', 'Description for Zuzu Subproject A', 3, FALSE),
        ('Zuzu Subproject B', 'Description for Zuzu Subproject B', 3, FALSE);
 
+-- Indsæt data i Task-tabellen
 INSERT INTO task (task_name, start_date, end_date, status, employee_id, actual_hours, estimated_hours, subproject_id,
                   is_archived)
 VALUES ('Task 1', '2024-11-01', '2024-11-05', 'INPROGRESS', 3, 5, 10, 1, FALSE),   -- Tildeler medarbejder med ID 3

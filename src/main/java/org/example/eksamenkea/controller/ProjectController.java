@@ -81,6 +81,10 @@ public class ProjectController {
     @GetMapping("/archived-project-overview")
     public String showArchivedProjects(Model model) throws Errorhandling {
         List<Project> archivedProjects = projectService.getArchivedProjects(); // hent arkiverede projekter
+        for (Project project : archivedProjects) {
+            int employeeCost = projectService.calculateEmployeeCost(project); // Beregn medarbejderomkostninger
+            project.setEmployee_cost(employeeCost); // Sæt omkostningerne på projektet
+        }
         model.addAttribute("archivedProjects", archivedProjects); // Tilføj til model
         return "archived-project-overview";
     }
