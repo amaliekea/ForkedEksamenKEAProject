@@ -55,6 +55,7 @@ public class ProjectController {
         return "redirect:/project-leader-overview";
     }
 
+
     @GetMapping("/worker-overview")
     public String showWorkerOverview(HttpSession session, Model model) throws Errorhandling {
         Employee employee = (Employee) session.getAttribute("employee");
@@ -63,18 +64,40 @@ public class ProjectController {
 
         return "worker-overview";
     }
-    @GetMapping("/{projectName}/edit-project")
-    public String getprojectToEdit(@PathVariable String projectName, Model model) throws Errorhandling {
-     int projectId = projectService.getProjectIdByProjectName(projectName);
-     Project project = projectService.getProjectFromProjectId(projectId);
-     model.addAttribute("project", project);
-        return "edit-project";
+@GetMapping("/{projectName}/edit-project")
+public String getprojectToEdit(@PathVariable String projectName, Model model) throws Errorhandling {
+    int projectId = projectService.getProjectIdByProjectName(projectName);
+    Project project = projectService.getProjectFromProjectId(projectId);
+    model.addAttribute("project", project);
+    return "edit-project";
+}
 
-    }
+@PostMapping("/edit-project")
+public String editProject(@ModelAttribute Project project) throws Errorhandling {
+    projectService.updateProject(project);
+    return "redirect:/project-leader-subproject-overview?projectName=" + project.getProject_name();
+}
 
-    @PostMapping("/edit-project")
-    public String editProject(@ModelAttribute Project project) throws Errorhandling {
-        projectService.updateProject(project);
-        return "redirect:/project-leader-subproject-overview?projectName=" + project.getProject_name() ;
-    }
+@GetMapping("/archived-project-overview")
+public String showArchivedProjects(Model model) throws Errorhandling {
+    List<Project> archivedProjects = projectService.getArchivedProjects(); // hent arkiverede projekter
+    model.addAttribute("archivedProjects", archivedProjects); // Tilføj til model
+    return "archived-project-overview";
+}
+
+@PostMapping("/archive-project")
+public String archiveProjectOverview(@RequestParam("projectName") String projectName, HttpSession session, Model model) throws Errorhandling {
+    Employee employee = (Employee) session.getAttribute("employee");
+    int projectId = projectService.getProjectIdByProjectName(projectName);
+
+    // Arkiver
+    projectService.archiveProject(projectId);
+
+    // Refresh listen af aktive projekter
+    List<Project> projects = projectService.getAllProjectsByEmployeeId(employee.getEmployee_id());
+    model.addAttribute("projects", projects);
+
+    return "project-leader-overview";
+}
+
 }

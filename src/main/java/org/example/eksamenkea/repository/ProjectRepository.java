@@ -1,5 +1,6 @@
 package org.example.eksamenkea.repository;
 
+import org.apache.tomcat.jni.Pool;
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.repository.interfaces.IProjectRepository;
@@ -37,7 +38,7 @@ public class ProjectRepository implements IProjectRepository {
     @Override
     public List<Project> getProjectsByEmployeeId(int employeeId) throws Errorhandling {
         List<Project> projects = new ArrayList<>();
-        String query = "SELECT * FROM project WHERE employee_id = ?";
+        String query = "SELECT * FROM project WHERE employee_id = ? AND is_archived = FALSE";
 
         try (Connection connection = ConnectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -141,6 +142,7 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
+
     public Project getProjectFromProjectId(int projectId) throws Errorhandling {
         Project project = null;
         String query = "SELECT * FROM project WHERE project_id = ?";
@@ -186,5 +188,77 @@ public class ProjectRepository implements IProjectRepository {
             throw new Errorhandling("Failed to update project: " + e.getMessage());
         }
     }
+
+
+    public List<Project> getArchivedProjects() throws Errorhandling {
+        List<Project> archivedProjects = new ArrayList<>();
+        String query = "SELECT * FROM project WHERE is_archived = TRUE";
+
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                archivedProjects.add(new Project(
+                        resultSet.getInt("project_id"),
+                        resultSet.getString("project_name"),
+                        resultSet.getDouble("budget"),
+                        resultSet.getString("project_description"),
+                        resultSet.getInt("employee_id"),
+                        resultSet.getInt("material_cost"),
+                        resultSet.getInt("employee_cost")
+                ));
+            }
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to get any archievd projects: " + e.getMessage());
+        }
+        return archivedProjects;
+
+
+    }
+
+    //DELETE-----------------------------------------------------------------------
+    @Override
+    public void archiveProject(int projectId) throws Errorhandling {
+        String archiveProjectQuery = "UPDATE project SET is_archived = TRUE WHERE project_id = ?";
+        String archiveSubprojectQuery = "UPDATE subproject SET is_archived = TRUE WHERE project_id = ?";
+        String archiveTaskQuery = "UPDATE task t " +
+                "JOIN subproject sp ON t.subproject_id = sp.subproject_id " +
+                "SET t.is_archived = TRUE " +
+                "WHERE sp.project_id = ?";
+
+        try (Connection connection = ConnectionManager.getConnection()) {
+            connection.setAutoCommit(false); // Start transaktion
+
+            try (PreparedStatement projectStmt = connection.prepareStatement(archiveProjectQuery);
+                 PreparedStatement subprojectStmt = connection.prepareStatement(archiveSubprojectQuery);
+                 PreparedStatement taskStmt = connection.prepareStatement(archiveTaskQuery)) {
+
+                // Arkiver projekt
+                projectStmt.setInt(1, projectId);
+                int projectRows = projectStmt.executeUpdate();
+                if (projectRows == 0) {
+                    throw new Errorhandling("No project found with ID: " + projectId);
+                }
+
+                // Arkiver tilknyttede subprojekter
+                subprojectStmt.setInt(1, projectId);
+                subprojectStmt.executeUpdate();
+
+                // Arkiver tilknyttede tasks
+                taskStmt.setInt(1, projectId);
+                taskStmt.executeUpdate();
+
+                connection.commit(); // Udfør transaktionen
+            } catch (SQLException e) {
+                connection.rollback(); // Rul tilbage ved fejl
+                throw new Errorhandling("Failed to archive project and related data: " + e.getMessage());
+            }
+        } catch (SQLException e) {
+            throw new Errorhandling("Database error during archiving: " + e.getMessage());
+        }
+    }
+
+
 
 }
