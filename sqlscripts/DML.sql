@@ -22,9 +22,3 @@ VALUES
     ('Task 1', '2024-11-01', '2024-11-05', 'INPROGRESS', 3, 5, 10, 1), -- Tildeler medarbejder med ID 3
     ('Task 2', '2024-11-02', '2024-11-06', 'NOTSTARTED', 4, 0, 20, 2), -- Tildeler medarbejder med ID 4
     ('Task 3', '2024-11-03', '2024-11-07', 'COMPLETE', NULL, 15, 15, 3); -- Ingen medarbejder tildelt
-
--- Indsæt data i Employee_Task-tabellen
-INSERT INTO employee_task (employee_id, task_id) VALUES
-                                                     (3, 1), -- Arbejder 1 til Task 1
-                                                     (4, 2), -- Arbejder 2 til Task 2
-                                                     (3, 3); -- Arbejder 1 til Task 3
