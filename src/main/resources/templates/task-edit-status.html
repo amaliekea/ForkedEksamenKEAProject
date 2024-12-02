@@ -29,7 +29,7 @@
                 <input type="hidden" name="estimated_hours" th:value="${task.estimated_hours}" />
 
                 <!--<input type="hidden" name="actual_hours" th:value="${task.actual_hours}" />-->
-
+                <label for="actual_hours">Insert used hours on task:</label>
                 <input id="actual_hours" class="form-control"
                        type="number"
                        th:field="*{actual_hours}"

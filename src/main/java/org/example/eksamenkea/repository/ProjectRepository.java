@@ -1,7 +1,9 @@
 package org.example.eksamenkea.repository;
 
+import org.example.eksamenkea.model.Employee;
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.Subproject;
+import org.example.eksamenkea.model.Task;
 import org.example.eksamenkea.repository.interfaces.IProjectRepository;
 import org.example.eksamenkea.service.Errorhandling;
 import org.example.eksamenkea.util.ConnectionManager;
@@ -9,10 +11,19 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Repository("IPROJECTREPOSITORY")
 public class ProjectRepository implements IProjectRepository {
+    private final TaskRepository taskRepository;
+    private final EmployeeRepository employeeRepository;
+
+    public ProjectRepository(TaskRepository taskRepository, EmployeeRepository employeeRepository) {
+        this.taskRepository = taskRepository;
+        this.employeeRepository = employeeRepository;
+    }
 
     // CREATE------------------------------------------------------------------------------
     @Override
@@ -52,8 +63,7 @@ public class ProjectRepository implements IProjectRepository {
                             resultSet.getDouble("budget"),
                             resultSet.getString("project_description"),
                             resultSet.getInt("employee_id"),
-                            resultSet.getInt("material_cost"),
-                            resultSet.getInt("employee_cost")
+                            resultSet.getInt("material_cost")
                     ));
                 }
             }
@@ -129,8 +139,7 @@ public class ProjectRepository implements IProjectRepository {
                             resultSet.getDouble("budget"),
                             resultSet.getString("project_description"),
                             resultSet.getInt("employee_id"),
-                            resultSet.getInt("material_cost"),// Rettet til double
-                            resultSet.getInt("employee_cost") // Rettet til double
+                            resultSet.getInt("material_cost")
                     );
                 }
             }
@@ -140,4 +149,36 @@ public class ProjectRepository implements IProjectRepository {
         return project;
     }
 
+    @Override
+    public int calculateEmployeeCost(Project project) throws Errorhandling {
+        //rate * actualhours
+        int employeeCost = 0;
+        List<Task> allProjectTasks = taskRepository.getTasksByProjectId(project.getProject_id());
+        Set<Employee> allEmployeeForProject = getAllEmployeeForProject(project.getProject_id());
+        HashSet<Task> employeeTaskSet = new HashSet<>(allProjectTasks); // Konvertering af listen til et HashSet da vi ikke ønsker duplicates
+        for (Task task : allProjectTasks) {
+            for (Employee employee : allEmployeeForProject) {
+                if (task.getEmployee_id() == employee.getEmployee_id()) {
+                    employeeCost += employee.getEmployee_rate()+task.getActual_hours();
+                }
+            }
+        }
+        return employeeCost;
+    }
+
+    @Override
+    public Set<Employee> getAllEmployeeForProject(int projectId) throws Errorhandling {
+        Set<Employee> employeeInProject = new HashSet<>();
+        List<Task> projectTasks = taskRepository.getTasksByProjectId(projectId);
+        List<Employee> getAllWorker = employeeRepository.getAllWorkers();
+
+        for (Employee employee : getAllWorker) {
+            for (Task task : projectTasks) {
+                if (employee.getEmployee_id() == task.getEmployee_id()) {
+                    employeeInProject.add(employee);
+                }
+            }
+        }
+        return employeeInProject;
+    }
 }

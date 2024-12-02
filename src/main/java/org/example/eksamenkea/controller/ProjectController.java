@@ -28,6 +28,10 @@ public class ProjectController {
     public String showProjectLeaderOverview(HttpSession session, Model model) throws Errorhandling {
         Employee employee = (Employee) session.getAttribute("employee");
         List<Project> projects = projectService.getAllProjectsByEmployeeId(employee.getEmployee_id());  // Hent projekter tilknyttet projektlederen
+        for (Project project : projects) {
+            int employeeCost = projectService.calculateEmployeeCost(project); // Beregn medarbejderomkostninger
+            project.setEmployee_cost(employeeCost); // Sæt omkostningerne på projektet
+        }
         model.addAttribute("projects", projects); // Tilføj projekter til modellen, så de kan vises i HTML'en
         return "project-leader-overview";
     }
