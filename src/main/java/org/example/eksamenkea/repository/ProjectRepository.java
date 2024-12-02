@@ -1,20 +1,14 @@
 package org.example.eksamenkea.repository;
 
-import org.apache.tomcat.jni.Pool;
-import org.example.eksamenkea.model.Employee;
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.Subproject;
-import org.example.eksamenkea.model.Task;
 import org.example.eksamenkea.repository.interfaces.IProjectRepository;
 import org.example.eksamenkea.service.Errorhandling;
 import org.example.eksamenkea.util.ConnectionManager;
 import org.springframework.stereotype.Repository;
-
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Repository("IPROJECTREPOSITORY")
 public class ProjectRepository implements IProjectRepository {
