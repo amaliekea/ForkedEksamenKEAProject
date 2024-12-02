@@ -30,6 +30,10 @@
             <input type="hidden" name="projectName" th:value="${project.project_name}" />
             <button type="submit">See subprojects</button>
         </form>
+        <form th:action="@{'/' + ${project.project_name} + '/edit-project'}" method="get">
+            <input type="hidden" name="projectName" th:value="${project.project_name}"/>
+            <button type="submit">Edit Project</button>
+        </form>
     </td>
     </tr>
 

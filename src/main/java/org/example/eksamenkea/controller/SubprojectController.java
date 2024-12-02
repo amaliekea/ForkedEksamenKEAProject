@@ -20,7 +20,7 @@ public class SubprojectController {
         this.projectService = projectService;
     }
 
-    @GetMapping("/{subprojectName}/edit")
+    @GetMapping("/{subprojectName}/edit-subproject")
     public String getSubprojectToEdit(@PathVariable String subprojectName, Model model) throws Errorhandling {
         int subprojectId = subprojectService.getSubprojectIdBySubprojectName(subprojectName);
        Subproject subproject = subprojectService.getSubprojectBySubprojectId(subprojectId);

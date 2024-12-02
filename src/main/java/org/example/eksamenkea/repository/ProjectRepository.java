@@ -168,5 +168,23 @@ public class ProjectRepository implements IProjectRepository {
         }
         return project;
     }
+    @Override
+    public void updateProject(Project project) throws Errorhandling {
+        String sqlAddProject = "UPDATE project SET project_name = ?, budget = ?, project_description = ?, employee_id = ?, material_cost = ?, employee_cost = ? WHERE project_id = ?";
+        try (Connection con = ConnectionManager.getConnection();
+             PreparedStatement statement = con.prepareStatement(sqlAddProject)) {
+
+            statement.setString(1, project.getProject_name());
+            statement.setDouble(2, project.getBudget());
+            statement.setString(3, project.getProject_description());
+            statement.setInt(4, project.getEmployee_id());
+            statement.setDouble(5, project.getMaterial_cost());
+            statement.setDouble(6, project.getEmployee_cost());
+            statement.setInt(7, project.getProject_id());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to update project: " + e.getMessage());
+        }
+    }
 
 }

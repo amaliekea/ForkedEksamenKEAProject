@@ -7,11 +7,9 @@ import org.example.eksamenkea.service.ProjectService;
 import org.example.eksamenkea.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.http.HttpHeaders;
 import java.util.List;
 
 @Controller
@@ -64,5 +62,19 @@ public class ProjectController {
         model.addAttribute("tasklist", taskList);
 
         return "worker-overview";
+    }
+    @GetMapping("/{projectName}/edit-project")
+    public String getprojectToEdit(@PathVariable String projectName, Model model) throws Errorhandling {
+     int projectId = projectService.getProjectIdByProjectName(projectName);
+     Project project = projectService.getProjectFromProjectId(projectId);
+     model.addAttribute("project", project);
+        return "edit-project";
+
+    }
+
+    @PostMapping("/edit-project")
+    public String editProject(@ModelAttribute Project project) throws Errorhandling {
+        projectService.updateProject(project);
+        return "redirect:/project-leader-subproject-overview?projectName=" + project.getProject_name() ;
     }
 }

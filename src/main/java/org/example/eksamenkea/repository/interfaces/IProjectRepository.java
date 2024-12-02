@@ -20,4 +20,7 @@ public interface IProjectRepository {
 
     Project getProjectFromProjectId(int projectId) throws Errorhandling;
 
+    public void updateProject(Project project) throws Errorhandling;
+
+
     }
