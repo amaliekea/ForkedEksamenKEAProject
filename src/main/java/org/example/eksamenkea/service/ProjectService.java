@@ -18,6 +18,7 @@ public class ProjectService {
     }
 
 
+
     public List<Project> getAllProjectsByEmployeeId(int employeeId) throws Errorhandling {
         return projectRepository.getProjectsByEmployeeId(employeeId);
 
@@ -44,5 +45,13 @@ public class ProjectService {
 
     public int calculateEmployeeCost(Project project) throws Errorhandling {
         return projectRepository.calculateEmployeeCost(project);
+    }
+
+    public void archiveProject(int projectId) throws Errorhandling {
+        projectRepository.archiveProject(projectId);
+    }
+
+    public List<Project> getArchivedProjects() throws Errorhandling{
+        return projectRepository.getArchivedProjects();
     }
 }

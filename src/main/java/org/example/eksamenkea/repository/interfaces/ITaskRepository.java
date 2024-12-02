@@ -24,6 +24,5 @@ public interface ITaskRepository {
 
     void assignWorkerToTask(int taskId, int employeeId) throws Errorhandling;
   
-    void markTaskAsComplete(String taskName, String subprojectName) throws Errorhandling;
 
 }
