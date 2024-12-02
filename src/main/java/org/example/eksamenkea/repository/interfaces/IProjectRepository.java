@@ -33,6 +33,5 @@ public interface IProjectRepository {
 
     void calculateEmployeeCost() throws Errorhandling;
 
-    Set<Employee> getAllEmployeeForProject(int projectId) throws Errorhandling;
 }
 

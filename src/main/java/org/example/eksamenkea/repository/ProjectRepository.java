@@ -300,37 +300,4 @@ public class ProjectRepository implements IProjectRepository {
             throw new Errorhandling("Failed to calculate employee cost: " + e.getMessage());
         }
     }
-
-
-
-        //rate * actualhours
-//        int employeeCost = 0;
-//        List<Task> allProjectTasks = taskRepository.getTasksByProjectId(project.getProject_id());
-//        Set<Employee> allEmployeeForProject = getAllEmployeeForProject(project.getProject_id());
-//        HashSet<Task> employeeTaskSet = new HashSet<>(allProjectTasks); // Konvertering af listen til et HashSet da vi ikke ønsker duplicates
-//        for (Task task : allProjectTasks) {
-//            for (Employee employee : allEmployeeForProject) {
-//                if (task.getEmployee_id() == employee.getEmployee_id()) {
-//                    employeeCost += employee.getEmployee_rate()*task.getActual_hours();
-//                }
-//            }
-//        }
-//        return employeeCost;
-
-
-    @Override
-    public Set<Employee> getAllEmployeeForProject(int projectId) throws Errorhandling {
-        Set<Employee> employeeInProject = new HashSet<>();
-        List<Task> projectTasks = taskRepository.getTasksByProjectId(projectId);
-        List<Employee> getAllWorker = employeeRepository.getAllWorkers();
-
-        for (Employee employee : getAllWorker) {
-            for (Task task : projectTasks) {
-                if (employee.getEmployee_id() == task.getEmployee_id()) {
-                    employeeInProject.add(employee);
-                }
-            }
-        }
-        return employeeInProject;
-    }
 }
