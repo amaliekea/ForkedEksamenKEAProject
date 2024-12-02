@@ -42,4 +42,8 @@ public class ProjectService {
         public void addProject(Project project) throws Errorhandling {
          projectRepository.addProject(project);
     }
-}
+    public Project getProjectFromProjectId(int projectId) throws Errorhandling {
+        return projectRepository.getProjectFromProjectId(projectId);
+    }
+
+    }

@@ -129,13 +129,42 @@ public class ProjectRepository implements IProjectRepository {
                             resultSet.getDouble("budget"),
                             resultSet.getString("project_description"),
                             resultSet.getInt("employee_id"),
-                            resultSet.getInt("material_cost"),// Rettet til double
-                            resultSet.getInt("employee_cost") // Rettet til double
+                            resultSet.getInt("material_cost"),
+                            resultSet.getInt("employee_cost")
                     );
                 }
             }
         } catch (SQLException e) {
             throw new Errorhandling("Failed to fetch project for employee ID " + employeeId + ": " + e.getMessage());
+        }
+        return project;
+    }
+
+    @Override
+    public Project getProjectFromProjectId(int projectId) throws Errorhandling {
+        Project project = null;
+        String query = "SELECT * FROM project WHERE project_id = ?";
+
+        try (Connection con = ConnectionManager.getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, projectId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    project = new Project(
+                            resultSet.getInt("project_id"),
+                            resultSet.getString("project_name"),
+                            resultSet.getDouble("budget"),
+                            resultSet.getString("project_description"),
+                            resultSet.getInt("employee_id"),
+                            resultSet.getInt("material_cost"),
+                            resultSet.getInt("employee_cost")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to fetch project for project ID " + projectId + ": " + e.getMessage());
         }
         return project;
     }

@@ -17,4 +17,7 @@ public interface IProjectRepository {
     public Project getWorkerProjectFromEmployeeId(int employeeId) throws Errorhandling;
 
     int getProjectIdByProjectName(String projectName) throws Errorhandling;
-}
+
+    Project getProjectFromProjectId(int projectId) throws Errorhandling;
+
+    }
