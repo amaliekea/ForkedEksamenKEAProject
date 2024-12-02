@@ -23,8 +23,6 @@ public class ProjectService {
         return projectRepository.getProjectsByEmployeeId(employeeId);
 
     }
-
-
     public Project getWorkerProjectFromEmployeeId(int employeeId) throws Errorhandling {
         return projectRepository.getWorkerProjectFromEmployeeId(employeeId);
     }
@@ -54,4 +52,11 @@ public class ProjectService {
     public List<Project> getArchivedProjects() throws Errorhandling{
         return projectRepository.getArchivedProjects();
     }
-}
+    public Project getProjectFromProjectId(int projectId) throws Errorhandling {
+        return projectRepository.getProjectFromProjectId(projectId);
+    }
+    public void updateProject(Project project) throws Errorhandling {
+        projectRepository.updateProject(project);
+    }
+
+    }

@@ -36,6 +36,51 @@ public class SubprojectRepository implements ISubprojectRepository {
             throw new Errorhandling("Failed to get subproject ID by subproject name: " + e.getMessage());
         }
     }
+// Lavet af Malthe
+    public Subproject getSubprojectBySubprojectId(int subprojectId) throws Errorhandling {
+        Subproject subproject = null;
+        String query = "SELECT * FROM subproject WHERE subproject_id = ?;";
+
+        try (Connection con = ConnectionManager.getConnection();
+             PreparedStatement preStat = con.prepareStatement(query)) {
+
+            preStat.setInt(1, subprojectId);
+
+            try (ResultSet resultSet = preStat.executeQuery()) {
+                if (resultSet.next()) {
+                    subproject = new Subproject(
+                            resultSet.getInt("subproject_id"),
+                            resultSet.getString("subproject_name"),
+                            resultSet.getString("subproject_description"),
+                            resultSet.getInt("project_id")
+                    );
+                }
+            }
+            return subproject;
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to get subproject by subproject ID: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void updateSubproject(Subproject subproject) throws Errorhandling {
+        String query = "UPDATE subproject SET subproject_name = ?, subproject_description = ? , project_id = ? WHERE subproject_id = ?";
+
+        try (Connection con = ConnectionManager.getConnection();
+        PreparedStatement preStat = con.prepareStatement(query)){
+
+            preStat.setString(1, subproject.getSubproject_name());
+            preStat.setString(2, subproject.getSubproject_description());
+            preStat.setInt(3, subproject.getSubproject_id());
+            preStat.setInt(4, subproject.getProject_id());
+
+            preStat.executeUpdate();
+            System.out.println("Updated subproject");
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to update subproject " + e.getMessage());
+        }
+    }
+
 
     @Override
     public Set<Subproject> getAllSubProjectsByProjectId(int projectId) throws Errorhandling {
