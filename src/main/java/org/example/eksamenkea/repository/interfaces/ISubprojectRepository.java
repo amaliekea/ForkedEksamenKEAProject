@@ -13,7 +13,6 @@ public interface ISubprojectRepository {
 
     Set<Subproject> getAllSubProjectsByProjectId(int projectId) throws Errorhandling; //måske slettes
 
-
     Subproject getSubprojectBySubprojectId(int subprojectId) throws Errorhandling;
 
     void updateSubproject(Subproject subproject) throws Errorhandling;

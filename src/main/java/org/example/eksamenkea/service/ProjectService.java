@@ -18,7 +18,6 @@ public class ProjectService {
     }
 
 
-
     public List<Project> getAllProjectsByEmployeeId(int employeeId) throws Errorhandling {
         return projectRepository.getProjectsByEmployeeId(employeeId);
 

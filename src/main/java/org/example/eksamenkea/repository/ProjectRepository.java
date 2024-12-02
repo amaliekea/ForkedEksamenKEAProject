@@ -169,8 +169,7 @@ public class ProjectRepository implements IProjectRepository {
                             resultSet.getDouble("budget"),
                             resultSet.getString("project_description"),
                             resultSet.getInt("employee_id"),
-                            resultSet.getInt("material_cost"),
-                            resultSet.getInt("employee_cost")
+                            resultSet.getInt("material_cost")
                     );
                 }
             }

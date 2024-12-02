@@ -92,12 +92,6 @@ public String editProject(@ModelAttribute Project project) throws Errorhandling 
         model.addAttribute("archivedProjects", archivedProjects); // Tilføj til model
         return "archived-project-overview";
     }
-@GetMapping("/archived-project-overview")
-public String showArchivedProjects(Model model) throws Errorhandling {
-    List<Project> archivedProjects = projectService.getArchivedProjects(); // hent arkiverede projekter
-    model.addAttribute("archivedProjects", archivedProjects); // Tilføj til model
-    return "archived-project-overview";
-}
 
 @PostMapping("/archive-project")
 public String archiveProjectOverview(@RequestParam("projectName") String projectName, HttpSession session, Model model) throws Errorhandling {

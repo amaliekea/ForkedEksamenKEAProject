@@ -26,8 +26,6 @@ public interface IProjectRepository {
     public void updateProject(Project project) throws Errorhandling;
 
 
-    }
-
     void archiveProject(int projectId) throws Errorhandling;
 
     List<Project> getArchivedProjects() throws Errorhandling;
