@@ -36,6 +36,7 @@
                 <button type="submit" th:disabled="${task.status == 'COMPLETE'}">Archive</button>
             </form>
         </td>
+        <!-- Assign worker to task -->
         <td>
             <form th:action="@{/assign-worker}" th:method="post">
                 <input type="hidden" name="taskName" th:value="${task.task_name}" />
@@ -44,7 +45,8 @@
                     <option value="" disabled selected>Select a worker</option>
                     <option th:each="employee : ${employeeList}"
                             th:value="${employee.email}"
-                            th:text="${employee.email}">
+                            th:text="${employee.email}"
+                        th:selected="${task.employee_id == employee.employee_id}">
                     </option>
                 </select>
             </form>

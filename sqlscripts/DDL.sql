@@ -49,13 +49,3 @@ CREATE TABLE task (
                       FOREIGN KEY (subproject_id) REFERENCES subproject(subproject_id),
                       FOREIGN KEY (employee_id) REFERENCES employee(employee_id) -- Definer relationen
 );
-
-
--- Opret Employee_Task tabel (til mange-til-mange forhold mellem Employee og Task)
-CREATE TABLE employee_task (
-                               employee_id INT NOT NULL,
-                               task_id INT NOT NULL,
-                               PRIMARY KEY (employee_id, task_id), -- Kombineret primær nøgle
-                               FOREIGN KEY (employee_id) REFERENCES employee(employee_id),
-                               FOREIGN KEY (task_id) REFERENCES task(task_id)
-);
