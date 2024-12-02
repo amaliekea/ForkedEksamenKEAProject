@@ -278,7 +278,7 @@ public class ProjectRepository implements IProjectRepository {
         for (Task task : allProjectTasks) {
             for (Employee employee : allEmployeeForProject) {
                 if (task.getEmployee_id() == employee.getEmployee_id()) {
-                    employeeCost += employee.getEmployee_rate()+task.getActual_hours();
+                    employeeCost += employee.getEmployee_rate()*task.getActual_hours();
                 }
             }
         }
