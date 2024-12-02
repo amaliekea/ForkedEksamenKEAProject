@@ -31,7 +31,7 @@ public interface IProjectRepository {
     List<Project> getArchivedProjects() throws Errorhandling;
 
 
-    int calculateEmployeeCost(Project project) throws Errorhandling;
+    void calculateEmployeeCost() throws Errorhandling;
 
     Set<Employee> getAllEmployeeForProject(int projectId) throws Errorhandling;
 }

@@ -38,7 +38,7 @@ public class ProjectRepository implements IProjectRepository {
             statement.setString(3, project.getProject_description());
             statement.setInt(4, project.getEmployee_id());
             statement.setDouble(5, project.getMaterial_cost());
-            statement.setDouble(6, project.getEmployee_cost());
+            statement.setDouble(6, 0);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new Errorhandling("Failed to add project: " + e.getMessage());
@@ -64,7 +64,8 @@ public class ProjectRepository implements IProjectRepository {
                             resultSet.getDouble("budget"),
                             resultSet.getString("project_description"),
                             resultSet.getInt("employee_id"),
-                            resultSet.getInt("material_cost")
+                            resultSet.getInt("material_cost"),
+                            resultSet.getInt("employee_cost")
                     ));
                 }
             }
@@ -140,7 +141,8 @@ public class ProjectRepository implements IProjectRepository {
                             resultSet.getDouble("budget"),
                             resultSet.getString("project_description"),
                             resultSet.getInt("employee_id"),
-                            resultSet.getInt("material_cost")
+                            resultSet.getInt("material_cost"),
+                            resultSet.getInt("employee_cost")
                     );
                 }
             }
@@ -169,7 +171,8 @@ public class ProjectRepository implements IProjectRepository {
                             resultSet.getDouble("budget"),
                             resultSet.getString("project_description"),
                             resultSet.getInt("employee_id"),
-                            resultSet.getInt("material_cost")
+                            resultSet.getInt("material_cost"),
+                            resultSet.getInt("employee_cost")
                     );
                 }
             }
@@ -178,6 +181,7 @@ public class ProjectRepository implements IProjectRepository {
         }
         return project;
     }
+
     @Override
     public void updateProject(Project project) throws Errorhandling {
         String sqlAddProject = "UPDATE project SET project_name = ?, budget = ?, project_description = ?, employee_id = ?, material_cost = ?, employee_cost = ? WHERE project_id = ?";
@@ -189,9 +193,10 @@ public class ProjectRepository implements IProjectRepository {
             statement.setString(3, project.getProject_description());
             statement.setInt(4, project.getEmployee_id());
             statement.setDouble(5, project.getMaterial_cost());
-            statement.setDouble(6, project.getEmployee_cost());
+            statement.setDouble(6, 0);
             statement.setInt(7, project.getProject_id());
             statement.executeUpdate();
+
         } catch (SQLException e) {
             throw new Errorhandling("Failed to update project: " + e.getMessage());
         }
@@ -213,7 +218,8 @@ public class ProjectRepository implements IProjectRepository {
                         resultSet.getDouble("budget"),
                         resultSet.getString("project_description"),
                         resultSet.getInt("employee_id"),
-                        resultSet.getInt("material_cost")
+                        resultSet.getInt("material_cost"),
+                        resultSet.getInt("employee_cost")
                 ));
             }
         } catch (SQLException e) {
@@ -267,23 +273,50 @@ public class ProjectRepository implements IProjectRepository {
     }
 
 
-
     @Override
-    public int calculateEmployeeCost(Project project) throws Errorhandling {
-        //rate * actualhours
-        int employeeCost = 0;
-        List<Task> allProjectTasks = taskRepository.getTasksByProjectId(project.getProject_id());
-        Set<Employee> allEmployeeForProject = getAllEmployeeForProject(project.getProject_id());
-        HashSet<Task> employeeTaskSet = new HashSet<>(allProjectTasks); // Konvertering af listen til et HashSet da vi ikke ønsker duplicates
-        for (Task task : allProjectTasks) {
-            for (Employee employee : allEmployeeForProject) {
-                if (task.getEmployee_id() == employee.getEmployee_id()) {
-                    employeeCost += employee.getEmployee_rate()*task.getActual_hours();
-                }
-            }
+    public void calculateEmployeeCost() throws Errorhandling {
+        String createTempTableQuery = "CREATE TEMPORARY TABLE temp_project AS " +
+                "SELECT project.project_id, SUM(task.actual_hours * employee.employee_rate) AS new_employee_cost " +
+                "FROM project " +
+                "JOIN subproject ON project.project_id = subproject.project_id " +
+                "JOIN task ON subproject.subproject_id = task.subproject_id " +
+                "JOIN employee ON task.employee_id = employee.employee_id " +
+                "GROUP BY project.project_id";
+
+        String updateProjectQuery = "UPDATE project " +
+                "JOIN temp_project ON project.project_id = temp_project.project_id " +
+                "SET project.employee_cost = temp_project.new_employee_cost";
+
+        try (Connection connection = ConnectionManager.getConnection();
+             Statement statement = connection.createStatement()) {
+
+            // Opret midlertidig tabel
+            statement.executeUpdate(createTempTableQuery);
+
+            // Opdater employee_cost
+            statement.executeUpdate(updateProjectQuery);
+
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to calculate employee cost: " + e.getMessage());
         }
-        return employeeCost;
     }
+
+
+
+        //rate * actualhours
+//        int employeeCost = 0;
+//        List<Task> allProjectTasks = taskRepository.getTasksByProjectId(project.getProject_id());
+//        Set<Employee> allEmployeeForProject = getAllEmployeeForProject(project.getProject_id());
+//        HashSet<Task> employeeTaskSet = new HashSet<>(allProjectTasks); // Konvertering af listen til et HashSet da vi ikke ønsker duplicates
+//        for (Task task : allProjectTasks) {
+//            for (Employee employee : allEmployeeForProject) {
+//                if (task.getEmployee_id() == employee.getEmployee_id()) {
+//                    employeeCost += employee.getEmployee_rate()*task.getActual_hours();
+//                }
+//            }
+//        }
+//        return employeeCost;
+
 
     @Override
     public Set<Employee> getAllEmployeeForProject(int projectId) throws Errorhandling {

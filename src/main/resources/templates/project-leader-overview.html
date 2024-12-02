@@ -32,8 +32,8 @@
         <td th:text="${project.project_name}"></td>
         <td th:text="${project.project_description}"></td>
         <td th:text="${project.budget}"></td>
-        <td th:text="${project.getEmployee_cost()}"></td>
-        <td th:text="${project.getMaterial_cost()}"></td>
+        <td th:text="${project.employee_cost}"></td>
+        <td th:text="${project.material_cost}"></td>
     <td>
         <!-- Se subprojekter knap -->
         <form action="/project-leader-subproject-overview" method="get">
