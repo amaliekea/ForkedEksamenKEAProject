@@ -15,7 +15,7 @@ public class SubprojectService {
     }
 
 
-    public int getSubprojectIdBySubprojectName(String subprojectName) throws Errorhandling {
+    public int i(String subprojectName) throws Errorhandling {
         return subprojectRepository.getSubprojectIdBySubprojectName(subprojectName);
     }
 }

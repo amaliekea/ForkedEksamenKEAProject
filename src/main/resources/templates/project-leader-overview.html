@@ -18,6 +18,7 @@
     </tr>
     </thead>
     <tbody>
+    <!-- Iteration over projekter -->
     <tr th:if="${#lists.isEmpty(projects)}">
         <td colspan="3">No projects available.</td>
     </tr>
@@ -26,9 +27,14 @@
         <td th:text="${project.budget}"></td>
         <td th:text="${project.project_description}"></td>
     <td>
+        <!-- Se subprojekter knap -->
         <form action="/project-leader-subproject-overview" method="get">
             <input type="hidden" name="projectName" th:value="${project.project_name}" />
             <button type="submit">See subprojects</button>
+        </form>
+        <!-- Arkiver projekt knap -->
+        <form>
+
         </form>
     </td>
     </tr>

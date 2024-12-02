@@ -139,5 +139,20 @@ public class ProjectRepository implements IProjectRepository {
         }
         return project;
     }
+    //DELETE-----------------------------------------------------------------------
+    @Override
+    public void archiveProject(int projectId) throws Errorhandling{
+        String query ="UPDATE project SET is_archived = TRUE WHERE project_id = ?";
+        try(Connection connection = ConnectionManager.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, projectId);
+            int rowsAffected = preparedStatement.executeUpdate();
+            if(rowsAffected == 0){
+                throw new Errorhandling("no project found with project id: " + projectId);
+            }
+        } catch (SQLException e) {
+            throw new Errorhandling(("Failed to archive project: " + e.getMessage()));
+        }
+    }
 
 }
