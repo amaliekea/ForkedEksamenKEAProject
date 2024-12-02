@@ -31,7 +31,6 @@ public class ProjectController {
         model.addAttribute("projects", projects); // Tilføj projekter til modellen, så de kan vises i HTML'en
         return "project-leader-overview";
     }
-
     @GetMapping("/project-leader-subproject-overview") // Amalie
     public String showProjectLeaderSubprojectOverview(@RequestParam("projectName") String projectName, HttpSession session, Model model) throws Errorhandling {
         int projectId = projectService.getProjectIdByProjectName(projectName);  // Hent projectId baseret på projectName
