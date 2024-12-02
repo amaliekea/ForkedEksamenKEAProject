@@ -2,8 +2,6 @@ package org.example.eksamenkea.service;
 
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.Subproject;
-import org.example.eksamenkea.repository.ProjectRepository;
-import org.example.eksamenkea.repository.interfaces.IEmployeeRepository;
 import org.example.eksamenkea.repository.interfaces.IProjectRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -24,8 +22,6 @@ public class ProjectService {
         return projectRepository.getProjectsByEmployeeId(employeeId);
 
     }
-
-
     public Project getWorkerProjectFromEmployeeId(int employeeId) throws Errorhandling {
         return projectRepository.getWorkerProjectFromEmployeeId(employeeId);
     }
@@ -44,6 +40,10 @@ public class ProjectService {
         projectRepository.addProject(project);
     }
 
+    public int calculateEmployeeCost(Project project) throws Errorhandling {
+        return projectRepository.calculateEmployeeCost(project);
+    }
+
     public void archiveProject(int projectId) throws Errorhandling {
         projectRepository.archiveProject(projectId);
     }
@@ -51,4 +51,11 @@ public class ProjectService {
     public List<Project> getArchivedProjects() throws Errorhandling{
         return projectRepository.getArchivedProjects();
     }
-}
+    public Project getProjectFromProjectId(int projectId) throws Errorhandling {
+        return projectRepository.getProjectFromProjectId(projectId);
+    }
+    public void updateProject(Project project) throws Errorhandling {
+        projectRepository.updateProject(project);
+    }
+
+    }

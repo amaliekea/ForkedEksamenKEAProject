@@ -14,6 +14,9 @@ public class Subproject {
         this.subproject_description = subproject_description;
         this.project_id = project_id;
     }
+    public Subproject() {
+
+    }
 
     public int getSubproject_id() {
         return subproject_id;
