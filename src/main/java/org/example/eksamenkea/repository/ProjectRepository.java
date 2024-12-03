@@ -1,6 +1,7 @@
 package org.example.eksamenkea.repository;
 
 import org.example.eksamenkea.model.Project;
+import org.example.eksamenkea.model.ProjectEmployeeCostDTO;
 import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.repository.interfaces.IProjectRepository;
 import org.example.eksamenkea.service.Errorhandling;
@@ -281,5 +282,36 @@ public class ProjectRepository implements IProjectRepository {
             throw new Errorhandling("Failed to calculate employee cost: " + e.getMessage());
         }
         return 0;
+    }
+
+    @Override
+    public List<ProjectEmployeeCostDTO> getProjectsDTOByEmployeeId(int employeeId) throws Errorhandling {
+        List<ProjectEmployeeCostDTO> projects = new ArrayList<>();
+        String queryView = "SELECT project.*,SUM(task.actual_hours * employee.employee_rate) AS employee_cost FROM task " +
+                "JOIN subproject ON task.subproject_id = subproject.subproject_id " +
+                "JOIN employee ON task.employee_id = employee.employee_id " +
+                "JOIN project ON subproject.project_id = project.project_id " +
+                "WHERE project.employee_id = ? Group by project.project_id";
+
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement preparedStatement1 = connection.prepareStatement(queryView)) {
+            preparedStatement1.setInt(1, employeeId);
+
+            ResultSet resultSet = preparedStatement1.executeQuery();
+                while (resultSet.next()) {
+                    projects.add(new ProjectEmployeeCostDTO(
+                            resultSet.getInt("project_id"),
+                            resultSet.getString("project_name"),
+                            resultSet.getDouble("budget"),
+                            resultSet.getString("project_description"),
+                            resultSet.getInt("employee_id"),
+                            resultSet.getInt("material_cost"),
+                            resultSet.getInt("employee_cost")
+                    ));
+                }
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to get projects by employee ID: " + e.getMessage());
+        }
+        return projects;
     }
 }
