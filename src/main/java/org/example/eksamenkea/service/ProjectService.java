@@ -1,5 +1,7 @@
 package org.example.eksamenkea.service;
+
 import org.example.eksamenkea.model.Project;
+import org.example.eksamenkea.model.ProjectEmployeeCostDTO;
 import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.repository.interfaces.IProjectRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,10 +19,11 @@ public class ProjectService {
     }
 
 
-    public List<Project> getAllProjectsByEmployeeId(int employeeId) throws Errorhandling {
+    public List<Project> getProjectsByEmployeeId(int employeeId) throws Errorhandling {
         return projectRepository.getProjectsByEmployeeId(employeeId);
 
     }
+
     public Project getWorkerProjectFromEmployeeId(int employeeId) throws Errorhandling {
         return projectRepository.getWorkerProjectFromEmployeeId(employeeId);
     }
@@ -39,22 +42,24 @@ public class ProjectService {
         projectRepository.addProject(project);
     }
 
-    public double calculateEmployeeCost(int projectId) throws Errorhandling {
-    return projectRepository.calculateEmployeeCost(projectId);
-    }
-
     public void archiveProject(int projectId) throws Errorhandling {
         projectRepository.archiveProject(projectId);
     }
 
-    public List<Project> getArchivedProjects() throws Errorhandling{
+    public List<Project> getArchivedProjects() throws Errorhandling {
         return projectRepository.getArchivedProjects();
     }
+
     public Project getProjectFromProjectId(int projectId) throws Errorhandling {
         return projectRepository.getProjectFromProjectId(projectId);
     }
+
     public void updateProject(Project project) throws Errorhandling {
         projectRepository.updateProject(project);
     }
 
+    public List<ProjectEmployeeCostDTO> getProjectsDTOByEmployeeId(int employeeId) throws Errorhandling {
+        return projectRepository.getProjectsDTOByEmployeeId(employeeId);
     }
+
+}
