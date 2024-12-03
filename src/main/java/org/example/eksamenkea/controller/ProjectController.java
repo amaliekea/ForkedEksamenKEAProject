@@ -24,7 +24,7 @@ public class ProjectController {
 
     @GetMapping("/project-leader-overview")
     public String showProjectLeaderOverview(HttpSession session, Model model) throws Errorhandling {
-        projectService.calculateEmployeeCost();
+       //KOM TILBAGE TIL MIG projectService.calculateEmployeeCost();
         Employee employee = (Employee) session.getAttribute("employee");
         List<Project> projects = projectService.getAllProjectsByEmployeeId(employee.getEmployee_id());  // Hent projekter tilknyttet projektlederen
         model.addAttribute("projects", projects); // Tilføj projekter til modellen, så de kan vises i HTML'en
