@@ -24,9 +24,10 @@ public class ProjectController {
 
     @GetMapping("/project-leader-overview")
     public String showProjectLeaderOverview(HttpSession session, Model model) throws Errorhandling {
-       //KOM TILBAGE TIL MIG projectService.calculateEmployeeCost();
+
         Employee employee = (Employee) session.getAttribute("employee");
-        List<Project> projects = projectService.getAllProjectsByEmployeeId(employee.getEmployee_id());  // Hent projekter tilknyttet projektlederen
+        List<ProjectEmployeeCostDTO> projects = projectService.getProjectsDTOByEmployeeId(employee.getEmployee_id()); // Hent projekter tilknyttet projektlederen
+        System.out.println(projects);
         model.addAttribute("projects", projects); // Tilføj projekter til modellen, så de kan vises i HTML'en
         return "project-leader-overview";
     }
@@ -97,7 +98,8 @@ public class ProjectController {
         projectService.archiveProject(projectId);
 
         // Refresh listen af aktive projekter
-        List<Project> projects = projectService.getAllProjectsByEmployeeId(employee.getEmployee_id());
+        List<ProjectEmployeeCostDTO> projects = projectService.getProjectsDTOByEmployeeId(employee.getEmployee_id());
+       // List<Project> projects = projectService.getProjectsByEmployeeId(employee.getEmployee_id());
         model.addAttribute("projects", projects);
 
         return "project-leader-overview";

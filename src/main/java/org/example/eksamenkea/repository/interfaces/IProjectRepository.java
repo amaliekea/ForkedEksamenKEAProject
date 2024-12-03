@@ -2,6 +2,7 @@ package org.example.eksamenkea.repository.interfaces;
 
 import org.example.eksamenkea.model.Employee;
 import org.example.eksamenkea.model.Project;
+import org.example.eksamenkea.model.ProjectEmployeeCostDTO;
 import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.service.Errorhandling;
 
@@ -30,7 +31,7 @@ public interface IProjectRepository {
     List<Project> getArchivedProjects() throws Errorhandling;
 
 
-    public double calculateEmployeeCost(int projectId) throws Errorhandling;
+    public List<ProjectEmployeeCostDTO>getProjectsDTOByEmployeeId(int employeeId) throws Errorhandling;
 
 }
 
