@@ -42,10 +42,6 @@ public class ProjectService {
         projectRepository.addProject(project);
     }
 
-    public double calculateEmployeeCost(int projectId) throws Errorhandling {
-        return projectRepository.calculateEmployeeCost(projectId);
-    }
-
     public void archiveProject(int projectId) throws Errorhandling {
         projectRepository.archiveProject(projectId);
     }
