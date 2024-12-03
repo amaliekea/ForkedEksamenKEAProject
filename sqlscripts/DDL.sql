@@ -52,3 +52,22 @@ CREATE TABLE task (
                       FOREIGN KEY (subproject_id) REFERENCES subproject(subproject_id),
                       FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
 );
+create view spend as
+select project.project_id, sum(task.actual_hours*employee.employee_rate) spend
+from project, subproject, task, employee
+where project.project_id=subproject.project_id
+  and subproject.subproject_id = task.subproject_id
+  and task.employee_id = employee.employee_id
+group by project_id;
+
+-- Opret en midlertidig tabel med de korrekte værdier
+DROP TABLE IF EXISTS temp_project;
+
+CREATE TEMPORARY TABLE temp_project AS
+SELECT project.project_id, spend.spend AS new_employee_cost
+FROM project
+         JOIN spend ON project.project_id = spend.project_id;
+
+UPDATE project
+    JOIN temp_project ON project.project_id = temp_project.project_id
+    SET project.employee_cost = temp_project.new_employee_cost;

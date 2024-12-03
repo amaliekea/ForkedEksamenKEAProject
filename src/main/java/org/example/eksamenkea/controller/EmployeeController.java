@@ -1,5 +1,4 @@
 package org.example.eksamenkea.controller;
-
 import jakarta.servlet.http.HttpSession;
 import org.example.eksamenkea.model.Role;
 import org.example.eksamenkea.model.Employee;

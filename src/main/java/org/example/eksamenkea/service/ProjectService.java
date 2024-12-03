@@ -1,5 +1,4 @@
 package org.example.eksamenkea.service;
-
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.repository.interfaces.IProjectRepository;
@@ -40,8 +39,8 @@ public class ProjectService {
         projectRepository.addProject(project);
     }
 
-    public int calculateEmployeeCost(Project project) throws Errorhandling {
-        return projectRepository.calculateEmployeeCost(project);
+    public void calculateEmployeeCost() throws Errorhandling {
+     projectRepository.calculateEmployeeCost();
     }
 
     public void archiveProject(int projectId) throws Errorhandling {

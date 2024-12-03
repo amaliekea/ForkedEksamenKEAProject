@@ -6,7 +6,6 @@ import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.service.Errorhandling;
 
 import java.util.List;
-import java.util.Set;
 
 public interface IProjectRepository {
 
@@ -31,8 +30,7 @@ public interface IProjectRepository {
     List<Project> getArchivedProjects() throws Errorhandling;
 
 
-    int calculateEmployeeCost(Project project) throws Errorhandling;
+    void calculateEmployeeCost() throws Errorhandling;
 
-    Set<Employee> getAllEmployeeForProject(int projectId) throws Errorhandling;
 }
 
