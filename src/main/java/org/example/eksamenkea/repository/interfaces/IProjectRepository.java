@@ -31,8 +31,6 @@ public interface IProjectRepository {
     List<Project> getArchivedProjects() throws Errorhandling;
 
 
-    public double calculateEmployeeCost(int projectId) throws Errorhandling;
-
     public List<ProjectEmployeeCostDTO>getProjectsDTOByEmployeeId(int employeeId) throws Errorhandling;
 
 }

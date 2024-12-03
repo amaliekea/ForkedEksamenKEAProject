@@ -1,5 +1,4 @@
 package org.example.eksamenkea.repository;
-
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.ProjectEmployeeCostDTO;
 import org.example.eksamenkea.model.Subproject;
@@ -24,7 +23,8 @@ public class ProjectRepository implements IProjectRepository {
     // CREATE------------------------------------------------------------------------------
     @Override
     public void addProject(Project project) throws Errorhandling {
-        String sqlAddProject = "INSERT INTO project(project_name, budget, project_description, employee_id, material_cost) VALUES (?, ?, ?, ?, ?)";
+        String sqlAddProject = "INSERT INTO project(project_name, budget, project_description, employee_id, material_cost,is_archived) VALUES (?, ?, ?, ?, ?,?)";
+        System.out.println(project);
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sqlAddProject)) {
 
@@ -33,7 +33,9 @@ public class ProjectRepository implements IProjectRepository {
             statement.setString(3, project.getProject_description());
             statement.setInt(4, project.getEmployee_id());
             statement.setDouble(5, project.getMaterial_cost());
+            statement.setBoolean(6, false);
             statement.executeUpdate();
+
         } catch (SQLException e) {
             throw new Errorhandling("Failed to add project: " + e.getMessage());
         }
@@ -145,7 +147,6 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
-
     public Project getProjectFromProjectId(int projectId) throws Errorhandling {
         Project project = null;
         String query = "SELECT * FROM project WHERE project_id = ?";
@@ -261,37 +262,14 @@ public class ProjectRepository implements IProjectRepository {
         }
     }
 
-
-    @Override
-    public double calculateEmployeeCost(int projectId) throws Errorhandling {
-        String query = "SELECT SUM(task.actual_hours * employee.employee_rate) AS cost " +
-                "FROM task " +
-                "JOIN subproject ON task.subproject_id = subproject.subproject_id " +
-                "JOIN employee ON task.employee_id = employee.employee_id " +
-                "WHERE subproject.project_id = ?";
-        try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-
-            statement.setInt(1, projectId);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getDouble("cost");
-                }
-            }
-        } catch (SQLException e) {
-            throw new Errorhandling("Failed to calculate employee cost: " + e.getMessage());
-        }
-        return 0;
-    }
-
     @Override
     public List<ProjectEmployeeCostDTO> getProjectsDTOByEmployeeId(int employeeId) throws Errorhandling {
         List<ProjectEmployeeCostDTO> projects = new ArrayList<>();
-        String queryView = "SELECT project.*,SUM(task.actual_hours * employee.employee_rate) AS employee_cost FROM task " +
-                "JOIN subproject ON task.subproject_id = subproject.subproject_id " +
-                "JOIN employee ON task.employee_id = employee.employee_id " +
-                "JOIN project ON subproject.project_id = project.project_id " +
-                "WHERE project.employee_id = ? Group by project.project_id";
+        String queryView = "SELECT project.*,SUM(task.actual_hours * employee.employee_rate) AS employee_cost FROM project " +
+                "LEFT JOIN subproject ON project.project_id = subproject.project_id " +
+                "LEFT JOIN task ON subproject.subproject_id = task.subproject_id " +
+                "LEFT JOIN employee ON task.employee_id = employee.employee_id " +
+                "WHERE project.employee_id = ? AND project.is_archived = FALSE Group by project.project_id";
 
         try (Connection connection = ConnectionManager.getConnection();
              PreparedStatement preparedStatement1 = connection.prepareStatement(queryView)) {

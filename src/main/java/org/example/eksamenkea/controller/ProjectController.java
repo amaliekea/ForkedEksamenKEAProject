@@ -24,7 +24,7 @@ public class ProjectController {
 
     @GetMapping("/project-leader-overview")
     public String showProjectLeaderOverview(HttpSession session, Model model) throws Errorhandling {
-        //KOM TILBAGE TIL MIG projectService.calculateEmployeeCost();
+
         Employee employee = (Employee) session.getAttribute("employee");
         List<ProjectEmployeeCostDTO> projects = projectService.getProjectsDTOByEmployeeId(employee.getEmployee_id()); // Hent projekter tilknyttet projektlederen
         System.out.println(projects);
@@ -84,7 +84,6 @@ public class ProjectController {
 
     @GetMapping("/archived-project-overview")
     public String showArchivedProjects(Model model) throws Errorhandling {
-        // List<ProjectEmployeeCostDTO> archivedProjects = projectService.getArchivedProjects();
         List<Project> archivedProjects = projectService.getArchivedProjects(); // hent arkiverede projekter
         model.addAttribute("archivedProjects", archivedProjects); // Tilføj til model
         return "archived-project-overview";
@@ -99,7 +98,8 @@ public class ProjectController {
         projectService.archiveProject(projectId);
 
         // Refresh listen af aktive projekter
-        List<Project> projects = projectService.getProjectsByEmployeeId(employee.getEmployee_id());
+        List<ProjectEmployeeCostDTO> projects = projectService.getProjectsDTOByEmployeeId(employee.getEmployee_id());
+       // List<Project> projects = projectService.getProjectsByEmployeeId(employee.getEmployee_id());
         model.addAttribute("projects", projects);
 
         return "project-leader-overview";
