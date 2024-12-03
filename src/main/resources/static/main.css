@@ -3,6 +3,11 @@ body {
     margin: 20px;  /* Angiver afstand fra kanten */
     background-color: #f9f9f9;
 }
+.button-below-table {
+    margin-top: 20px; /* Afstand mellem tabel og knap */
+    text-align: right; /* Centrerer knappen */
+}
+
 
 h1 {
     color: #333;
