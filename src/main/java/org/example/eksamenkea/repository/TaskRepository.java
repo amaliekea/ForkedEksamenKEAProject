@@ -150,8 +150,9 @@ public class TaskRepository implements ITaskRepository {
                             resultSet.getDate("end_date") != null ? resultSet.getDate("end_date").toLocalDate() : null,
                             Status.valueOf(resultSet.getString("status").toUpperCase()),
                             resultSet.getInt("subproject_id"),
-                            resultSet.getObject("employee_id") != null ? resultSet.getInt("employee_id") : 0,
-                            resultSet.getInt("estimated_hours")
+                            resultSet.getInt("estimated_hours"),
+                            resultSet.getObject("employee_id") != null ? resultSet.getInt("employee_id") : 0
+
                     ));
                 }
                 return taskList;
