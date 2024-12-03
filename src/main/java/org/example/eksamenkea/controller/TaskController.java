@@ -79,17 +79,9 @@ public class TaskController {
 
     @PostMapping("/task-status")
     public String updatedTask(@ModelAttribute Task task) throws Errorhandling {
+        System.out.println("Received Actual Hours: " + task.getActual_hours());
         taskService.updateTask(task);
         return "redirect:/worker-overview";
-    }
-
-    //DELETE-----------------------------------------------------------------
-    // Metode til at markere en task som "Complete" og arkivere den
-    @PostMapping("/mark-task-complete")
-    public String markTaskAsComplete(@RequestParam("taskName") String taskName,
-                                     @RequestParam("subprojectName") String subprojectName) throws Errorhandling {
-        taskService.markTaskAsComplete(taskName, subprojectName);
-        return "redirect:/project-leader-tasks?subprojectName=" + subprojectName;
     }
 
 

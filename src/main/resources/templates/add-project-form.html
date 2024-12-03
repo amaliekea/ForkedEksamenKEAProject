@@ -45,19 +45,11 @@
            min="0" />
     <br>
 
-    <!-- Employee Cost -->
-    <label for="employee_cost">Employee Cost (in DKK):</label>
-    <input id="employee_cost" class="form-control"
-           type="number"
-           th:field="*{employee_cost}"
-           placeholder="Enter estimated employee cost"
-           min="0" />
-    <br>
 
     <!-- Hidden Employee ID -->
     <input type="hidden" name="employee_id" th:value="${employeeId}" />
     <!-- Feltet bruges til at overføre projektlederens ID fra sessionen -->
-
+    <input type="hidden" th:field="*{employee_cost}" />
     <!-- Submit Button -->
     <button type="submit" class="btn btn-primary">Submit and Add Project</button>
 </form>

@@ -1,5 +1,6 @@
 package org.example.eksamenkea.repository.interfaces;
 
+import org.example.eksamenkea.model.Employee;
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.service.Errorhandling;
@@ -17,4 +18,19 @@ public interface IProjectRepository {
     public Project getWorkerProjectFromEmployeeId(int employeeId) throws Errorhandling;
 
     int getProjectIdByProjectName(String projectName) throws Errorhandling;
+
+
+    Project getProjectFromProjectId(int projectId) throws Errorhandling;
+
+    public void updateProject(Project project) throws Errorhandling;
+
+
+    void archiveProject(int projectId) throws Errorhandling;
+
+    List<Project> getArchivedProjects() throws Errorhandling;
+
+
+    void calculateEmployeeCost() throws Errorhandling;
+
 }
+

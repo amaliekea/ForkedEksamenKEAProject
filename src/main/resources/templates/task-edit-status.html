@@ -21,10 +21,20 @@
             <form th:action="@{/task-status}" th:object="${task}" method="post">
                 <!-- Hidden fields da worker kun kan editere status -->
                 <input type="hidden" name="task_id" th:value="${task.task_id}" />
+                <input type="hidden" name="task_name" th:value="${task.task_name}" />
+                <input type="hidden" name="startdate" th:value="${task.startdate}" />
+                <input type="hidden" name="enddate" th:value="${task.enddate}" />
                 <input type="hidden" name="subproject_id" th:value="${task.subproject_id}" />
                 <input type="hidden" name="employee_id" th:value="${task.employee_id}" />
                 <input type="hidden" name="estimated_hours" th:value="${task.estimated_hours}" />
-                <input type="hidden" name="actual_hours" th:value="${task.actual_hours}" />
+
+                <!--<input type="hidden" name="actual_hours" th:value="${task.actual_hours}" />-->
+                <label for="actual_hours">Insert used hours on task:</label>
+                <input id="actual_hours" class="form-control"
+                       type="number"
+                       th:field="*{actual_hours}"
+                       placeholder="Enter actual hours" required />
+
 
                 <select name="status" th:field="*{status}">
                     <option value="NOTSTARTED">Not Started</option>

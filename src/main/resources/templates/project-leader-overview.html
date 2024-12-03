@@ -7,29 +7,51 @@
 </head>
 <body>
 <h1>Project Leader Overview</h1>
+<!-- Knap til at se arkiverede projekter -->
+<form action="/archived-project-overview" method="get">
+    <button type="submit">View Archived Projects</button>
+</form>
 
 <h2>Projects</h2>
 <table>
     <thead>
     <tr>
         <th>Project Name</th>
-        <th>Budget</th>
         <th>Description</th>
+        <th>Total budget</th>
+        <th>Employee cost</th>
+        <th>Material cost</th>
     </tr>
     </thead>
     <tbody>
+    <!-- Iteration over projekter -->
     <tr th:if="${#lists.isEmpty(projects)}">
         <td colspan="3">No projects available.</td>
     </tr>
     <tr th:each="project : ${projects}">
         <td th:text="${project.project_name}"></td>
-        <td th:text="${project.budget}"></td>
         <td th:text="${project.project_description}"></td>
+        <td th:text="${project.budget}"></td>
+        <td th:text="${project.employee_cost}"></td>
+        <td th:text="${project.material_cost}"></td>
     <td>
+        <!-- Se subprojekter knap -->
         <form action="/project-leader-subproject-overview" method="get">
             <input type="hidden" name="projectName" th:value="${project.project_name}" />
             <button type="submit">See subprojects</button>
         </form>
+
+        <form th:action="@{'/' + ${project.project_name} + '/edit-project'}" method="get">
+            <input type="hidden" name="projectName" th:value="${project.project_name}"/>
+            <button type="submit">Edit Project</button>
+        </form>
+
+        <!-- Arkiver projekt knap -->
+        <form action="/archive-project" method="post">
+            <input type="hidden" name="projectName" th:value="${project.project_name}" />
+            <button type="submit">Archive project</button>
+        </form>
+
     </td>
     </tr>
 
@@ -44,3 +66,5 @@
 </form>
 </body>
 </html>
+
+
