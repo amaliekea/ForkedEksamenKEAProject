@@ -23,7 +23,7 @@ public class ProjectRepository implements IProjectRepository {
     // CREATE------------------------------------------------------------------------------
     @Override
     public void addProject(Project project) throws Errorhandling {
-        String sqlAddProject = "INSERT INTO project(project_name, budget, project_description, employee_id, material_cost, employee_cost) VALUES (?, ?, ?, ?, ?, ?)";
+        String sqlAddProject = "INSERT INTO project(project_name, budget, project_description, employee_id, material_cost) VALUES (?, ?, ?, ?, ?)";
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sqlAddProject)) {
 
@@ -32,7 +32,6 @@ public class ProjectRepository implements IProjectRepository {
             statement.setString(3, project.getProject_description());
             statement.setInt(4, project.getEmployee_id());
             statement.setDouble(5, project.getMaterial_cost());
-            statement.setDouble(6, 0);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new Errorhandling("Failed to add project: " + e.getMessage());
@@ -57,8 +56,7 @@ public class ProjectRepository implements IProjectRepository {
                             resultSet.getDouble("budget"),
                             resultSet.getString("project_description"),
                             resultSet.getInt("employee_id"),
-                            resultSet.getInt("material_cost"),
-                            resultSet.getInt("employee_cost")
+                            resultSet.getInt("material_cost")
                     ));
                 }
             }
@@ -134,8 +132,7 @@ public class ProjectRepository implements IProjectRepository {
                             resultSet.getDouble("budget"),
                             resultSet.getString("project_description"),
                             resultSet.getInt("employee_id"),
-                            resultSet.getInt("material_cost"),
-                            resultSet.getInt("employee_cost")
+                            resultSet.getInt("material_cost")
                     );
                 }
             }
@@ -164,8 +161,7 @@ public class ProjectRepository implements IProjectRepository {
                             resultSet.getDouble("budget"),
                             resultSet.getString("project_description"),
                             resultSet.getInt("employee_id"),
-                            resultSet.getInt("material_cost"),
-                            resultSet.getInt("employee_cost")
+                            resultSet.getInt("material_cost")
                     );
                 }
             }
@@ -177,7 +173,7 @@ public class ProjectRepository implements IProjectRepository {
 
     @Override
     public void updateProject(Project project) throws Errorhandling {
-        String sqlAddProject = "UPDATE project SET project_name = ?, budget = ?, project_description = ?, employee_id = ?, material_cost = ?, employee_cost = ? WHERE project_id = ?";
+        String sqlAddProject = "UPDATE project SET project_name = ?, budget = ?, project_description = ?, employee_id = ?, material_cost = ?, WHERE project_id = ?";
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sqlAddProject)) {
 
@@ -186,8 +182,7 @@ public class ProjectRepository implements IProjectRepository {
             statement.setString(3, project.getProject_description());
             statement.setInt(4, project.getEmployee_id());
             statement.setDouble(5, project.getMaterial_cost());
-            statement.setDouble(6, 0);
-            statement.setInt(7, project.getProject_id());
+            statement.setInt(6, project.getProject_id());
             statement.executeUpdate();
 
         } catch (SQLException e) {
@@ -211,8 +206,7 @@ public class ProjectRepository implements IProjectRepository {
                         resultSet.getDouble("budget"),
                         resultSet.getString("project_description"),
                         resultSet.getInt("employee_id"),
-                        resultSet.getInt("material_cost"),
-                        resultSet.getInt("employee_cost")
+                        resultSet.getInt("material_cost")
                 ));
             }
         } catch (SQLException e) {
@@ -267,30 +261,24 @@ public class ProjectRepository implements IProjectRepository {
 
 
     @Override
-    public void calculateEmployeeCost() throws Errorhandling {
-        String createTempTableQuery = "CREATE TEMPORARY TABLE temp_project AS " +
-                "SELECT project.project_id, SUM(task.actual_hours * employee.employee_rate) AS new_employee_cost " +
-                "FROM project " +
-                "JOIN subproject ON project.project_id = subproject.project_id " +
-                "JOIN task ON subproject.subproject_id = task.subproject_id " +
+    public double calculateEmployeeCost(int projectId) throws Errorhandling {
+        String query = "SELECT SUM(task.actual_hours * employee.employee_rate) AS cost " +
+                "FROM task " +
+                "JOIN subproject ON task.subproject_id = subproject.subproject_id " +
                 "JOIN employee ON task.employee_id = employee.employee_id " +
-                "GROUP BY project.project_id";
-
-        String updateProjectQuery = "UPDATE project " +
-                "JOIN temp_project ON project.project_id = temp_project.project_id " +
-                "SET project.employee_cost = temp_project.new_employee_cost";
-
+                "WHERE subproject.project_id = ?";
         try (Connection connection = ConnectionManager.getConnection();
-             Statement statement = connection.createStatement()) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
-            // Opret midlertidig tabel
-            statement.executeUpdate(createTempTableQuery);
-
-            // Opdater employee_cost
-            statement.executeUpdate(updateProjectQuery);
-
+            statement.setInt(1, projectId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getDouble("cost");
+                }
+            }
         } catch (SQLException e) {
             throw new Errorhandling("Failed to calculate employee cost: " + e.getMessage());
         }
+        return 0;
     }
 }

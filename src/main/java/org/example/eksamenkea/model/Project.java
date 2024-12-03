@@ -8,7 +8,6 @@ public class Project {
     private String project_description;
     private int employee_id;
     private int material_cost;
-    private int employee_cost;
 
     public Project(int project_id, String project_name, double budget, String project_description, int employee_id, int material_cost) {
         this.project_id = project_id;
@@ -17,16 +16,6 @@ public class Project {
         this.project_description = project_description;
         this.employee_id = employee_id;
         this.material_cost = material_cost;
-    }
-
-    public Project(int project_id, String project_name, double budget, String project_description, int employee_id, int material_cost, int employee_cost) {
-        this.project_id = project_id;
-        this.project_name = project_name;
-        this.budget = budget;
-        this.project_description = project_description;
-        this.employee_id = employee_id;
-        this.material_cost = material_cost;
-        this.employee_cost = employee_cost;
     }
 
     public Project() {
@@ -73,14 +62,6 @@ public class Project {
         this.employee_id = employee_id;
     }
 
-    public int getEmployee_cost() {
-        return employee_cost;
-    }
-
-    public void setEmployee_cost(int employee_cost) {
-        this.employee_cost = employee_cost;
-    }
-
     public int getMaterial_cost() {
         return material_cost;
     }
@@ -97,6 +78,7 @@ public class Project {
                 ", budget=" + budget +
                 ", project_description='" + project_description + '\'' +
                 ", employee_id=" + employee_id +
+                ", material_cost=" + material_cost +
                 '}';
     }
 }
