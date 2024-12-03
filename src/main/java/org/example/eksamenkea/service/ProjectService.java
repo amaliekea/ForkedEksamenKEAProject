@@ -39,8 +39,8 @@ public class ProjectService {
         projectRepository.addProject(project);
     }
 
-    public void calculateEmployeeCost() throws Errorhandling {
-     projectRepository.calculateEmployeeCost();
+    public double calculateEmployeeCost(int projectId) throws Errorhandling {
+    return projectRepository.calculateEmployeeCost(projectId);
     }
 
     public void archiveProject(int projectId) throws Errorhandling {

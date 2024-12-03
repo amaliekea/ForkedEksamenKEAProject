@@ -30,7 +30,7 @@ public interface IProjectRepository {
     List<Project> getArchivedProjects() throws Errorhandling;
 
 
-    void calculateEmployeeCost() throws Errorhandling;
+    public double calculateEmployeeCost(int projectId) throws Errorhandling;
 
 }
 
