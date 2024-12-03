@@ -37,9 +37,9 @@
         <input type="hidden" name="subprojectName" th:value="${subproject.subproject_name}" />
         <button type="submit">View Tasks</button>
       </form>
-      <form th:action="@{'/' + ${subproject.subproject_name} + '/edit-subproject'}" method="get">
+      <form action="@{'/' + ${subproject.subproject_name} + '/edit-subproject'}" method="get">
         <input type="hidden" name="subprojectName" th:value="${subproject.subproject_name}"/>
-        <button type="submit">Edit Subrproject</button>
+        <button type="submit">Edit Subproject</button>
       </form>
     </td>
 
@@ -47,9 +47,6 @@
   </tbody>
 </table>
 
-<form action="/add-project" method="get">
-  <button type="submit">Add subproject</button>
-</form>
 <form action="/logout" method="get">
   <button type="submit">Log out</button>
 </form>
