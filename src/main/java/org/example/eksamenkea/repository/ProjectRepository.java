@@ -176,7 +176,7 @@ public class ProjectRepository implements IProjectRepository {
 
     @Override
     public void updateProject(Project project) throws Errorhandling {
-        String sqlAddProject = "UPDATE project SET project_name = ?, budget = ?, project_description = ?, employee_id = ?, material_cost = ?, WHERE project_id = ?";
+        String sqlAddProject = "UPDATE project SET project_name = ?, budget = ?, project_description = ?, employee_id = ?, material_cost = ? WHERE project_id = ?";
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sqlAddProject)) {
 
