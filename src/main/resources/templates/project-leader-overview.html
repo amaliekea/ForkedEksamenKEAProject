@@ -3,15 +3,9 @@
 <link th:href="@{/main.css}" rel="stylesheet">
 <head>
     <title>Project Leader Overview</title>
-    <link th:href="@{/main.css}" rel="stylesheet">
 </head>
 <body>
 <h1>Project Leader Overview</h1>
-<!-- Knap til at se arkiverede projekter -->
-<form action="/archived-project-overview" method="get">
-    <button type="submit">View Archived Projects</button>
-</form>
-
 <h2>Projects</h2>
 <table>
     <thead>
@@ -35,18 +29,17 @@
         <td th:text="${project.employee_cost}"></td>
         <td th:text="${project.material_cost}"></td>
     <td>
-        <!-- Se subprojekter knap -->
         <form action="/project-leader-subproject-overview" method="get">
             <input type="hidden" name="projectName" th:value="${project.project_name}" />
             <button type="submit">See subprojects</button>
         </form>
-
+<br>
         <form th:action="@{'/' + ${project.project_name} + '/edit-project'}" method="get">
             <input type="hidden" name="projectName" th:value="${project.project_name}"/>
             <button type="submit">Edit Project</button>
         </form>
 
-        <!-- Arkiver projekt knap -->
+      <br>
         <form action="/archive-project" method="post">
             <input type="hidden" name="projectName" th:value="${project.project_name}" />
             <button type="submit">Archive project</button>
@@ -57,13 +50,18 @@
 
     </tbody>
 </table>
-
+<div class="button-below-table">
+    <form action="/archived-project-overview" method="get">
+        <button type="submit">View Archived Projects</button>
+    </form>
+</div>
 <form action="/add-project" method="get">
     <button type="submit">Add project</button>
 </form>
 <form action="/logout" method="get">
     <button type="submit">Log out</button>
 </form>
+
 </body>
 </html>
 
