@@ -90,21 +90,24 @@ public class TaskController {
         Employee employee = employeeService.getEmployeeByEmail(employeeEmail);
         employee.setEmployee_id(employee.getEmployee_id());
         int taskId = taskService.getTaskIdByTaskName(taskName);
+        int taskHours = taskService.getTaskByName(taskName).getEstimated_hours();
         List<Task> tasklist = taskService.getTasklistByEmployeeId(employee.getEmployee_id());
         int totalTaskHours = 0;
+
         for (Task task : tasklist) {
             totalTaskHours += task.getEstimated_hours();
+        }
 
-        }
-        System.out.println(totalTaskHours + " total task hours");
-        if (totalTaskHours <= employee.getMax_hours()) {
-        taskService.assignEmployeeToTask(taskId, employee.getEmployee_id());
-        }
-        else {
-            throw new Errorhandling ("Exceeding max hours for this employee");
-        }
         model.addAttribute("subprojectName", subprojectName);
         model.addAttribute("taskId", taskId);
+        model.addAttribute("totalTaskHours", totalTaskHours);
+        model.addAttribute("employee", employee);
+
+        if ((totalTaskHours + taskHours) <= employee.getMax_hours()) {
+            taskService.assignEmployeeToTask(taskId, employee.getEmployee_id());
+        } else {
+            return "error/error-exceed-max-hours-for-worker";
+        }
         return "redirect:/project-leader-tasks?subprojectName=" + subprojectName;
     }
 
