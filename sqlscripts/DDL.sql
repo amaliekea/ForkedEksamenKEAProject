@@ -8,10 +8,16 @@ CREATE TABLE employee (
                           employee_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                           email VARCHAR(255) NOT NULL UNIQUE,
                           password VARCHAR(255) NOT NULL,
-                          role ENUM('PROJECTLEADER', 'WORKER') DEFAULT 'WORKER', -- Role angiver typen af bruger
-                          employee_rate INT DEFAULT 0, -- Angiv en standardværdi for lønsats
-                          max_hours INT DEFAULT 0      -- Angiv en standardværdi for maksimale timer
-);
+                          role ENUM('PROJECTLEADER', 'WORKER') DEFAULT 'WORKER',
+                          employee_rate INT DEFAULT 0,
+                          max_hours INT DEFAULT 0,
+                          CONSTRAINT chk_password CHECK (
+                              LENGTH(password) >= 8 AND -- passwordet er mindst 8 tegn langt.
+                              password REGEXP '.*[A-Z].*' AND -- passwordet skal indeholde mindst ét stort bogstav
+                              password REGEXP '.*[0-9].*' -- Tjekker, at passwordet indeholder mindst ét tal
+)
+    );
+
 
 -- Opret Project tabel
 CREATE TABLE project (
