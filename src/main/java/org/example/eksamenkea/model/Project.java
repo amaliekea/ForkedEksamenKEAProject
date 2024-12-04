@@ -2,40 +2,40 @@ package org.example.eksamenkea.model;
 
 
 public class Project {
-    private int project_id;
-    private String project_name;
+    private int projectId;
+    private String projectName;
     private double budget;
-    private String project_description;
-    private int employee_id;
-    private int material_cost;
+    private String projectDescription;
+    private int employeeId;
+    private int materialCost;
 
-    public Project(int project_id, String project_name, double budget, String project_description, int employee_id, int material_cost) {
-        this.project_id = project_id;
-        this.project_name = project_name;
+    public Project(int projectId, String projectName, double budget, String projectDescription, int employeeId, int materialCost) {
+        this.projectId = projectId;
+        this.projectName = projectName;
         this.budget = budget;
-        this.project_description = project_description;
-        this.employee_id = employee_id;
-        this.material_cost = material_cost;
+        this.projectDescription = projectDescription;
+        this.employeeId = employeeId;
+        this.materialCost = materialCost;
     }
 
     public Project() {
 
     }
 
-    public int getProject_id() {
-        return project_id;
+    public int getProjectId() {
+        return projectId;
     }
 
-    public void setProject_id(int project_id) {
-        this.project_id = project_id;
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 
-    public String getProject_name() {
-        return project_name;
+    public String getProjectName() {
+        return projectName;
     }
 
-    public void setProject_name(String project_name) {
-        this.project_name = project_name;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
     public double getBudget() {
@@ -46,39 +46,39 @@ public class Project {
         this.budget = budget;
     }
 
-    public String getProject_description() {
-        return project_description;
+    public String getProjectDescription() {
+        return projectDescription;
     }
 
-    public void setProject_description(String project_description) {
-        this.project_description = project_description;
+    public void setProjectDescription(String projectDescription) {
+        this.projectDescription = projectDescription;
     }
 
-    public int getEmployee_id() {
-        return employee_id;
+    public int getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployee_id(int employee_id) {
-        this.employee_id = employee_id;
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
     }
 
-    public int getMaterial_cost() {
-        return material_cost;
+    public int getMaterialCost() {
+        return materialCost;
     }
 
-    public void setMaterial_cost(int material_cost) {
-        this.material_cost = material_cost;
+    public void setMaterialCost(int materialCost) {
+        this.materialCost = materialCost;
     }
 
     @Override
     public String toString() {
         return "Project{" +
-                "project_id=" + project_id +
-                ", project_name='" + project_name + '\'' +
+                "project_id=" + projectId +
+                ", project_name='" + projectName + '\'' +
                 ", budget=" + budget +
-                ", project_description='" + project_description + '\'' +
-                ", employee_id=" + employee_id +
-                ", material_cost=" + material_cost +
+                ", project_description='" + projectDescription + '\'' +
+                ", employee_id=" + employeeId +
+                ", material_cost=" + materialCost +
                 '}';
     }
 }

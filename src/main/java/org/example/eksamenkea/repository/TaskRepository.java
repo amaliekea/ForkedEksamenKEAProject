@@ -26,13 +26,13 @@ public class TaskRepository implements ITaskRepository {
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sqlAddTask)) {
 
-            statement.setString(1, task.getTask_name());
+            statement.setString(1, task.getTaskName());
             statement.setDate(2, Date.valueOf(task.getStartdate())); // Konverter LocalDate til java.sql.Date
             statement.setDate(3, Date.valueOf(task.getEnddate()));
             statement.setInt(4, task.getStatus().ordinal()); // Enum-værdi
-            statement.setInt(5, task.getEmployee_id());
-            statement.setInt(6, task.getEstimated_hours());
-            statement.setInt(7, task.getSubproject_id());
+            statement.setInt(5, task.getEmployeeId());
+            statement.setInt(6, task.getEstimatedHours());
+            statement.setInt(7, task.getSubprojectId());
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -202,8 +202,8 @@ public class TaskRepository implements ITaskRepository {
         try (Connection connection = ConnectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(updateSql)) {
             preparedStatement.setString(1, task.getStatus().name());
-            preparedStatement.setInt(2, task.getActual_hours());
-            preparedStatement.setInt(3, task.getTask_id());
+            preparedStatement.setInt(2, task.getActualHours());
+            preparedStatement.setInt(3, task.getTaskId());
 
             // Log SQL-forespørgslen for debugging
             System.out.println("Executing SQL: " + preparedStatement.toString());

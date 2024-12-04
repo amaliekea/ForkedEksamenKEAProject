@@ -30,16 +30,16 @@
   </thead>
   <tbody>
   <tr th:each="subproject : ${subprojects}">
-    <td th:text="${subproject.subproject_name}"></td>
-    <td th:text="${subproject.subproject_description}"></td>
+    <td th:text="${subproject.subprojectName}"></td>
+    <td th:text="${subproject.subprojectDescription}"></td>
     <td>
       <form action="/project-leader-tasks" method="get">
-        <input type="hidden" name="subprojectName" th:value="${subproject.subproject_name}" />
+        <input type="hidden" name="subprojectName" th:value="${subproject.subprojectName}" />
         <input type="hidden" name="subproject" th:value="${subproject}" />
         <button type="submit">View Tasks</button>
       </form>
-      <form th:action="@{'/' + ${subproject.subproject_name} + '/edit-subproject'}" method="get">
-        <input type="hidden" name="subprojectName" th:value="${subproject.subproject_name}"/>
+      <form th:action="@{'/' + ${subproject.subprojectName} + '/edit-subproject'}" method="get">
+        <input type="hidden" name="subprojectName" th:value="${subproject.subprojectName}"/>
         <button type="submit">Edit Subproject</button>
       </form>
     </td>

@@ -35,7 +35,7 @@ public class TaskController {
         int subprojectId = subprojectService.getSubprojectIdBySubprojectName(subprojectName);
 
         model.addAttribute("task", task);
-        model.addAttribute("employeeId", employee.getEmployee_id());
+        model.addAttribute("employeeId", employee.getEmployeeId());
         model.addAttribute("subprojectId", subprojectId);
         model.addAttribute("subprojectName", subprojectName);
         return "add-task";
@@ -79,7 +79,7 @@ public class TaskController {
 
     @PostMapping("/task-status")
     public String updatedTask(@ModelAttribute Task task) throws Errorhandling {
-        System.out.println("Received Actual Hours: " + task.getActual_hours());
+        System.out.println("Received Actual Hours: " + task.getActualHours());
         taskService.updateTask(task);
         return "redirect:/worker-overview";
     }
@@ -88,14 +88,14 @@ public class TaskController {
     @PostMapping("/assign-worker")
     public String assignEmployeeToTask(@RequestParam("subprojectName") String subprojectName, @RequestParam("taskName") String taskName, @RequestParam ("employeeEmail") String employeeEmail, Model model, HttpSession session) throws Errorhandling {
         Employee employee = employeeService.getEmployeeByEmail(employeeEmail);
-        employee.setEmployee_id(employee.getEmployee_id());
+        employee.setEmployeeId(employee.getEmployeeId());
         int taskId = taskService.getTaskIdByTaskName(taskName);
-        int taskHours = taskService.getTaskByName(taskName).getEstimated_hours();
-        List<Task> tasklist = taskService.getTasklistByEmployeeId(employee.getEmployee_id());
+        int taskHours = taskService.getTaskByName(taskName).getEstimatedHours();
+        List<Task> tasklist = taskService.getTasklistByEmployeeId(employee.getEmployeeId());
         int totalTaskHours = 0;
 
         for (Task task : tasklist) {
-            totalTaskHours += task.getEstimated_hours();
+            totalTaskHours += task.getEstimatedHours();
         }
 
         model.addAttribute("subprojectName", subprojectName);
@@ -103,8 +103,8 @@ public class TaskController {
         model.addAttribute("totalTaskHours", totalTaskHours);
         model.addAttribute("employee", employee);
 
-        if ((totalTaskHours + taskHours) <= employee.getMax_hours()) {
-            taskService.assignEmployeeToTask(taskId, employee.getEmployee_id());
+        if ((totalTaskHours + taskHours) <= employee.getMaxHours()) {
+            taskService.assignEmployeeToTask(taskId, employee.getEmployeeId());
         } else {
             return "error/error-exceed-max-hours-for-worker";
         }

@@ -22,24 +22,24 @@
     </thead>
     <tbody>
     <tr th:each="task : ${tasks}">
-        <td th:text="${task.task_name}"></td>
+        <td th:text="${task.taskName}"></td>
         <td th:text="${task.startdate}"></td>
         <td th:text="${task.enddate}"></td>
         <td th:text="${task.status}"></td>
-        <td th:text="${task.estimated_hours}"></td>
-        <td th:text="${task.actual_hours}"></td>
+        <td th:text="${task.estimatedHours}"></td>
+        <td th:text="${task.actualHours}"></td>
 
         <!-- Assign worker to task -->
         <td>
             <form th:action="@{/assign-worker}" th:method="post">
-                <input type="hidden" name="taskName" th:value="${task.task_name}" />
+                <input type="hidden" name="taskName" th:value="${task.taskName}" />
                 <input type="hidden" name="subprojectName" th:value="${subprojectName}" />
                 <select name="employeeEmail" required onchange="this.form.submit()">
                     <option value="" disabled selected>Select a worker</option>
                     <option th:each="employee : ${employeeList}"
                             th:value="${employee.email}"
                             th:text="${employee.email}"
-                        th:selected="${task.employee_id == employee.employee_id}">
+                        th:selected="${task.employeeId == employee.employeeId}">
                     </option>
                 </select>
             </form>

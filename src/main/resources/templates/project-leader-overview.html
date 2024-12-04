@@ -23,25 +23,25 @@
         <td colspan="3">No projects available.</td>
     </tr>
     <tr th:each="project : ${projects}">
-        <td th:text="${project.project_name}"></td>
-        <td th:text="${project.project_description}"></td>
+        <td th:text="${project.projectName}"></td>
+        <td th:text="${project.projectDescription}"></td>
         <td th:text="${project.budget}"></td>
-        <td th:text="${project.material_cost}"></td>
-        <td th:text="${project.employee_cost}"></td>
+        <td th:text="${project.materialCost}"></td>
+        <td th:text="${project.employeeCost}"></td>
     <td>
         <form action="/project-leader-subproject-overview" method="get">
-            <input type="hidden" name="projectName" th:value="${project.project_name}" />
+            <input type="hidden" name="projectName" th:value="${project.projectName}" />
             <button type="submit">See subprojects</button>
         </form>
 <br>
-        <form th:action="@{'/' + ${project.project_name} + '/edit-project'}" method="get">
-            <input type="hidden" name="projectName" th:value="${project.project_name}"/>
+        <form th:action="@{'/' + ${project.projectName} + '/edit-project'}" method="get">
+            <input type="hidden" name="projectName" th:value="${project.projectName}"/>
             <button type="submit">Edit Project</button>
         </form>
 
       <br>
         <form action="/archive-project" method="post">
-            <input type="hidden" name="projectName" th:value="${project.project_name}" />
+            <input type="hidden" name="projectName" th:value="${project.projectName}" />
             <button type="submit">Archive project</button>
         </form>
 

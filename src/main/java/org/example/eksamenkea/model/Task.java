@@ -3,55 +3,55 @@ package org.example.eksamenkea.model;
 import java.time.LocalDate;
 
 public class Task {
-    private int task_id;
-    private String task_name;
+    private int taskId;
+    private String taskName;
     private LocalDate startdate;
     private LocalDate enddate;
     private Status status = Status.NOTSTARTED; //antagelse / standardværdi
-    private int subproject_id; // FK
-    private int employee_id; // FK
-    private int estimated_hours; // Antal forventede timer
-    private int actual_hours; // Standardværdi (kan ikke ændres ved oprettelse)
+    private int subprojectId; // FK
+    private int employeeId; // FK
+    private int estimatedHours; // Antal forventede timer
+    private int actualHours; // Standardværdi (kan ikke ændres ved oprettelse)
 
     //delete i join
-    public Task(int task_id, String task_name, LocalDate startdate, LocalDate enddate, Status status,
-                int subproject_id, int estimated_hours, int employee_id) {
-        this.task_id = task_id;
-        this.task_name = task_name;
+    public Task(int taskId, String taskName, LocalDate startdate, LocalDate enddate, Status status,
+                int subprojectId, int estimatedHours, int employeeId) {
+        this.taskId = taskId;
+        this.taskName = taskName;
         this.startdate = startdate;
         this.enddate = enddate;
         this.status = status;
-        this.subproject_id = subproject_id;
-        this.estimated_hours = estimated_hours;
-        this.actual_hours = 0;
-        this.employee_id = employee_id;
+        this.subprojectId = subprojectId;
+        this.estimatedHours = estimatedHours;
+        this.actualHours = 0;
+        this.employeeId = employeeId;
     }
     public Task() {
 
     }
 
-    public int getEmployee_id() {
-        return employee_id;
+    public int getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployee_id(int employee_id) {
-        this.employee_id = employee_id;
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
     }
 
-    public int getTask_id() {
-        return task_id;
+    public int getTaskId() {
+        return taskId;
     }
 
-    public void setTask_id(int task_id) {
-        this.task_id = task_id;
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
     }
 
-    public String getTask_name() {
-        return task_name;
+    public String getTaskName() {
+        return taskName;
     }
 
-    public void setTask_name(String task_name) {
-        this.task_name = task_name;
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 
     public LocalDate getStartdate() {
@@ -78,42 +78,42 @@ public class Task {
         this.status = status;
     }
 
-    public int getSubproject_id() {
-        return subproject_id;
+    public int getSubprojectId() {
+        return subprojectId;
     }
 
-    public void setSubproject_id(int subproject_id) {
-        this.subproject_id = subproject_id;
+    public void setSubprojectId(int subprojectId) {
+        this.subprojectId = subprojectId;
     }
 
-    public int getEstimated_hours() {
-        return estimated_hours;
+    public int getEstimatedHours() {
+        return estimatedHours;
     }
 
-    public void setEstimated_hours(int estimated_hours) {
-        this.estimated_hours = estimated_hours;
+    public void setEstimatedHours(int estimatedHours) {
+        this.estimatedHours = estimatedHours;
     }
 
-    public int getActual_hours() {
-        return actual_hours;
+    public int getActualHours() {
+        return actualHours;
     }
 
-    public void setActual_hours(int actual_hours) {
-        this.actual_hours = actual_hours;
+    public void setActualHours(int actualHours) {
+        this.actualHours = actualHours;
     }
 
     @Override
     public String toString() {
         return "Task{" +
-                "task_id=" + task_id +
-                ", task_name='" + task_name + '\'' +
+                "task_id=" + taskId +
+                ", task_name='" + taskName + '\'' +
                 ", startdate=" + startdate +
                 ", enddate=" + enddate +
                 ", status=" + status +
-                ", subproject_id=" + subproject_id +
-                ", employee_id=" + employee_id +
-                ", estimated_hours=" + estimated_hours +
-                ", actual_hours=" + actual_hours +
+                ", subproject_id=" + subprojectId +
+                ", employee_id=" + employeeId +
+                ", estimated_hours=" + estimatedHours +
+                ", actual_hours=" + actualHours +
                 '}';
     }
 }
