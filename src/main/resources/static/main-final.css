@@ -8,7 +8,7 @@
 
 body {
     height: 100vh;
-    background: url('static/pictures/login-screen.jpg') no-repeat center center fixed;
+    background: url('pictures/login-screen.jpg') no-repeat center center fixed;
     background-size: cover;
     display: flex;
     align-items: center;
@@ -91,17 +91,6 @@ body {
     font-family: 'Roboto', Arial, sans-serif;
 }
 
-body {
-    height: 100vh;
-    background: url('your-background-image.jpg') no-repeat center center fixed;
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    color: #333;
-    padding: 20px;
-}
 
 .overview-container {
     width: 90%;
