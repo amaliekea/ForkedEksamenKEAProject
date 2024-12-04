@@ -36,7 +36,12 @@ public class EmployeeController {
     }
 
     @PostMapping("/validate_login") //Amalie
-    public String validateLogin(HttpSession session, @RequestParam String email, @RequestParam String password) throws Errorhandling {
+    public String validateLogin(HttpSession session, @RequestParam String email, @RequestParam String password, Model model) throws Errorhandling {
+        if(!employeeService.isPasswordValid(password)){
+            model.addAttribute("errorMessage","Password must be atleast 8 characters, " +
+                    "and include uppercase letter and a number");
+        }
+
         Employee employee = employeeService.signIn(email, password); //metodekald til employeerepository
         if (employee != null) {
             //Koden er designet til at håndtere sessioner og brugerroller.

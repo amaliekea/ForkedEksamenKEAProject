@@ -28,4 +28,10 @@ public class EmployeeService  {
     public Employee getEmployeeByEmail(String email) throws Errorhandling{
         return iEmployeeRepository.getEmployeeByEmail(email);
     }
+
+    public boolean isPasswordValid(String password){
+        // Regex: Mindst 8 tegn, mindst ét stort bogstav og ét tal
+        String passwordPattern= "^(?=.*[A-Z])(?=.*\\\\d).{8,}$";
+        return password.matches(passwordPattern);
+    }
 }
