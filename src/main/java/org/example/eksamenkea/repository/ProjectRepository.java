@@ -46,7 +46,6 @@ public class ProjectRepository implements IProjectRepository {
     public List<Project> getProjectsByEmployeeId(int employeeId) throws Errorhandling {
         List<Project> projects = new ArrayList<>();
         String query = "SELECT * FROM project WHERE employee_id = ? AND is_archived = FALSE";
-
         try (Connection connection = ConnectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
