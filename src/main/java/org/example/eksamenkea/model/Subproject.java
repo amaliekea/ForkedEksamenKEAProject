@@ -1,52 +1,50 @@
 package org.example.eksamenkea.model;
 
-import java.time.LocalDate;
-
 public class Subproject {
-    private int subproject_id;
-    private String subproject_name;
-    private String subproject_description;
-    private int project_id;
+    private int subprojectId;
+    private String subprojectName;
+    private String subprojectDescription;
+    private int projectId;
 
-    public Subproject(int subproject_id, String subproject_name, String subproject_description, int project_id) {
-        this.subproject_id = subproject_id;
-        this.subproject_name = subproject_name;
-        this.subproject_description = subproject_description;
-        this.project_id = project_id;
+    public Subproject(int subprojectId, String subprojectName, String subprojectDescription, int projectId) {
+        this.subprojectId = subprojectId;
+        this.subprojectName = subprojectName;
+        this.subprojectDescription = subprojectDescription;
+        this.projectId = projectId;
     }
     public Subproject() {
 
     }
 
-    public int getSubproject_id() {
-        return subproject_id;
+    public int getSubprojectId() {
+        return subprojectId;
     }
 
-    public void setSubproject_id(int subproject_id) {
-        this.subproject_id = subproject_id;
+    public void setSubprojectId(int subprojectId) {
+        this.subprojectId = subprojectId;
     }
 
-    public String getSubproject_name() {
-        return subproject_name;
+    public String getSubprojectName() {
+        return subprojectName;
     }
 
-    public void setSubproject_name(String subproject_name) {
-        this.subproject_name = subproject_name;
+    public void setSubprojectName(String subprojectName) {
+        this.subprojectName = subprojectName;
     }
 
-    public String getSubproject_description() {
-        return subproject_description;
+    public String getSubprojectDescription() {
+        return subprojectDescription;
     }
 
-    public void setSubproject_description(String subproject_description) {
-        this.subproject_description = subproject_description;
+    public void setSubprojectDescription(String subprojectDescription) {
+        this.subprojectDescription = subprojectDescription;
     }
 
-    public int getProject_id() {
-        return project_id;
+    public int getProjectId() {
+        return projectId;
     }
 
-    public void setProject_id(int project_id) {
-        this.project_id = project_id;
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 }

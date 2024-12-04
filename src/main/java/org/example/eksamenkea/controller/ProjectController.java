@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpHeaders;
 import java.util.List;
 
 @Controller
@@ -26,7 +25,7 @@ public class ProjectController {
     public String showProjectLeaderOverview(HttpSession session, Model model) throws Errorhandling {
 
         Employee employee = (Employee) session.getAttribute("employee");
-        List<ProjectEmployeeCostDTO> projects = projectService.getProjectsDTOByEmployeeId(employee.getEmployee_id()); // Hent projekter tilknyttet projektlederen
+        List<ProjectEmployeeCostDTO> projects = projectService.getProjectsDTOByEmployeeId(employee.getEmployeeId()); // Hent projekter tilknyttet projektlederen
         System.out.println(projects);
         model.addAttribute("projects", projects); // Tilføj projekter til modellen, så de kan vises i HTML'en
         return "project-leader-overview";
@@ -46,9 +45,9 @@ public class ProjectController {
     public String addNewProject(HttpSession session, Model model) throws Errorhandling {
         Project project = new Project();
         Employee employee = (Employee) session.getAttribute("employee");  // Henter "user" fra sessionen.
-        System.out.println("Employee ID: " + employee.getEmployee_id());
+        System.out.println("Employee ID: " + employee.getEmployeeId());
         model.addAttribute("project", project);
-        model.addAttribute("employeeId", employee.getEmployee_id());
+        model.addAttribute("employeeId", employee.getEmployeeId());
         return "add-project-form";
     }
 
@@ -62,7 +61,7 @@ public class ProjectController {
     @GetMapping("/worker-overview")
     public String showWorkerOverview(HttpSession session, Model model) throws Errorhandling {
         Employee employee = (Employee) session.getAttribute("employee");
-        List<Task> taskList = taskService.getTasklistByEmployeeId(employee.getEmployee_id());
+        List<Task> taskList = taskService.getTasklistByEmployeeId(employee.getEmployeeId());
         model.addAttribute("tasklist", taskList);
 
         return "worker-overview";
@@ -79,7 +78,7 @@ public class ProjectController {
     @PostMapping("/edit-project")
     public String editProject(@ModelAttribute Project project) throws Errorhandling {
         projectService.updateProject(project);
-        return "redirect:/project-leader-subproject-overview?projectName=" + project.getProject_name();
+        return "redirect:/project-leader-subproject-overview?projectName=" + project.getProjectName();
     }
 
     @GetMapping("/archived-project-overview")
@@ -98,7 +97,7 @@ public class ProjectController {
         projectService.archiveProject(projectId);
 
         // Refresh listen af aktive projekter
-        List<ProjectEmployeeCostDTO> projects = projectService.getProjectsDTOByEmployeeId(employee.getEmployee_id());
+        List<ProjectEmployeeCostDTO> projects = projectService.getProjectsDTOByEmployeeId(employee.getEmployeeId());
        // List<Project> projects = projectService.getProjectsByEmployeeId(employee.getEmployee_id());
         model.addAttribute("projects", projects);
 

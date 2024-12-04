@@ -36,7 +36,7 @@ public class SubprojectRepository implements ISubprojectRepository {
             throw new Errorhandling("Failed to get subproject ID by subproject name: " + e.getMessage());
         }
     }
-// Lavet af Malthe
+    // Lavet af Malthe
     public Subproject getSubprojectBySubprojectId(int subprojectId) throws Errorhandling {
         Subproject subproject = null;
         String query = "SELECT * FROM subproject WHERE subproject_id = ?;";
@@ -67,12 +67,12 @@ public class SubprojectRepository implements ISubprojectRepository {
         String query = "UPDATE subproject SET subproject_name = ?, subproject_description = ? , project_id = ? WHERE subproject_id = ?";
 
         try (Connection con = ConnectionManager.getConnection();
-        PreparedStatement preStat = con.prepareStatement(query)){
+             PreparedStatement preStat = con.prepareStatement(query)){
 
-            preStat.setString(1, subproject.getSubproject_name());
-            preStat.setString(2, subproject.getSubproject_description());
-            preStat.setInt(3, subproject.getSubproject_id());
-            preStat.setInt(4, subproject.getProject_id());
+            preStat.setString(1, subproject.getSubprojectName());
+            preStat.setString(2, subproject.getSubprojectDescription());
+            preStat.setInt(3, subproject.getSubprojectId());
+            preStat.setInt(4, subproject.getProjectId());
 
             preStat.executeUpdate();
             System.out.println("Updated subproject");
@@ -96,10 +96,10 @@ public class SubprojectRepository implements ISubprojectRepository {
                 while (resultSet.next()) {
                     Subproject subproject = new Subproject();
 
-                    subproject.setSubproject_id(resultSet.getInt("subproject_id"));
-                    subproject.setSubproject_name(resultSet.getString("subproject_name"));
-                    subproject.setSubproject_description(resultSet.getString("subproject_description"));
-                    subproject.setProject_id(resultSet.getInt("project_id"));
+                    subproject.setSubprojectId(resultSet.getInt("subproject_id"));
+                    subproject.setSubprojectName(resultSet.getString("subproject_name"));
+                    subproject.setSubprojectDescription(resultSet.getString("subproject_description"));
+                    subproject.setProjectId(resultSet.getInt("project_id"));
 
                     // Tilføj subproject til HashSet
                     subprojects.add(subproject);
@@ -111,4 +111,3 @@ public class SubprojectRepository implements ISubprojectRepository {
         return subprojects;
     }
 }
-

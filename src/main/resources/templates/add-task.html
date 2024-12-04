@@ -9,37 +9,37 @@
 <h1>Add Task</h1>
 <form th:action="@{/task-added}" th:object="${task}" method="post">
 
-  <label for="task_name">Task Name:</label>
-  <input id="task_name" class="form-control"
+  <label for="taskName">Task Name:</label>
+  <input id="taskName" class="form-control"
          type="text"
-         th:field="*{task_name}"
+         th:field="*{taskName}"
          placeholder="Enter task name" required />
   <br>
 
-  <label for="start_date">Start Date:</label>
-  <input id="start_date" class="form-control"
+  <label for="startdate">Start Date:</label>
+  <input id="startdate" class="form-control"
          type="date"
          th:field="*{startdate}"
          required />
   <br>
 
-  <label for="end_date">End Date:</label>
-  <input id="end_date" class="form-control"
+  <label for="enddate">End Date:</label>
+  <input id="enddate" class="form-control"
          type="date"
          th:field="*{enddate}"
          required />
   <br>
 
-  <label for="estimated_hours">Estimated Hours:</label>
-  <input id="estimated_hours" class="form-control"
+  <label for="estimatedHours">Estimated Hours:</label>
+  <input id="estimatedHours" class="form-control"
          type="number"
-         th:field="*{estimated_hours}"
+         th:field="*{estimatedHours}"
          placeholder="Enter estimated hours" required />
   <br>
 
-  <input type="hidden"  name="subproject_id" th:value="${subprojectId}" />
+  <input type="hidden"  name="subprojectId" th:value="${subprojectId}" />
 
-  <input type="hidden" name="employee_id" th:value="${employeeId}" />
+  <input type="hidden" name="employeeId" th:value="${employeeId}" />
   <input type="hidden" th:field="*{status}" value="NOTSTARTED" /> <!--da det er ny task antager vi at den ikke er startet-->
 
   <input type="hidden"  name="subprojectName" th:value="${subprojectName}" />

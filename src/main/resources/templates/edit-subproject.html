@@ -12,17 +12,17 @@
     <label for="name">Name</label>
     <input id="name"
            type="text"
-           th:field="*{subproject_name}"
+           th:field="*{subprojectName}"
            placeholder="Enter subproject name..." />
     <br>
     <label for="description">Description</label>
     <input id="description"
            type="text"
-           th:field="*{subproject_description}"
+           th:field="*{subprojectDescription}"
            placeholder="Enter subproject description..." />
     <br>
-    <input type="hidden" th:field="*{subproject_id}" />
-    <input type="hidden" th:field="*{project_id}" />
+    <input type="hidden" th:field="*{subprojectId}" />
+    <input type="hidden" th:field="*{projectId}" />
     <button type="submit">Edit Subproject</button>
 </form>
 <form action="/project-leader-overview" method="get">

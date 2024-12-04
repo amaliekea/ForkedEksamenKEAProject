@@ -1,6 +1,5 @@
 package org.example.eksamenkea.controller;
 
-import jakarta.servlet.http.HttpSession;
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.service.Errorhandling;
@@ -32,8 +31,8 @@ public class SubprojectController {
     @PostMapping("/edit-subproject")
     public String editSubproject(@ModelAttribute Subproject subproject) throws Errorhandling {
         subprojectService.updateSubproject(subproject);
-        Project project = projectService.getProjectFromProjectId(subproject.getProject_id());
-        String projectName = project.getProject_name();
+        Project project = projectService.getProjectFromProjectId(subproject.getProjectId());
+        String projectName = project.getProjectName();
 
         return "redirect:/project-leader-subproject-overview?projectName=" + projectName;
     }
