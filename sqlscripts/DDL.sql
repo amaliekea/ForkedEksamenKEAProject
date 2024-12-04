@@ -27,7 +27,7 @@ CREATE TABLE project (
                          project_description VARCHAR(255) NOT NULL,
                          employee_id INT, -- Reference til employee_id fra Employee tabellen (projektlederen)
                          material_cost DECIMAL(10, 2) DEFAULT 0.00, -- Materialeomkostninger med standardværdi
-                         is_archived BOOLEAN DEFAULT FALSE, -- Ny kolonne til arkivering
+                         is_archived BOOLEAN DEFAULT FALSE, --  til arkivering
                          FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
 );
 

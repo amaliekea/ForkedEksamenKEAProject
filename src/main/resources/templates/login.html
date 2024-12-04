@@ -3,19 +3,32 @@
 <link th:href="@{/main.css}" rel="stylesheet">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Login</title>
 </head>
 <body>
 <table>
     <tr>
         <form action="/validate_login" method="post">
+            <!-- Email input -->
             <td>Email</td>
-            <td><input type="text" name="email"></td>
+            <td><input type="text" name="email" required></td>
             <br>
+
+            <!-- Password input -->
             <td>Password</td>
-            <td><input type="password" name="password"></td>
+            <td><input type="password" name="password" required></td>
             <br>
-            <button type="submit">Login</button>
+
+            <!-- Fejlmeddelelse -->
+            <td colspan="2">
+                <p th:if="${errorMessage}" th:text="${errorMessage}"></p>
+            </td>
+            <br>
+
+            <!-- Login knap -->
+            <td colspan="2">
+                <button type="submit">Login</button>
+            </td>
         </form>
     </tr>
 </table>
