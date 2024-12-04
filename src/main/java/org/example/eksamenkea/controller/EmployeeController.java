@@ -1,5 +1,4 @@
 package org.example.eksamenkea.controller;
-
 import jakarta.servlet.http.HttpSession;
 import org.example.eksamenkea.model.Role;
 import org.example.eksamenkea.model.Employee;
@@ -37,25 +36,23 @@ public class EmployeeController {
     }
 
     @PostMapping("/validate_login") //Amalie
-    public String validateLogin(HttpSession session, @RequestParam String email, @RequestParam String password, Model model) {
-        try {
-            // Forsøg at hente medarbejderen baseret på email og adgangskode
-            Employee employee = employeeService.signIn(email, password);
-            if (employee != null) {
-                // Gem medarbejderen i sessionen
-                session.setAttribute("employee", employee);
-                session.setAttribute("userRole", employee.getRole());
-                session.setAttribute("employeeId", employee.getEmployeeId());
-                return "redirect:/logged_in";
-            } else {
-                // Hvis email eller password er forkert
-                model.addAttribute("errorMessage", "Forkert email eller adgangskode.");
-                return "login";
-            }
-        } catch (Errorhandling e) {
-            // Hvis der er andre brugerdefinerede fejl
-            model.addAttribute("errorMessage", e.getMessage());
-            return "login";
+    public String validateLogin(HttpSession session, @RequestParam String email, @RequestParam String password, Model model) throws Errorhandling {
+        if(!employeeService.isPasswordValid(password)){
+            model.addAttribute("errorMessage","Password must be atleast 8 characters, " +
+                    "and include uppercase letter and a number");
+        }
+
+        Employee employee = employeeService.signIn(email, password); //metodekald til employeerepository
+        if (employee != null) {
+            //Koden er designet til at håndtere sessioner og brugerroller.
+            // Brugerens rolle og ID gemmes i sessionen og bruges til at vise relevante
+            // sider og udføre handlinger
+            session.setAttribute("employee", employee); //gemmer brugeren i sessionen
+            session.setAttribute("userRole", employee.getRole()); // Tilføj denne linje
+            session.setAttribute("employeeId", employee.getEmployee_id()); // Gemmer employeeId separat
+            return "redirect:/logged_in";
+        } else {
+            throw new Errorhandling("Enter valid username and password");
         }
     }
 
