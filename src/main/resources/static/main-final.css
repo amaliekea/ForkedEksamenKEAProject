@@ -8,15 +8,11 @@
 
 body {
     height: 100vh;
-    background: url('/Users/malthetiufkaer/Desktop/KEA-2/EksamenKEA/src/main/resources/static/pictures/login-screen.jpg') no-repeat center center fixed;
+    background: url('static/pictures/login-screen.jpg') no-repeat center center fixed;
     background-size: cover;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    color: #333;
-    margin: 0;
-    padding: 0;
+    justify-content: center;
 }
 
 /* Login container */
@@ -40,24 +36,11 @@ body {
     text-align: center;
 }
 
-/* Overskrifter */
+/* Overskrift */
 .login-box h1 {
     font-size: 24px;
     color: #333;
     margin-bottom: 20px;
-}
-
-header h1 {
-    text-align: center;
-    font-size: 32px;
-    color: #4A90E2;
-    margin: 20px 0;
-}
-
-main h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-    color: #333;
 }
 
 /* Inputfelter */
@@ -83,84 +66,152 @@ main h2 {
     border-color: #4A90E2;
 }
 
-/* Generel knap-styling */
+/* Login-knap */
+.login-box button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4A90E2;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-box button:hover {
+    background-color: #357ABD;
+}
+
+/* Generel nulstilling og typografi */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: url('your-background-image.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: #333;
+    padding: 20px;
+}
+
+.overview-container {
+    width: 90%;
+    max-width: 1200px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Overskrifter */
+header h1 {
+    font-size: 32px;
+    color: #4A90E2;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+main h2 {
+    font-size: 24px;
+    color: #333;
+    margin: 20px 0;
+}
+
+/* Tabellen */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.styled-table thead tr {
+    background-color: #4A90E2;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+.styled-table tbody tr {
+    background-color: #f9f9f9;
+}
+
+.styled-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.styled-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Knapper */
 button,
-.action-button,
-.primary-button {
-    display: inline-flex; /* Ens justering */
-    width: 200px; /* Ensartet bredde */
-    height: 50px; /* Ensartet højde */
-    padding: 10px 15px;
-    margin: 10px 5px;
+.action-button {
+    display: inline-block;
+    width: 150px;
+    padding: 10px;
     background-color: #4A90E2;
     color: white;
     border: none;
     border-radius: 5px;
-    font-size: 16px; /* Ensartet skrifttype */
-    text-align: center;
+    font-size: 14px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Lidt dybde */
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 5px 0;
 }
 
-/* Hover-effekt */
 button:hover,
-.action-button:hover,
-.primary-button:hover {
+.action-button:hover {
     background-color: #357ABD;
+    transform: scale(1.05);
 }
 
-/* Styling for tabellen */
-.styled-table {
-    width: 90%;
-    margin: 20px auto;
-    border-collapse: collapse;
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+/* Knap-gruppe */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
 }
 
-.styled-table th, .styled-table td {
-    padding: 12px 15px;
-    text-align: left;
-    border: 1px solid #ddd;
+.button-group form {
+    margin: 0 5px;
 }
 
-.styled-table th {
-    background-color: #4A90E2;
-    color: #fff;
-    font-weight: bold;
-}
-
-.styled-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.styled-table tr:hover {
-    background-color: #f1f1f1;
-}
-
-/* Specifik layout-tilpasning for mindre skærme */
+/* Responsiv styling */
 @media (max-width: 768px) {
-    .login-box {
-        max-width: 90%;
+    .overview-container {
+        padding: 15px;
     }
 
-    .styled-table {
+    button,
+    .action-button {
         width: 100%;
     }
 
     .button-group {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    button,
-    .action-button,
-    .primary-button {
-        width: 100%; /* Fylder bredden på små skærme */
-        height: auto; /* Justerer højden proportionalt */
+        flex-direction: column;
+        align-items: center;
     }
 }
+
