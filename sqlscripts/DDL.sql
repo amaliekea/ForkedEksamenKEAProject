@@ -5,7 +5,7 @@ USE project_management;
 
 -- Opret Employee tabel (fælles for både Worker og Project Leader)
 CREATE TABLE employee (
-                          employee_id INT AUTO_INCREMENT PRIMARY KEY,
+                          employee_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                           email VARCHAR(255) NOT NULL UNIQUE,
                           password VARCHAR(255) NOT NULL,
                           role ENUM('PROJECTLEADER', 'WORKER') DEFAULT 'WORKER', -- Role angiver typen af bruger
@@ -15,7 +15,7 @@ CREATE TABLE employee (
 
 -- Opret Project tabel
 CREATE TABLE project (
-                         project_id INT AUTO_INCREMENT PRIMARY KEY,
+                         project_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                          project_name VARCHAR(255) NOT NULL,
                          budget DECIMAL(10, 2) NOT NULL,
                          project_description VARCHAR(255) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE project (
 
 -- Opret Subproject tabel
 CREATE TABLE subproject (
-                            subproject_id INT AUTO_INCREMENT PRIMARY KEY,
+                            subproject_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                             subproject_name VARCHAR(255) NOT NULL,
                             subproject_description VARCHAR(255) NOT NULL,
                             is_archived BOOLEAN DEFAULT FALSE,
@@ -37,7 +37,7 @@ CREATE TABLE subproject (
 
 -- Opret Task tabel
 CREATE TABLE task (
-                      task_id INT AUTO_INCREMENT PRIMARY KEY,
+                      task_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                       task_name VARCHAR(255) NOT NULL,
                       start_date DATE,
                       end_date DATE,
