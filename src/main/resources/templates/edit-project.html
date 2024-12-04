@@ -12,20 +12,20 @@
     <label for="name">Name</label>
     <input id="name"
            type="text"
-           th:field="*{project_name}"
+           th:field="*{projectName}"
            placeholder="Enter project name..." />
     <br>
     <label for="description">Description</label>
     <input id="description"
            type="text"
-           th:field="*{project_description}"
+           th:field="*{projectDescription}"
            placeholder="Enter project description..." />
 
 
       <label for="materialCost">Material Cost</label>
     <input id="materialCost"
            type="text"
-           th:field="*{material_cost}"
+           th:field="*{materialCost}"
            placeholder="Enter material cost..." />
 
           <label for="budget">Budget</label>
@@ -35,8 +35,8 @@
            placeholder="Enter budget..." />
 
     <br>
-    <input type="hidden" th:field="*{project_id}" />
-    <input type="hidden" th:field="*{employee_id}" />
+    <input type="hidden" th:field="*{projectId}" />
+    <input type="hidden" th:field="*{employeeId}" />
     <button type="submit">Edit Subproject</button>
 </form>
 <form action="/project-leader-overview" method="get">

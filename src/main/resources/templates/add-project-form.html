@@ -12,17 +12,17 @@
     <!-- Formularen er bundet til backend-objektet "project" -->
 
     <!-- Project Name -->
-    <label for="project_name">Project Name:</label>
-    <input id="project_name" class="form-control"
+    <label for="projectName">Project Name:</label>
+    <input id="projectName" class="form-control"
            type="text"
-           th:field="*{project_name}"
+           th:field="*{projectName}"
            placeholder="Enter project name" required />
     <br>
 
     <!-- Project Description -->
-    <label for="project_description">Description:</label>
-    <textarea id="project_description" class="form-control"
-              th:field="*{project_description}"
+    <label for="projectDescription">Description:</label>
+    <textarea id="projectDescription" class="form-control"
+              th:field="*{projectDescription}"
               placeholder="Enter project description"
               rows="4" required></textarea>
     <br>
@@ -37,17 +37,17 @@
     <br>
 
     <!-- Material Cost -->
-    <label for="material_cost">Material Cost (in DKK):</label>
-    <input id="material_cost" class="form-control"
+    <label for="materialCost">Material Cost (in DKK):</label>
+    <input id="materialCost" class="form-control"
            type="number"
-           th:field="*{material_cost}"
+           th:field="*{materialCost}"
            placeholder="Enter estimated material cost"
            min="0" />
     <br>
 
 
     <!-- Hidden Employee ID -->
-    <input type="hidden" name="employee_id" th:value="${employeeId}" />
+    <input type="hidden" name="employeeId" th:value="${employeeId}" />
     <!-- Feltet bruges til at overføre projektlederens ID fra sessionen -->
     <!-- Submit Button -->
     <button type="submit" class="btn btn-primary">Submit and Add Project</button>

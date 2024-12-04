@@ -10,7 +10,7 @@
             <h3>The current amount of hours for this worker is: </h3>
                 <a th:text="${totalTaskHours}"></a>
                     <h3>And the worker has the following hours available: </h3>
-                <a th:text="${employee.max_hours}"></a>
+                <a th:text="${employee.maxHours}"></a>
 
                 <form action="/project-leader-overview" method="get">
                 <button type="submit">Back to subproject Overview</button>

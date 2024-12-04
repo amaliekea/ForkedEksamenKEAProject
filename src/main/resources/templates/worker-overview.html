@@ -23,8 +23,8 @@
     </th:block>
 
     <th:block th:if="${project != null}">
-        <td th:text="${project.project_name}"></td>
-        <td th:text="${project.project_description}"></td>
+        <td th:text="${project.projectName}"></td>
+        <td th:text="${project.projectDescription}"></td>
     </th:block>
 
     </tbody>
@@ -43,8 +43,8 @@
     </th:block>
     <tbody>
     <tr th:each="subproject : ${subprojects}">
-        <td th:text="${subproject.subproject_name}"></td>
-        <td th:text="${subproject.subproject_description}"></td>
+        <td th:text="${subproject.subprojectName}"></td>
+        <td th:text="${subproject.subprojectDescription}"></td>
     </tr>
     </tbody>
 </table>
@@ -62,14 +62,14 @@
     </thead>
     <tbody>
     <tr th:each="task : ${tasklist}">
-        <td th:text="${task.task_name}"></td>
+        <td th:text="${task.taskName}"></td>
         <td th:text="${task.startdate}"></td>
         <td th:text="${task.enddate}"></td>
         <td th:text="${task.status}"></td>
-        <td th:text="${task.estimated_hours}"></td>
+        <td th:text="${task.estimatedHours}"></td>
         <td>
         <form action="/task-status" method="get">
-            <input type="hidden" name="taskName" th:value="${task.task_name}" />
+            <input type="hidden" name="taskName" th:value="${task.taskName}" />
             <button type="submit">Change task status</button>
         </form>
         </td>

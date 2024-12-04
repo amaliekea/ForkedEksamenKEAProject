@@ -21,10 +21,10 @@
         <td colspan="3">No archived projects available.</td>
     </tr>
     <tr th:each="project : ${archivedProjects}">
-        <td th:text="${project.project_name}"></td>
-        <td th:text="${project.project_description}"></td>
+        <td th:text="${project.projectName}"></td>
+        <td th:text="${project.projectDescription}"></td>
         <td th:text="${project.budget}"></td>
-        <td th:text="${project.material_cost}"></td>
+        <td th:text="${project.materialCost}"></td>
     </tr>
     </tbody>
 </table>
