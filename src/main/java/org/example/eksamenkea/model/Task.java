@@ -105,15 +105,15 @@ public class Task {
     @Override
     public String toString() {
         return "Task{" +
-                "task_id=" + taskId +
-                ", task_name='" + taskName + '\'' +
+                "taskId=" + taskId +
+                ", taskName='" + taskName + '\'' +
                 ", startdate=" + startdate +
                 ", enddate=" + enddate +
                 ", status=" + status +
-                ", subproject_id=" + subprojectId +
-                ", employee_id=" + employeeId +
-                ", estimated_hours=" + estimatedHours +
-                ", actual_hours=" + actualHours +
+                ", subprojectId=" + subprojectId +
+                ", employeeId=" + employeeId +
+                ", estimatedHours=" + estimatedHours +
+                ", actualHours=" + actualHours +
                 '}';
     }
 }

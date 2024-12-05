@@ -47,4 +47,14 @@ public class Subproject {
     public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
+
+    @Override
+    public String toString() {
+        return "Subproject{" +
+                "subprojectId=" + subprojectId +
+                ", subprojectName='" + subprojectName + '\'' +
+                ", subprojectDescription='" + subprojectDescription + '\'' +
+                ", projectId=" + projectId +
+                '}';
+    }
 }
