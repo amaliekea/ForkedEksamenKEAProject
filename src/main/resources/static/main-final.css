@@ -366,3 +366,18 @@ button:hover,
 .logout-button:hover {
     background-color: #357ABD; /* Mørkere farve ved hover */
 }
+.label {
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    color: white;
+    margin-left: 10px; /* Afstand fra værdien */
+}
+
+.label.sustainable {
+    background-color: #4CAF50; /* Grøn for bæredygtige projekter */
+}
+
+.label.not-sustainable {
+    background-color: #f44336; /* Rød for ikke-bæredygtige projekter */
+}

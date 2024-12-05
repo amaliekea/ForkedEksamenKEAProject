@@ -33,8 +33,17 @@
                 <td th:text="${project.projectName}"></td>
                 <td th:text="${project.projectDescription}"></td>
                 <td th:text="${project.budget}"></td>
-                <td th:text="${project.materialCost}"></td>
+                <td>
+                    <!-- Vis materialekost -->
+                    <span th:text="${project.materialCost}"></span>
+                    <!-- Dynamisk bæredygtighedslabel -->
+                    <span th:if="${project.materialCost / project.budget <= 0.30}"
+                          class="label sustainable">Sustainable</span>
+                    <span th:if="${project.materialCost / project.budget > 0.30}"
+                          class="label not-sustainable">Not Sustainable</span>
+                </td>
                 <td th:text="${project.employeeCost}"></td>
+
                 <td>
                     <form action="/project-leader-subproject-overview" method="get">
                         <input type="hidden" name="projectName" th:value="${project.projectName}" />

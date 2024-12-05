@@ -12,12 +12,12 @@ public class ConnectionManager {
     private static Connection connection;
 
     private ConnectionManager() {
-        // Private constructor to prevent instantiation
+
     }
 
     public static Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
-            synchronized (ConnectionManager.class) { // Thread-safe singleton
+            synchronized (ConnectionManager.class) {
                 if (connection == null || connection.isClosed()) {
                     connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
                 }
@@ -26,3 +26,5 @@ public class ConnectionManager {
         return connection;
     }
 }
+
+
