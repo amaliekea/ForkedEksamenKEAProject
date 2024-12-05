@@ -25,9 +25,9 @@ public class ProjectController {
     public String showProjectLeaderOverview(HttpSession session, Model model) throws Errorhandling {
 
         Employee employee = (Employee) session.getAttribute("employee");
-        List<ProjectEmployeeCostDTO> projects = projectService.getProjectsDTOByEmployeeId(employee.getEmployeeId()); // Hent projekter tilknyttet projektlederen
+        List<ProjectEmployeeCostDTO> projects = projectService.getProjectsDTOByEmployeeId(employee.getEmployeeId());
         System.out.println(projects);
-        model.addAttribute("projects", projects); // Tilføj projekter til modellen, så de kan vises i HTML'en
+        model.addAttribute("projects", projects);
         return "project-leader-overview";
     }
 
