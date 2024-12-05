@@ -10,8 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Repository("ISUBPROJECTREPOSITORY")
 public class SubprojectRepository implements ISubprojectRepository {
@@ -79,35 +78,5 @@ public class SubprojectRepository implements ISubprojectRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Failed to update subproject " + e.getMessage());
         }
-    }
-
-
-    @Override
-    public Set<Subproject> getAllSubProjectsByProjectId(int projectId) throws Errorhandling {
-        Set<Subproject> subprojects = new HashSet<>();
-        String query = "SELECT * FROM subproject WHERE project_id = ?";
-
-        try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setInt(1, projectId);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    Subproject subproject = new Subproject();
-
-                    subproject.setSubprojectId(resultSet.getInt("subproject_id"));
-                    subproject.setSubprojectName(resultSet.getString("subproject_name"));
-                    subproject.setSubprojectDescription(resultSet.getString("subproject_description"));
-                    subproject.setProjectId(resultSet.getInt("project_id"));
-
-                    // Tilføj subproject til HashSet
-                    subprojects.add(subproject);
-                }
-            }
-        } catch (SQLException e) {
-            throw new Errorhandling("Failed to get subproject ID by subproject name: " + e.getMessage());
-        }
-        return subprojects;
     }
 }
