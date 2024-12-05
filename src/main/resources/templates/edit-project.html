@@ -37,9 +37,10 @@
                 </div>
 
                 <!-- Hidden Fields -->
+                <form>
                 <input type="hidden" th:field="*{projectId}" />
                 <input type="hidden" th:field="*{employeeId}" />
-
+                </form>
                 <button type="submit" class="action-button">Edit Project</button>
                 <form action="/project-leader-overview" method="get">
                     <button type="submit" class="action-button">Back to Overview</button>

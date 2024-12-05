@@ -6,6 +6,7 @@
     font-family: 'Roboto', Arial, sans-serif;
 }
 
+/* Body styling */
 body {
     height: 100vh;
     background: url('pictures/login-screen.jpg') no-repeat center center fixed;
@@ -36,7 +37,6 @@ body {
     text-align: center;
 }
 
-/* Overskrift */
 .login-box h1 {
     font-size: 24px;
     color: #333;
@@ -83,38 +83,6 @@ body {
     background-color: #357ABD;
 }
 
-/* Generel nulstilling og typografi */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', Arial, sans-serif;
-}
-
-
-.overview-container {
-    width: 90%;
-    max-width: 1200px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
-    padding: 20px 30px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Overskrifter */
-header h1 {
-    font-size: 32px;
-    color: #4A90E2;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-main h2 {
-    font-size: 24px;
-    color: #333;
-    margin: 20px 0;
-}
-
 /* Tabellen */
 .styled-table {
     width: 100%;
@@ -130,7 +98,6 @@ main h2 {
 .styled-table thead tr {
     background-color: #4A90E2;
     color: #ffffff;
-    text-align: left;
     font-weight: bold;
 }
 
@@ -209,24 +176,22 @@ button:hover,
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Justér indhold til venstre */
-    width: 100%; /* Fyld tilgængelig bredde */
+    align-items: flex-start;
+    width: 100%;
 }
 
-/* Justér formularfelter */
 .status-update-form .form-control {
-    width: 100%; /* Gør felterne brede og ensartede */
+    width: 100%;
     padding: 8px;
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-top: 5px; /* Lidt afstand mellem label og input */
+    margin-top: 5px;
 }
 
-/* Formular knap */
 .status-update-form .action-button {
     width: auto;
-    align-self: flex-start; /* Justér knappen til venstre */
+    align-self: flex-start;
     background-color: #4A90E2;
     color: white;
     border: none;
@@ -268,32 +233,36 @@ button:hover,
 
 /* Logo container */
 .logo-container {
-    background-color: rgba(255, 255, 255, 0.8); /* Hvid baggrund med gennemsigtighed */
-    padding: 20px; /* Indvendig margin */
-    border-radius: 8px; /* Bløde hjørner */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Let skygge */
-    display: inline-block; /* Tilpas bredden til indholdet */
-    text-align: center; /* Centrerer tekst og billeder */
-    margin: 20px auto; /* Placerer boksen centralt på siden */
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    text-align: center;
+    margin: 20px auto;
 }
 
-/* Logoer */
 .logo {
-    max-height: 100px; /* Maksimal højde for logoer */
-    max-width: 200px; /* Maksimal bredde for logoer */
+    max-height: 100px;
+    max-width: 200px;
     width: auto;
     height: auto;
     object-fit: contain;
-    margin: 10px; /* Plads omkring logoer */
+    margin: 10px;
 }
-
 
 /* Main sektion */
 .homepage-main {
     margin-top: 20px;
 }
 
-/* Knappen */
+.button-container {
+    display: flex;
+    justify-content: center; /* Centrerer knappen horisontalt */
+    align-items: center; /* Centrerer knappen vertikalt */
+    height: 100vh; /* Sørger for, at containeren fylder hele højden af skærmen */
+}
+
 .action-button {
     padding: 10px 20px;
     color: #fff;
@@ -311,52 +280,31 @@ button:hover,
 
 /* Hvid boks for formularen */
 .white-box {
-    background: rgba(255, 255, 255, 0.9); /* Semi-transparent hvid */
-    padding: 30px; /* Giver lidt ekstra plads */
-    border-radius: 10px; /* Rundede hjørner */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Blød skygge */
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 600px; /* Maksimal bredde */
-    margin: 0 auto; /* Centrer boksen på siden */
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-/* Formularens overordnede container */
+/* Formularens container */
 .form-container {
     display: flex;
     flex-direction: column;
-    gap: 20px; /* Mellemrum mellem felterne */
+    gap: 20px;
 }
 
-/* Individuelle formulargrupper */
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
-
-/* Knapperne */
-.action-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #4A90E2;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.action-button:hover {
-    background-color: #357ABD;
-}
-
-/* Formular header */
 .form-page-header h1 {
-    font-size: 28px;
-    font-weight: bold;
-    text-align: center;
-    color: #333;
+    font-size: 28px; /* Størrelse på overskriften */
+    font-weight: bold; /* Gør overskriften fed */
+    text-align: center; /* Centrerer teksten horisontalt */
+    color: #333; /* Mørk tekstfarve */
+    line-height: 1.2; /* Sørger for passende linjehøjde, så teksten ikke bliver beskåret */
+    margin-top: 50px; /* Juster afstanden fra toppen, så teksten ikke bliver beskåret */
 }
+
 
 /* Formular main */
 .form-page-main {
@@ -372,21 +320,6 @@ button:hover,
     justify-content: center;
     align-items: center;
     padding: 20px;
-}
-
-/* Header */
-.form-page-header h1 {
-    font-size: 28px;
-    font-weight: bold;
-    text-align: center;
-    color: #333;
-    margin-bottom: 30px;
-}
-
-/* Hovedsektion */
-.form-page-main {
-    width: 100%;
-    max-width: 600px;
 }
 
 /* Styling af formularfelter */
@@ -414,7 +347,3 @@ button:hover,
     border-color: #4A90E2;
     outline: none;
 }
-
-
-
-
