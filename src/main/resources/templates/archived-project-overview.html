@@ -1,37 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link th:href="@{/main.css}" rel="stylesheet">
 <head>
+    <meta charset="UTF-8">
     <title>Archived Projects</title>
+    <link th:href="@{/main-final.css}" rel="stylesheet">
 </head>
 <body>
-<h1>Archived Projects</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Project Name</th>
-        <th>Description</th>
-        <th>Budget</th>
-        <th>Material cost</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- Iterere over arkiverede projekter -->
-    <tr th:if="${#lists.isEmpty(archivedProjects)}">
-        <td colspan="3">No archived projects available.</td>
-    </tr>
-    <tr th:each="project : ${archivedProjects}">
-        <td th:text="${project.projectName}"></td>
-        <td th:text="${project.projectDescription}"></td>
-        <td th:text="${project.budget}"></td>
-        <td th:text="${project.materialCost}"></td>
-    </tr>
-    </tbody>
-</table>
-
-<!-- Tilbage til projekt oversigt -->
-<form action="/project-leader-overview" method="get">
-    <button type="submit">Back to Project Overview</button>
-</form>
+<div class="form-page-container">
+    <header class="form-page-header">
+        <h1>Archived Projects</h1>
+    </header>
+    <main class="form-page-main">
+        <!-- Hvid boks for arkiverede projekter -->
+        <div class="white-box">
+            <!-- Projekt Tabel -->
+            <table class="styled-table">
+                <thead>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Description</th>
+                    <th>Budget</th>
+                    <th>Material Cost</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Hvis der ikke er nogen arkiverede projekter -->
+                <tr th:if="${#lists.isEmpty(archivedProjects)}">
+                    <td colspan="4">No archived projects available.</td>
+                </tr>
+                <!-- Iterere over arkiverede projekter -->
+                <tr th:each="project : ${archivedProjects}">
+                    <td th:text="${project.projectName}"></td>
+                    <td th:text="${project.projectDescription}"></td>
+                    <td th:text="${project.budget}"></td>
+                    <td th:text="${project.materialCost}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <form action="/project-leader-overview" method="get">
+                <button type="submit" class="action-button">Back to Project Overview</button>
+            </form>
+        </div>
+    </main>
+</div>
 </body>
 </html>

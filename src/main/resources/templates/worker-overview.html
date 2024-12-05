@@ -1,84 +1,100 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link th:href="@{/main.css}" rel="stylesheet">
 <head>
-    <link th:href="@{/main.css}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worker Overview</title>
+    <link th:href="@{/main-final.css}" rel="stylesheet">
 </head>
 <body>
-<h1>Worker Overview</h1>
-<!--<h1 th:text="${employee.email}"></h1>-->
+<div class="overview-container">
+    <header>
+        <h1>Worker Overview</h1>
+    </header>
+    <main>
+        <!-- Project Section -->
+        <section class="project-section">
+            <h2>Project</h2>
+            <table class="styled-table">
+                <thead>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${project == null}">
+                    <td colspan="2">No project available</td>
+                </tr>
+                <tr th:if="${project != null}">
+                    <td th:text="${project.projectName}"></td>
+                    <td th:text="${project.projectDescription}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
 
-<!--<h2 th:text="${project.project_name}">Project</h2>-->
-<table>
-    <thead>
-    <tr>
-        <th>Project Name</th>
-        <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
+        <!-- Subproject Section -->
+        <section class="subproject-section">
+            <h2>Subprojects</h2>
+            <table class="styled-table">
+                <thead>
+                <tr>
+                    <th>Subproject Name</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${subprojects == null}">
+                    <td colspan="2">No subproject available</td>
+                </tr>
+                <tr th:each="subproject : ${subprojects}">
+                    <td th:text="${subproject.subprojectName}"></td>
+                    <td th:text="${subproject.subprojectDescription}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
 
-    <th:block th:if="${project == null}">
-        <span>No project available</span>
-    </th:block>
+        <!-- Task Section -->
+        <section class="task-section">
+            <h2>Tasks</h2>
+            <table class="styled-table">
+                <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Estimated Hours</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="task : ${tasklist}">
+                    <td th:text="${task.taskName}"></td>
+                    <td th:text="${task.startdate}"></td>
+                    <td th:text="${task.enddate}"></td>
+                    <td th:text="${task.status}"></td>
+                    <td th:text="${task.estimatedHours}"></td>
+                    <td>
+                        <form action="/task-status" method="get" class="action-form">
+                            <input type="hidden" name="taskName" th:value="${task.taskName}" />
+                            <button type="submit" class="action-button">Change Task Status</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
 
-    <th:block th:if="${project != null}">
-        <td th:text="${project.projectName}"></td>
-        <td th:text="${project.projectDescription}"></td>
-    </th:block>
-
-    </tbody>
-</table>
-
-<h2>Subprojects</h2>
-<table>
-    <thead>
-    <tr>
-        <th>Subproject Name</th>
-        <th>Description</th>
-    </tr>
-    </thead>
-    <th:block th:if="${subprojects == null}">
-        <span>No subproject available</span>
-    </th:block>
-    <tbody>
-    <tr th:each="subproject : ${subprojects}">
-        <td th:text="${subproject.subprojectName}"></td>
-        <td th:text="${subproject.subprojectDescription}"></td>
-    </tr>
-    </tbody>
-</table>
-
-<h2>Tasks</h2>
-<table>
-    <thead>
-    <tr>
-        <th>Task Name</th>
-        <th>Start date</th>
-        <th>End date</th>
-        <th>Status</th>
-        <th>Estimated hours</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="task : ${tasklist}">
-        <td th:text="${task.taskName}"></td>
-        <td th:text="${task.startdate}"></td>
-        <td th:text="${task.enddate}"></td>
-        <td th:text="${task.status}"></td>
-        <td th:text="${task.estimatedHours}"></td>
-        <td>
-        <form action="/task-status" method="get">
-            <input type="hidden" name="taskName" th:value="${task.taskName}" />
-            <button type="submit">Change task status</button>
-        </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<form action="/logout" method="get">
-    <button type="submit">Log out</button>
-</form>
-
+        <!-- Logout Section -->
+        <div class="button-group">
+            <form action="/logout" method="get">
+                <button type="submit" class="action-button">Log Out</button>
+            </form>
+        </div>
+    </main>
+</div>
 </body>
 </html>
