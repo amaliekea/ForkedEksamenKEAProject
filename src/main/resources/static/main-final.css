@@ -347,3 +347,22 @@ button:hover,
     border-color: #4A90E2;
     outline: none;
 }
+.logout-button {
+    margin-left: auto; /* Skubber knappen til højre */
+    background-color: #4A90E2; /* Standardfarve */
+    color: white; /* Tekstfarve */
+    padding: 10px 20px; /* Knappens størrelse */
+    border: none; /* Fjern kant */
+    border-radius: 5px; /* Runde kanter */
+    cursor: pointer; /* Gør knappen klikbar */
+    transition: background-color 0.3s ease; /* Effekt ved hover */
+}
+
+.logout-button:hover {
+    background-color: #357ABD; /* Ændrer farve ved hover */
+}
+
+
+.logout-button:hover {
+    background-color: #357ABD; /* Mørkere farve ved hover */
+}
