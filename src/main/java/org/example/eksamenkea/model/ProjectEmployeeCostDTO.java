@@ -78,13 +78,13 @@ public class ProjectEmployeeCostDTO {
     @Override
     public String toString() {
         return "ProjectEmployeeCostDTO{" +
-                "project_id=" + projectId +
-                ", project_name='" + projectName + '\'' +
+                "projectId=" + projectId +
+                ", projectName='" + projectName + '\'' +
                 ", budget=" + budget +
-                ", project_description='" + projectDescription + '\'' +
-                ", employee_id=" + employeeId +
-                ", material_cost=" + materialCost +
-                ", employee_cost=" + employeeCost +
+                ", projectDescription='" + projectDescription + '\'' +
+                ", employeeId=" + employeeId +
+                ", materialCost=" + materialCost +
+                ", employeeCost=" + employeeCost +
                 '}';
     }
 }
