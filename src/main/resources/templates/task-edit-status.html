@@ -2,53 +2,65 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link th:href="@{/main.css}" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Status Update</title>
+    <link th:href="@{/main-final.css}" rel="stylesheet">
 </head>
 <body>
-<h1>Update Task Status</h1>
+<div class="overview-container">
+    <header>
+        <h1>Update Task Status</h1>
+    </header>
+    <main>
+        <section class="status-update-section">
+            <h2 th:text="${task.taskName}"></h2>
+            <table class="styled-table">
+                <thead>
+                <tr>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <form th:action="@{/task-status}" th:object="${task}" method="post" class="status-update-form">
+                            <!-- Hidden fields -->
+                            <input type="hidden" name="taskId" th:value="${task.taskId}" />
+                            <input type="hidden" name="taskName" th:value="${task.taskName}" />
+                            <input type="hidden" name="startdate" th:value="${task.startdate}" />
+                            <input type="hidden" name="enddate" th:value="${task.enddate}" />
+                            <input type="hidden" name="subprojectId" th:value="${task.subprojectId}" />
+                            <input type="hidden" name="employeeId" th:value="${task.employeeId}" />
+                            <input type="hidden" name="estimatedHours" th:value="${task.estimatedHours}" />
 
-<table>
-    <thead>
-    <tr>
-        <th>Task Name</th>
-        <th>Status</th>
-    </tr>
-    </thead>
-    <tbody>
-        <td th:text="${task.taskName}"></td>
-        <td>
-            <form th:action="@{/task-status}" th:object="${task}" method="post">
-                <!-- Hidden fields da worker kun kan editere status -->
-                <input type="hidden" name="taskId" th:value="${task.taskId}" />
-                <input type="hidden" name="taskName" th:value="${task.taskName}" />
-                <input type="hidden" name="startdate" th:value="${task.startdate}" />
-                <input type="hidden" name="enddate" th:value="${task.enddate}" />
-                <input type="hidden" name="subprojectId" th:value="${task.subprojectId}" />
-                <input type="hidden" name="employeeId" th:value="${task.employeeId}" />
-                <input type="hidden" name="estimatedHours" th:value="${task.estimatedHours}" />
+                            <div class="form-group">
+                                <label for="actualHours">Insert used hours on task:</label>
+                                <input id="actualHours" class="form-control"
+                                       type="number"
+                                       th:field="*{actualHours}"
+                                       placeholder="Enter actual hours" required />
+                            </div>
 
-                <!--<input type="hidden" name="actual_hours" th:value="${task.actual_hours}" />-->
-                <label for="actualHours">Insert used hours on task:</label>
-                <input id="actualHours" class="form-control"
-                       type="number"
-                       th:field="*{actualHours}"
-                       placeholder="Enter actual hours" required />
+                            <div class="form-group">
+                                <label for="status">Update Status:</label>
+                                <select id="status" name="status" th:field="*{status}" class="form-control">
+                                    <option value="NOTSTARTED">Not Started</option>
+                                    <option value="INPROGRESS">In Progress</option>
+                                    <option value="COMPLETE">Complete</option>
+                                    <option value="OVERDUE">Overdue</option>
+                                </select>
+                            </div>
 
-
-                <select name="status" th:field="*{status}">
-                    <option value="NOTSTARTED">Not Started</option>
-                    <option value="INPROGRESS">In Progress</option>
-                    <option value="COMPLETE">Complete</option>
-                    <option value="OVERDUE">Overdue</option>
-                </select>
-
-                <button type="submit">Update status</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
+                            <div class="form-group">
+                                <button type="submit" class="action-button">Update Status</button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</div>
 </body>
 </html>

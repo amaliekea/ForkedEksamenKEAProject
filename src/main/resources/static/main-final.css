@@ -204,3 +204,41 @@ button:hover,
     }
 }
 
+/* Formular layout */
+.status-update-form .form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Justér indhold til venstre */
+    width: 100%; /* Fyld tilgængelig bredde */
+}
+
+/* Justér formularfelter */
+.status-update-form .form-control {
+    width: 100%; /* Gør felterne brede og ensartede */
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px; /* Lidt afstand mellem label og input */
+}
+
+/* Formular knap */
+.status-update-form .action-button {
+    width: auto;
+    align-self: flex-start; /* Justér knappen til venstre */
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.status-update-form .action-button:hover {
+    background-color: #357ABD;
+}
+
+
