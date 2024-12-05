@@ -1,60 +1,68 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<link th:href="@{/main.css}" rel="stylesheet">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Task Overview</title>
+    <link th:href="@{/main-final.css}" rel="stylesheet">
 </head>
-
 <body>
-<h1>Tasks for Subproject: <span th:text="${subprojectName}"></span></h1>
+<div class="overview-container">
+    <header>
+        <h1>Tasks for Subproject: <span th:text="${subprojectName}"></span></h1>
+    </header>
+    <main>
+        <section class="tasks-section">
+            <h2>Task List</h2>
+            <table class="styled-table">
+                <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Estimated Hours</th>
+                    <th>Actual Hours</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="task : ${tasks}">
+                    <td th:text="${task.taskName}"></td>
+                    <td th:text="${task.startdate}"></td>
+                    <td th:text="${task.enddate}"></td>
+                    <td th:text="${task.status}"></td>
+                    <td th:text="${task.estimatedHours}"></td>
+                    <td th:text="${task.actualHours}"></td>
+                    <td>
+                        <form th:action="@{/assign-worker}" method="post" class="assign-worker-form">
+                            <input type="hidden" name="taskName" th:value="${task.taskName}" />
+                            <input type="hidden" name="subprojectName" th:value="${subprojectName}" />
+                            <select name="employeeEmail" required class="worker-select" onchange="this.form.submit()">
+                                <option value="" disabled selected>Select a worker</option>
+                                <option th:each="employee : ${employeeList}"
+                                        th:value="${employee.email}"
+                                        th:text="${employee.email}"
+                                        th:selected="${task.employeeId == employee.employeeId}">
+                                </option>
+                            </select>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
 
-<table>
-    <thead>
-    <tr>
-        <th>Task Name</th>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Status</th>
-        <th>Estimated Hours</th>
-        <th>Actual Hours</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="task : ${tasks}">
-        <td th:text="${task.taskName}"></td>
-        <td th:text="${task.startdate}"></td>
-        <td th:text="${task.enddate}"></td>
-        <td th:text="${task.status}"></td>
-        <td th:text="${task.estimatedHours}"></td>
-        <td th:text="${task.actualHours}"></td>
-
-        <!-- Assign worker to task -->
-        <td>
-            <form th:action="@{/assign-worker}" th:method="post">
-                <input type="hidden" name="taskName" th:value="${task.taskName}" />
-                <input type="hidden" name="subprojectName" th:value="${subprojectName}" />
-                <select name="employeeEmail" required onchange="this.form.submit()">
-                    <option value="" disabled selected>Select a worker</option>
-                    <option th:each="employee : ${employeeList}"
-                            th:value="${employee.email}"
-                            th:text="${employee.email}"
-                        th:selected="${task.employeeId == employee.employeeId}">
-                    </option>
-                </select>
+        <div class="button-group">
+            <form action="/project-leader-overview" method="get">
+                <button type="submit">Back to Subproject Overview</button>
             </form>
-        </td>
-
-    </tr>
-    </tbody>
-</table>
-<form action="/project-leader-overview" method="get">
-    <button type="submit">Back to subproject Overview</button>
-</form>
-<form action="/add-task" method="get">
-    <input type="hidden" name="subprojectName" th:value="${subprojectName}" />
-    <button type="submit">Add Task</button>
-</form>
-
+            <form action="/add-task" method="get">
+                <input type="hidden" name="subprojectName" th:value="${subprojectName}" />
+                <button type="submit">Add Task</button>
+            </form>
+        </div>
+    </main>
+</div>
 </body>
 </html>

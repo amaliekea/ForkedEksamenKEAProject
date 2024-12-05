@@ -1,68 +1,69 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link th:href="@{/main.css}" rel="stylesheet">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Leader Overview</title>
+    <link th:href="@{/main-final.css}" rel="stylesheet">
 </head>
 <body>
-<h1>Project Leader Overview</h1>
-<h2>Projects</h2>
-<table>
-    <thead>
-    <tr>
-        <th>Project Name</th>
-        <th>Description</th>
-        <th>Total budget</th>
-        <th>Material cost</th>
-        <th>Employee cost</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- Iteration over projekter -->
-    <tr th:if="${#lists.isEmpty(projects)}">
-        <td colspan="3">No projects available.</td>
-    </tr>
-    <tr th:each="project : ${projects}">
-        <td th:text="${project.projectName}"></td>
-        <td th:text="${project.projectDescription}"></td>
-        <td th:text="${project.budget}"></td>
-        <td th:text="${project.materialCost}"></td>
-        <td th:text="${project.employeeCost}"></td>
-    <td>
-        <form action="/project-leader-subproject-overview" method="get">
-            <input type="hidden" name="projectName" th:value="${project.projectName}" />
-            <button type="submit">See subprojects</button>
-        </form>
-<br>
-        <form th:action="@{'/' + ${project.projectName} + '/edit-project'}" method="get">
-            <input type="hidden" name="projectName" th:value="${project.projectName}"/>
-            <button type="submit">Edit Project</button>
-        </form>
-
-      <br>
-        <form action="/archive-project" method="post">
-            <input type="hidden" name="projectName" th:value="${project.projectName}" />
-            <button type="submit">Archive project</button>
-        </form>
-
-    </td>
-    </tr>
-
-    </tbody>
-</table>
-<div class="button-below-table">
-    <form action="/archived-project-overview" method="get">
-        <button type="submit">View Archived Projects</button>
-    </form>
+<div class="overview-container">
+    <header>
+        <h1>Project Leader Overview</h1>
+    </header>
+    <main>
+        <h2>Projects</h2>
+        <table class="styled-table">
+            <thead>
+            <tr>
+                <th>Project Name</th>
+                <th>Description</th>
+                <th>Total Budget</th>
+                <th>Material Cost</th>
+                <th>Employee Cost</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Iteration over projekter -->
+            <tr th:if="${#lists.isEmpty(projects)}">
+                <td colspan="6">No projects available.</td>
+            </tr>
+            <tr th:each="project : ${projects}">
+                <td th:text="${project.projectName}"></td>
+                <td th:text="${project.projectDescription}"></td>
+                <td th:text="${project.budget}"></td>
+                <td th:text="${project.materialCost}"></td>
+                <td th:text="${project.employeeCost}"></td>
+                <td>
+                    <form action="/project-leader-subproject-overview" method="get">
+                        <input type="hidden" name="projectName" th:value="${project.projectName}" />
+                        <button type="submit" class="action-button">See subprojects</button>
+                    </form>
+                    <form th:action="@{'/' + ${project.projectName} + '/edit-project'}" method="get">
+                        <input type="hidden" name="projectName" th:value="${project.projectName}" />
+                        <button type="submit" class="action-button">Edit Project</button>
+                    </form>
+                    <form action="/archive-project" method="post">
+                        <input type="hidden" name="projectName" th:value="${project.projectName}" />
+                        <button type="submit" class="action-button">Archive Project</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="button-group">
+            <form action="/archived-project-overview" method="get">
+                <button type="submit">View Archived Projects</button>
+            </form>
+            <form action="/add-project" method="get">
+                <button type="submit">Add Project</button>
+            </form>
+            <form action="/logout" method="get">
+                <button type="submit">Log out</button>
+            </form>
+        </div>
+    </main>
 </div>
-<form action="/add-project" method="get">
-    <button type="submit">Add project</button>
-</form>
-<form action="/logout" method="get">
-    <button type="submit">Log out</button>
-</form>
-
 </body>
 </html>
-
-

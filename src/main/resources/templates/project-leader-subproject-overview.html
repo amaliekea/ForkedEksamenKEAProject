@@ -1,58 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
-<link th:href="@{/main.css}" rel="stylesheet">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Leader Overview over Subprojects</title>
+  <link th:href="@{/main-final.css}" rel="stylesheet">
 </head>
 <body>
-<h1>Project Leader Overview over Subprojekt</h1>
+<div class="overview-container">
+  <header>
+    <h1>Project Leader Overview over Subprojects</h1>
+  </header>
+  <main>
+    <section class="project-section">
+      <h2>Project Details</h2>
+      <table class="styled-table">
+        <thead>
+        <tr>
+          <th>Belongs to Project Name:</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td th:text="*{projectName}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
 
-<h2>Projects</h2>
-<table>
-  <thead>
-  <tr>
-    <th>Belongs to project name:</th>
-  </tr>
-  </thead>
-  <tbody>
-  <td th:text="*{projectName}"></td>
-  </tbody>
-</table>
+    <section class="subprojects-section">
+      <h2>Subprojects</h2>
+      <table class="styled-table">
+        <thead>
+        <tr>
+          <th>Subproject Name</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="subproject : ${subprojects}">
+          <td th:text="${subproject.subprojectName}"></td>
+          <td th:text="${subproject.subprojectDescription}"></td>
+          <td>
+            <form action="/project-leader-tasks" method="get" class="action-form">
+              <input type="hidden" name="subprojectName" th:value="${subproject.subprojectName}" />
+              <input type="hidden" name="subproject" th:value="${subproject}" />
+              <button type="submit" class="action-button">View Tasks</button>
+            </form>
+            <form th:action="@{'/' + ${subproject.subprojectName} + '/edit-subproject'}" method="get" class="action-form">
+              <input type="hidden" name="subprojectName" th:value="${subproject.subprojectName}" />
+              <button type="submit" class="action-button">Edit Subproject</button>
+            </form>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
 
-<h2>Subprojects</h2>
-<table>
-  <thead>
-  <tr>
-    <th>Subproject Name</th>
-    <th>Description</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="subproject : ${subprojects}">
-    <td th:text="${subproject.subprojectName}"></td>
-    <td th:text="${subproject.subprojectDescription}"></td>
-    <td>
-      <form action="/project-leader-tasks" method="get">
-        <input type="hidden" name="subprojectName" th:value="${subproject.subprojectName}" />
-        <input type="hidden" name="subproject" th:value="${subproject}" />
-        <button type="submit">View Tasks</button>
+    <div class="button-group">
+      <form action="/logout" method="get">
+        <button type="submit">Log out</button>
       </form>
-      <form th:action="@{'/' + ${subproject.subprojectName} + '/edit-subproject'}" method="get">
-        <input type="hidden" name="subprojectName" th:value="${subproject.subprojectName}"/>
-        <button type="submit">Edit Subproject</button>
+      <form action="/project-leader-overview" method="get">
+        <button type="submit">Back to Project Overview</button>
       </form>
-    </td>
-
-  </tr>
-  </tbody>
-</table>
-
-<form action="/logout" method="get">
-  <button type="submit">Log out</button>
-</form>
-<form action="/project-leader-overview" method="get">
-  <button type="submit">Back to project overview</button>
-</form>
+    </div>
+  </main>
+</div>
 </body>
 </html>

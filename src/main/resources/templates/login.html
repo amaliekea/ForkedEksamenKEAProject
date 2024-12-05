@@ -1,38 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<link th:href="@{/main.css}" rel="stylesheet">
 <head>
     <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link th:href="@{/main-final.css}" rel="stylesheet">
 </head>
 <body>
-<table>
-    <tr>
+<div class="login-container">
+    <div class="login-box">
+        <h1>Login</h1>
+        <p th:if="${errorMessage}" th:text="${errorMessage}" class="error-message"></p>
         <form action="/validate_login" method="post">
-            <!-- Email input -->
-            <td>Email</td>
-            <td><input type="text" name="email" required></td>
-            <br>
 
-            <!-- Password input -->
-            <td>Password</td>
-            <td><input type="password" name="password" required></td>
-            <br>
-
-            <!-- Fejlmeddelelse -->
-            <td colspan="2">
-                <p th:if="${errorMessage}" th:text="${errorMessage}"></p>
-            </td>
-            <br>
-
-            <!-- Login knap -->
-            <td colspan="2">
-                <button type="submit">Login</button>
-            </td>
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" placeholder="Enter your email">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password">
+            <button type="submit">Login</button>
         </form>
-    </tr>
-</table>
-
+    </div>
+</div>
 </body>
 </html>
-

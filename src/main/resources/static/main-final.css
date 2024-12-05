@@ -1,0 +1,244 @@
+/* Generel nulstilling og typografi */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: url('pictures/login-screen.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Login container */
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.6); /* Semi-transparent overlay */
+}
+
+/* Login box */
+.login-box {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 20px 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Overskrift */
+.login-box h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Inputfelter */
+.login-box label {
+    display: block;
+    font-size: 14px;
+    color: #555;
+    margin: 10px 0 5px;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.login-box input:focus {
+    border-color: #4A90E2;
+}
+
+/* Login-knap */
+.login-box button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4A90E2;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-box button:hover {
+    background-color: #357ABD;
+}
+
+/* Generel nulstilling og typografi */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+
+.overview-container {
+    width: 90%;
+    max-width: 1200px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Overskrifter */
+header h1 {
+    font-size: 32px;
+    color: #4A90E2;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+main h2 {
+    font-size: 24px;
+    color: #333;
+    margin: 20px 0;
+}
+
+/* Tabellen */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.styled-table thead tr {
+    background-color: #4A90E2;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+.styled-table tbody tr {
+    background-color: #f9f9f9;
+}
+
+.styled-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.styled-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Knapper */
+button,
+.action-button {
+    display: inline-block;
+    width: 150px;
+    padding: 10px;
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 5px 0;
+}
+
+button:hover,
+.action-button:hover {
+    background-color: #357ABD;
+    transform: scale(1.05);
+}
+
+/* Knap-gruppe */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.button-group form {
+    margin: 0 5px;
+}
+
+/* Responsiv styling */
+@media (max-width: 768px) {
+    .overview-container {
+        padding: 15px;
+    }
+
+    button,
+    .action-button {
+        width: 100%;
+    }
+
+    .button-group {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* Formular layout */
+.status-update-form .form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Justér indhold til venstre */
+    width: 100%; /* Fyld tilgængelig bredde */
+}
+
+/* Justér formularfelter */
+.status-update-form .form-control {
+    width: 100%; /* Gør felterne brede og ensartede */
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px; /* Lidt afstand mellem label og input */
+}
+
+/* Formular knap */
+.status-update-form .action-button {
+    width: auto;
+    align-self: flex-start; /* Justér knappen til venstre */
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.status-update-form .action-button:hover {
+    background-color: #357ABD;
+}
+
+
