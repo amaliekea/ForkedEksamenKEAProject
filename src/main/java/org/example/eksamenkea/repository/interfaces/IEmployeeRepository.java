@@ -8,7 +8,7 @@ import java.util.List;
 public interface IEmployeeRepository {
     Employee signIn(String email, String password) throws Errorhandling;
 
-    public List<Employee> getAllWorkers() throws Errorhandling;
+    List<Employee> getAllWorkers() throws Errorhandling;
 
-    public Employee getEmployeeByEmail(String email) throws Errorhandling;
+    Employee getEmployeeByEmail(String email) throws Errorhandling;
 }
