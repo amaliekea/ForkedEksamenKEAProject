@@ -3,55 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Project</title>
-    <link th:href="@{/main.css}" rel="stylesheet">
+    <link th:href="@{/main-final.css}" rel="stylesheet">
 </head>
 <body>
-<h1>Add Project</h1>
-<form th:action="@{/project-added}" th:object="${project}" method="post">
-    <!-- Formularens action angiver endpoint "/project-added", hvor data sendes via POST -->
-    <!-- Formularen er bundet til backend-objektet "project" -->
 
-    <!-- Project Name -->
-    <label for="projectName">Project Name:</label>
-    <input id="projectName" class="form-control"
-           type="text"
-           th:field="*{projectName}"
-           placeholder="Enter project name" required />
-    <br>
+<div class="form-page-container">
+    <header class="form-page-header">
+        <h1>Add Project</h1>
+    </header>
+    <main class="form-page-main">
+        <!-- Hvid boks omkring formularen -->
+        <div class="white-box">
+            <form th:action="@{/project-added}" th:object="${project}" method="post" class="form-container">
+                <!-- Project Name -->
+                <div class="form-group">
+                    <label for="projectName">Project Name:</label>
+                    <input id="projectName" class="form-control"
+                           type="text"
+                           th:field="*{projectName}"
+                           placeholder="Enter project name" required />
+                </div>
 
-    <!-- Project Description -->
-    <label for="projectDescription">Description:</label>
-    <textarea id="projectDescription" class="form-control"
-              th:field="*{projectDescription}"
-              placeholder="Enter project description"
-              rows="4" required></textarea>
-    <br>
+                <!-- Project Description -->
+                <div class="form-group">
+                    <label for="projectDescription">Description:</label>
+                    <textarea id="projectDescription" class="form-control"
+                              th:field="*{projectDescription}"
+                              placeholder="Enter project description"
+                              rows="4" required></textarea>
+                </div>
 
-    <!-- Budget -->
-    <label for="budget">Budget (in DKK):</label>
-    <input id="budget" class="form-control"
-           type="number"
-           th:field="*{budget}"
-           placeholder="Enter your project's budget"
-           min="0" required />
-    <br>
+                <!-- Budget -->
+                <div class="form-group">
+                    <label for="budget">Budget (in DKK):</label>
+                    <input id="budget" class="form-control"
+                           type="number"
+                           th:field="*{budget}"
+                           placeholder="Enter your project's budget"
+                           min="0" required />
+                </div>
 
-    <!-- Material Cost -->
-    <label for="materialCost">Material Cost (in DKK):</label>
-    <input id="materialCost" class="form-control"
-           type="number"
-           th:field="*{materialCost}"
-           placeholder="Enter estimated material cost"
-           min="0" />
-    <br>
+                <!-- Material Cost -->
+                <div class="form-group">
+                    <label for="materialCost">Material Cost (in DKK):</label>
+                    <input id="materialCost" class="form-control"
+                           type="number"
+                           th:field="*{materialCost}"
+                           placeholder="Enter estimated material cost"
+                           min="0" />
+                </div>
 
+                <!-- Hidden Employee ID -->
+                <input type="hidden" name="employeeId" th:value="${employeeId}" />
 
-    <!-- Hidden Employee ID -->
-    <input type="hidden" name="employeeId" th:value="${employeeId}" />
-    <!-- Feltet bruges til at overføre projektlederens ID fra sessionen -->
-    <!-- Submit Button -->
-    <button type="submit" class="btn btn-primary">Submit and Add Project</button>
-</form>
+                <!-- Submit Button -->
+                <div class="form-actions">
+                    <button type="submit" class="action-button">Submit and Add Project</button>
+                </div>
 
+            </form>
+        </div>
+    </main>
+</div>
 </body>
 </html>

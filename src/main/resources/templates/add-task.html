@@ -3,50 +3,67 @@
 <head>
   <meta charset="UTF-8">
   <title>Add Task</title>
-  <link th:href="@{/main.css}" rel="stylesheet">
+  <link th:href="@{/main-final.css}" rel="stylesheet">
 </head>
 <body>
-<h1>Add Task</h1>
-<form th:action="@{/task-added}" th:object="${task}" method="post">
+<div class="form-page-container">
+  <header class="form-page-header">
+    <h1>Add Task</h1>
+  </header>
+  <main class="form-page-main">
+    <!-- Hvid boks omkring formularen -->
+    <div class="white-box">
+      <form th:action="@{/task-added}" th:object="${task}" method="post" class="form-container">
 
-  <label for="taskName">Task Name:</label>
-  <input id="taskName" class="form-control"
-         type="text"
-         th:field="*{taskName}"
-         placeholder="Enter task name" required />
-  <br>
+        <!-- Task Name -->
+        <div class="form-group">
+          <label for="taskName">Task Name:</label>
+          <input id="taskName" class="form-control"
+                 type="text"
+                 th:field="*{taskName}"
+                 placeholder="Enter task name" required />
+        </div>
 
-  <label for="startdate">Start Date:</label>
-  <input id="startdate" class="form-control"
-         type="date"
-         th:field="*{startdate}"
-         required />
-  <br>
+        <!-- Start Date -->
+        <div class="form-group">
+          <label for="startdate">Start Date:</label>
+          <input id="startdate" class="form-control"
+                 type="date"
+                 th:field="*{startdate}"
+                 required />
+        </div>
 
-  <label for="enddate">End Date:</label>
-  <input id="enddate" class="form-control"
-         type="date"
-         th:field="*{enddate}"
-         required />
-  <br>
+        <!-- End Date -->
+        <div class="form-group">
+          <label for="enddate">End Date:</label>
+          <input id="enddate" class="form-control"
+                 type="date"
+                 th:field="*{enddate}"
+                 required />
+        </div>
 
-  <label for="estimatedHours">Estimated Hours:</label>
-  <input id="estimatedHours" class="form-control"
-         type="number"
-         th:field="*{estimatedHours}"
-         placeholder="Enter estimated hours" required />
-  <br>
+        <!-- Estimated Hours -->
+        <div class="form-group">
+          <label for="estimatedHours">Estimated Hours:</label>
+          <input id="estimatedHours" class="form-control"
+                 type="number"
+                 th:field="*{estimatedHours}"
+                 placeholder="Enter estimated hours" required />
+        </div>
 
-  <input type="hidden"  name="subprojectId" th:value="${subprojectId}" />
+        <!-- Hidden Fields -->
+        <input type="hidden" name="subprojectId" th:value="${subprojectId}" />
+        <input type="hidden" name="employeeId" th:value="${employeeId}" />
+        <input type="hidden" th:field="*{status}" value="NOTSTARTED" />
+        <input type="hidden" name="subprojectName" th:value="${subprojectName}" />
 
-  <input type="hidden" name="employeeId" th:value="${employeeId}" />
-  <input type="hidden" th:field="*{status}" value="NOTSTARTED" /> <!--da det er ny task antager vi at den ikke er startet-->
-
-  <input type="hidden"  name="subprojectName" th:value="${subprojectName}" />
-
-  <button type="submit" class="btn btn-primary">Add Task</button>
-
-</form>
-
+        <!-- Submit Button -->
+        <div class="form-actions">
+          <button type="submit" class="action-button">Add Task</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
 </body>
 </html>

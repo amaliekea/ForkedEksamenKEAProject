@@ -1,46 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link th:href="@{/main.css}" rel="stylesheet">
 <head>
+    <meta charset="UTF-8">
     <title>Edit Project</title>
-    <link th:href="@{/main.css}" rel="stylesheet">
+    <link th:href="@{/main-final.css}" rel="stylesheet">
 </head>
 <body>
 
-<h1>Edit Project</h1>
-<form th:action="@{/edit-project}" th:object="${project}" method="post">
-    <label for="name">Name</label>
-    <input id="name"
-           type="text"
-           th:field="*{projectName}"
-           placeholder="Enter project name..." />
-    <br>
-    <label for="description">Description</label>
-    <input id="description"
-           type="text"
-           th:field="*{projectDescription}"
-           placeholder="Enter project description..." />
+<div class="form-page-container">
+    <header class="form-page-header">
+        <h1>Edit Project</h1>
+    </header>
 
+    <main class="form-page-main">
+        <div class="white-box">
+            <form th:action="@{/edit-project}" th:object="${project}" method="post">
 
-      <label for="materialCost">Material Cost</label>
-    <input id="materialCost"
-           type="text"
-           th:field="*{materialCost}"
-           placeholder="Enter material cost..." />
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input id="name" class="form-control" type="text" th:field="*{projectName}" placeholder="Enter project name..." required />
+                </div>
 
-          <label for="budget">Budget</label>
-    <input id="budget"
-           type="text"
-           th:field="*{budget}"
-           placeholder="Enter budget..." />
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input id="description" class="form-control" type="text" th:field="*{projectDescription}" placeholder="Enter project description..." required />
+                </div>
 
-    <br>
-    <input type="hidden" th:field="*{projectId}" />
-    <input type="hidden" th:field="*{employeeId}" />
-    <button type="submit">Edit Subproject</button>
-</form>
-<form action="/project-leader-overview" method="get">
-    <button type="submit">Back to overview</button>
-</form>
+                <div class="form-group">
+                    <label for="materialCost">Material Cost</label>
+                    <input id="materialCost" class="form-control" type="text" th:field="*{materialCost}" placeholder="Enter material cost..." required />
+                </div>
+
+                <div class="form-group">
+                    <label for="budget">Budget</label>
+                    <input id="budget" class="form-control" type="text" th:field="*{budget}" placeholder="Enter budget..." required />
+                </div>
+
+                <!-- Hidden Fields -->
+                <form>
+                <input type="hidden" th:field="*{projectId}" />
+                <input type="hidden" th:field="*{employeeId}" />
+                </form>
+                <button type="submit" class="action-button">Edit Project</button>
+                <form action="/project-leader-overview" method="get">
+                    <button type="submit" class="action-button">Back to Overview</button>
+                </form>
+            </form>
+        </div>
+    </main>
+</div>
+
 </body>
 </html>

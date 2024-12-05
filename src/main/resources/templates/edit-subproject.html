@@ -1,32 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link th:href="@{/main.css}" rel="stylesheet">
 <head>
-    <title>Edit subproject</title>
-    <link th:href="@{/main.css}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Edit Subproject</title>
+    <link th:href="@{/main-final.css}" rel="stylesheet">
 </head>
 <body>
 
-<h1>Edit subproject</h1>
-<form th:action="@{/edit-subproject}" th:object="${subproject}" method="post">
-    <label for="name">Name</label>
-    <input id="name"
-           type="text"
-           th:field="*{subprojectName}"
-           placeholder="Enter subproject name..." />
-    <br>
-    <label for="description">Description</label>
-    <input id="description"
-           type="text"
-           th:field="*{subprojectDescription}"
-           placeholder="Enter subproject description..." />
-    <br>
-    <input type="hidden" th:field="*{subprojectId}" />
-    <input type="hidden" th:field="*{projectId}" />
-    <button type="submit">Edit Subproject</button>
-</form>
-<form action="/project-leader-overview" method="get">
-    <button type="submit">Back to overview</button>
-</form>
+<div class="form-page-container">
+    <header class="form-page-header">
+        <h1>Edit Subproject</h1>
+    </header>
+
+    <main class="form-page-main">
+        <div class="white-box">
+            <form th:action="@{/edit-subproject}" th:object="${subproject}" method="post">
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input id="name" class="form-control" type="text" th:field="*{subprojectName}" placeholder="Enter subproject name..." required />
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input id="description" class="form-control" type="text" th:field="*{subprojectDescription}" placeholder="Enter subproject description..." required />
+                </div>
+
+                <!-- Hidden Fields -->
+                <input type="hidden" th:field="*{subprojectId}" />
+                <input type="hidden" th:field="*{projectId}" />
+
+                <button type="submit" class="action-button">Edit Subproject</button>
+            </form>
+            <form action="/project-leader-overview" method="get">
+                <button type="submit" class="action-button">Back to Overview</button>
+            </form>
+        </div>
+    </main>
+</div>
+
 </body>
 </html>
