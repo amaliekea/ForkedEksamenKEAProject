@@ -10,32 +10,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Repository("ISUBPROJECTREPOSITORY")
 public class SubprojectRepository implements ISubprojectRepository {
 
-    @Override
-    public int getSubprojectIdBySubprojectName(String subprojectName) throws Errorhandling {
-        String query = "SELECT subproject_id FROM subproject WHERE subproject_name = ?";
-
-        try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setString(1, subprojectName);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getInt("subproject_id");
-                } else {
-                    throw new Errorhandling("Subproject not found for name: " + subprojectName);
-                }
-            }
-        } catch (SQLException e) {
-            throw new Errorhandling("Failed to get subproject ID by subproject name: " + e.getMessage());
-        }
-    }
-    // Lavet af Malthe
+    @Override //Malthe
     public Subproject getSubprojectBySubprojectId(int subprojectId) throws Errorhandling {
         Subproject subproject = null;
         String query = "SELECT * FROM subproject WHERE subproject_id = ?;";
@@ -78,5 +60,30 @@ public class SubprojectRepository implements ISubprojectRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Failed to update subproject " + e.getMessage());
         }
+    }
+    @Override
+    public List<Subproject> getSubjectsByProjectId(int projectId) throws Errorhandling {
+        List<Subproject> subprojects = new ArrayList<>();
+        String query = "SELECT * FROM subproject WHERE project_id = ?";
+
+        try (Connection con = ConnectionManager.getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, projectId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    subprojects.add(new Subproject(
+                            resultSet.getInt("subproject_id"),
+                            resultSet.getString("subproject_name"),
+                            resultSet.getString("subproject_description"),
+                            resultSet.getInt("project_id")
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to get subprojects by project ID: " + e.getMessage());
+        }
+        return subprojects;
     }
 }

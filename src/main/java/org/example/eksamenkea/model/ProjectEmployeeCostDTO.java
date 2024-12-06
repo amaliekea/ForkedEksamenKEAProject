@@ -1,6 +1,6 @@
 package org.example.eksamenkea.model;
 
-public class ProjectEmployeeCostDTO { //Amalie
+public class ProjectEmployeeCostDTO {
     private int projectId;
     private String projectName;
     private double budget;
@@ -39,8 +39,16 @@ public class ProjectEmployeeCostDTO { //Amalie
         return budget;
     }
 
+    public void setBudget(double budget) {
+        this.budget = budget;
+    }
+
     public String getProjectDescription() {
         return projectDescription;
+    }
+
+    public void setProjectDescription(String projectDescription) {
+        this.projectDescription = projectDescription;
     }
 
     public int getEmployeeId() {
@@ -55,11 +63,17 @@ public class ProjectEmployeeCostDTO { //Amalie
         return materialCost;
     }
 
+    public void setMaterialCost(int materialCost) {
+        this.materialCost = materialCost;
+    }
 
     public int getEmployeeCost() {
         return employeeCost;
     }
 
+    public void setEmployeeCost(int employeeCost) {
+        this.employeeCost = employeeCost;
+    }
 
     @Override
     public String toString() {
