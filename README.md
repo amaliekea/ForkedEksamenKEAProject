@@ -1,6 +1,6 @@
-# **Sjovt navn Project Planning Tool**
+# **Alpha Solutions Project Planning Tool**
 
-## **Description**
+## **This is our project calculation tool**
 
 ---
 
@@ -23,8 +23,8 @@
 ## **Collaborators**
 The project was developed by the following team members:
 
-- **Team Member 1**: [GitHub Profile](https://github.com/zuunun) 
-- **Team Member 2**: [GitHub Profile](https://github.com/amaliekea)
-- **Team Member 3**: [GitHub Profile](https://github.com/Malthe-kea)
+- **Zuhur**: [GitHub Profile](https://github.com/zuunun) 
+- **Amalie**: [GitHub Profile](https://github.com/amaliekea)
+- **Malthe**: [GitHub Profile](https://github.com/Malthe-kea)
 
 
