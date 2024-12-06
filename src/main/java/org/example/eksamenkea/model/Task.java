@@ -14,7 +14,7 @@ public class Task {
     private int actualHours;
 
     public Task(int taskId, String taskName, LocalDate startdate, LocalDate enddate, Status status,
-                int subprojectId, int estimatedHours, int employeeId) {
+                int subprojectId, int estimatedHours, int actualHours, int employeeId) {
         this.taskId = taskId;
         this.taskName = taskName;
         this.startdate = startdate;
@@ -22,8 +22,8 @@ public class Task {
         this.status = status;
         this.subprojectId = subprojectId;
         this.estimatedHours = estimatedHours;
-        this.actualHours = 0;
         this.employeeId = employeeId;
+        this.actualHours = actualHours;
     }
     public Task() {
 
