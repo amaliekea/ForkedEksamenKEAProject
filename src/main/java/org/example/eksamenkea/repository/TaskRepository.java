@@ -133,7 +133,7 @@ public class TaskRepository implements ITaskRepository {
         }
         return task;
     }
-
+//SLETMIG
     @Override //Amalie
     public void updateTask(Task task) throws Errorhandling {
         String updateSql = "UPDATE task SET status = ?, actual_hours = ? WHERE task_id = ?";
