@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class SubprojectService {
@@ -15,15 +17,14 @@ public class SubprojectService {
         this.subprojectRepository = (ISubprojectRepository) context.getBean(impl);
     }
 
-    public int getSubprojectIdBySubprojectName(String subprojectName) throws Errorhandling {
-     return subprojectRepository.getSubprojectIdBySubprojectName(subprojectName);
-    }
-
     public Subproject getSubprojectBySubprojectId(int subprojectId) throws Errorhandling {
         return subprojectRepository.getSubprojectBySubprojectId(subprojectId);
     }
     public void updateSubproject(Subproject subproject) throws Errorhandling{
         subprojectRepository.updateSubproject(subproject);
     };
+    public List<Subproject> getSubjectsByProjectId(int projectId) throws Errorhandling {
+        return subprojectRepository.getSubjectsByProjectId(projectId);
+    }
 
     }

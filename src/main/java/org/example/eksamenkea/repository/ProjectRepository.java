@@ -41,34 +41,6 @@ public class ProjectRepository implements IProjectRepository {
         }
     }
 
-    // READ--------------------------------------------------------------------------------
-    @Override
-    public List<Project> getProjectsByEmployeeId(int employeeId) throws Errorhandling {
-        List<Project> projects = new ArrayList<>();
-        String query = "SELECT * FROM project WHERE employee_id = ? AND is_archived = FALSE";
-        try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setInt(1, employeeId);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    projects.add(new Project(
-                            resultSet.getInt("project_id"),
-                            resultSet.getString("project_name"),
-                            resultSet.getDouble("budget"),
-                            resultSet.getString("project_description"),
-                            resultSet.getInt("employee_id"),
-                            resultSet.getInt("material_cost")
-                    ));
-                }
-            }
-        } catch (SQLException e) {
-            throw new Errorhandling("Failed to get projects by employee ID: " + e.getMessage());
-        }
-        return projects;
-    }
-
     public int getProjectIdByProjectName(String projectName) throws Errorhandling {
         String query = "SELECT project_id FROM project WHERE project_name = ?";
 
@@ -87,62 +59,6 @@ public class ProjectRepository implements IProjectRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Failed to get project ID by project name: " + e.getMessage());
         }
-    }
-
-
-    @Override
-    public List<Subproject> getSubjectsByProjectId(int projectId) throws Errorhandling {
-        List<Subproject> subprojects = new ArrayList<>();
-        String query = "SELECT * FROM subproject WHERE project_id = ?";
-
-        try (Connection con = ConnectionManager.getConnection();
-             PreparedStatement preparedStatement = con.prepareStatement(query)) {
-
-            preparedStatement.setInt(1, projectId);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    subprojects.add(new Subproject(
-                            resultSet.getInt("subproject_id"),
-                            resultSet.getString("subproject_name"),
-                            resultSet.getString("subproject_description"),
-                            resultSet.getInt("project_id")
-                    ));
-                }
-            }
-        } catch (SQLException e) {
-            throw new Errorhandling("Failed to get subprojects by project ID: " + e.getMessage());
-        }
-        return subprojects;
-    }
-
-
-    @Override
-    public Project getWorkerProjectFromEmployeeId(int employeeId) throws Errorhandling {
-        Project project = null;
-        String query = "SELECT * FROM project WHERE employee_id = ?";
-
-        try (Connection con = ConnectionManager.getConnection();
-             PreparedStatement preparedStatement = con.prepareStatement(query)) {
-
-            preparedStatement.setInt(1, employeeId);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    project = new Project(
-                            resultSet.getInt("project_id"),
-                            resultSet.getString("project_name"),
-                            resultSet.getDouble("budget"),
-                            resultSet.getString("project_description"),
-                            resultSet.getInt("employee_id"),
-                            resultSet.getInt("material_cost")
-                    );
-                }
-            }
-        } catch (SQLException e) {
-            throw new Errorhandling("Failed to fetch project for employee ID " + employeeId + ": " + e.getMessage());
-        }
-        return project;
     }
 
     @Override

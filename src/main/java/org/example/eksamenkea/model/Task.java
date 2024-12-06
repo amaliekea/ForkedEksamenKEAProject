@@ -30,14 +30,6 @@ public class Task {
 
     }
 
-    public int getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
-    }
-
     public int getTaskId() {
         return taskId;
     }
@@ -84,6 +76,14 @@ public class Task {
 
     public void setSubprojectId(int subprojectId) {
         this.subprojectId = subprojectId;
+    }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
     }
 
     public int getEstimatedHours() {

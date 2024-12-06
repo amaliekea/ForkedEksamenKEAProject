@@ -41,7 +41,7 @@ public class SubprojectController {
     @GetMapping("/project-leader-subproject-overview") // Amalie
     public String showProjectLeaderSubprojectOverview(@RequestParam("projectId") int projectId, HttpSession session, Model model) throws Errorhandling {
         Project project = projectService.getProjectFromProjectId(projectId);
-        List<Subproject> subprojects = projectService.getSubjectsByProjectId(projectId);
+        List<Subproject> subprojects = subprojectService.getSubjectsByProjectId(projectId);
         model.addAttribute("subprojects", subprojects);
         model.addAttribute("projectId", projectId); // Send projectId
         model.addAttribute("projectName", project.getProjectName());
