@@ -29,31 +29,31 @@ public class TaskController {
 
     //CREATE--------------------------------------------------------------
     @GetMapping("/add-task")
-    public String addTask(@RequestParam("subprojectName") String subprojectName, HttpSession session, Model model) throws Errorhandling {
+    public String addTask(@RequestParam("subprojectId") int subprojectId, HttpSession session, Model model) throws Errorhandling {
         Task task = new Task();
         Employee employee = (Employee) session.getAttribute("employee");  // Henter "user" fra sessionen.
-        int subprojectId = subprojectService.getSubprojectIdBySubprojectName(subprojectName);
+        Subproject subproject = subprojectService.getSubprojectBySubprojectId(subprojectId);
 
         model.addAttribute("task", task);
         model.addAttribute("employeeId", employee.getEmployeeId());
         model.addAttribute("subprojectId", subprojectId);
-        model.addAttribute("subprojectName", subprojectName);
+        model.addAttribute("subprojectName", subproject.getSubprojectName());
         return "add-task";
 
     }
 
-    @PostMapping("/task-added") //Amalie
-    public String addedTask(@RequestParam("subprojectName") String subprojectName, @ModelAttribute Task task) throws Errorhandling {
+    @PostMapping("/task-added")//Amalie
+    public String addedTask(@RequestParam("subprojectId") int subprojectId, @ModelAttribute Task task) throws Errorhandling {
         taskService.createTask(task);
-        return "redirect:/project-leader-tasks?subprojectName=" + subprojectName;
+        return "redirect:/project-leader-tasks?subprojectId=" + subprojectId;
     }
 
     //READ------------------------------------------------------------------
     @GetMapping("/project-leader-tasks")
-    public String getTaskBySubprojectName(@RequestParam("subprojectName") String subprojectName, HttpSession session, Model model) throws Errorhandling {
+    public String getTaskBySubprojectName(@RequestParam("subprojectId") int subprojectId, HttpSession session, Model model) throws Errorhandling {
 
         // Hent subproject ID baseret på subproject name
-        int subprojectId = subprojectService.getSubprojectIdBySubprojectName(subprojectName);
+        Subproject subproject = subprojectService.getSubprojectBySubprojectId(subprojectId);
 
 
         // Hent tasks for det fundne subproject ID
@@ -64,7 +64,8 @@ public class TaskController {
 
         // Tilføj tasks og subprojectName til modellen
         model.addAttribute("tasks", tasks);
-        model.addAttribute("subprojectName", subprojectName);
+        model.addAttribute("subprojectName", subproject.getSubprojectName());
+        model.addAttribute("subprojectId", subprojectId);
         model.addAttribute("employeeList", employeeList);
 
         return "project-leader-task-overview";
@@ -99,7 +100,7 @@ public class TaskController {
             totalTaskHours += task.getEstimatedHours();
         }
 
-        model.addAttribute("subprojectName", subprojectName);
+        model.addAttribute("subprojectId", subprojectId);
         model.addAttribute("taskId", taskId);
         model.addAttribute("totalTaskHours", totalTaskHours);
         model.addAttribute("employee", employee);
@@ -109,7 +110,8 @@ public class TaskController {
         } else {
             return "error/error-exceed-max-hours-for-worker";
         }
-        return "redirect:/project-leader-tasks?subprojectName=" + subprojectName;
+        return "redirect:/project-leader-tasks?subprojectId=" + subprojectId;
+
     }
 
 

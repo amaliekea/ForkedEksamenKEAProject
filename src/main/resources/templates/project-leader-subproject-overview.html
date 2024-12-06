@@ -22,7 +22,7 @@
         </thead>
         <tbody>
         <tr>
-          <td th:text="*{projectName}"></td>
+          <td th:text="${projectName}"></td>
         </tr>
         </tbody>
       </table>
@@ -44,14 +44,14 @@
           <td th:text="${subproject.subprojectDescription}"></td>
           <td>
             <form action="/project-leader-tasks" method="get" class="action-form">
-              <input type="hidden" name="subprojectName" th:value="${subproject.subprojectName}" />
-              <input type="hidden" name="subproject" th:value="${subproject}" />
+              <input type="hidden" name="subprojectId" th:value="${subproject.subprojectId}" />
               <button type="submit" class="action-button">View Tasks</button>
             </form>
-            <form th:action="@{'/' + ${subproject.subprojectName} + '/edit-subproject'}" method="get" class="action-form">
-              <input type="hidden" name="subprojectName" th:value="${subproject.subprojectName}" />
+            <form th:action="@{/edit-subproject}" method="get" class="action-form">
+              <input type="hidden" name="subprojectId" th:value="${subproject.subprojectId}" />
               <button type="submit" class="action-button">Edit Subproject</button>
             </form>
+
           </td>
         </tr>
         </tbody>
@@ -70,3 +70,4 @@
 </div>
 </body>
 </html>
+

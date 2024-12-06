@@ -30,15 +30,6 @@ public class ProjectController {
         return "project-leader-overview";
     }
 
-    @GetMapping("/project-leader-subproject-overview") // Amalie
-    public String showProjectLeaderSubprojectOverview(@RequestParam("projectName") String projectName, HttpSession session, Model model) throws Errorhandling {
-        int projectId = projectService.getProjectIdByProjectName(projectName);  // Hent projectId baseret på projectName
-        List<Subproject> subprojects = projectService.getSubjectsByProjectId(projectId); // Henter subprojekter baseret på det fundne projectId
-        model.addAttribute("subprojects", subprojects);
-        model.addAttribute("projectName", projectName);
-        return "project-leader-subproject-overview"; // Returnerer view
-    }
-
 
     @GetMapping("/add-project") //Amalie
     public String addNewProject(HttpSession session, Model model) throws Errorhandling {
