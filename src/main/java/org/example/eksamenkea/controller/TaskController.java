@@ -103,7 +103,7 @@ public class TaskController {
         model.addAttribute("employee", employee);
 
         if ((totalTaskHours + taskHours) <= employee.getMaxHours()) {
-            taskService.assignEmployeeToTask(taskId, employee.getEmployeeId());
+            taskService.assignWorkerToTask(taskId, employee.getEmployeeId());
         } else {
             return "error/error-exceed-max-hours-for-worker";
         }
