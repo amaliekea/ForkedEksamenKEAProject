@@ -1,4 +1,4 @@
-# **Alpha Solutions Project Planning Tool**
+# **Alpha Solutions Project calculation Tool**
 
 ## **This is our project calculation tool**
 
