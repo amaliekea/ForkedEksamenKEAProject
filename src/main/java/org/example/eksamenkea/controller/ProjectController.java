@@ -1,5 +1,4 @@
 package org.example.eksamenkea.controller;
-
 import jakarta.servlet.http.HttpSession;
 import org.example.eksamenkea.model.*;
 import org.example.eksamenkea.service.Errorhandling;
@@ -67,9 +66,8 @@ public class ProjectController {
         return "worker-overview";
     }
 
-    @GetMapping("/{projectName}/edit-project")
-    public String getprojectToEdit(@PathVariable String projectName, Model model) throws Errorhandling {
-        int projectId = projectService.getProjectIdByProjectName(projectName);
+    @GetMapping("/{projectId}/edit-project")
+    public String getprojectToEdit(@PathVariable int projectId, Model model) throws Errorhandling {
         Project project = projectService.getProjectFromProjectId(projectId);
         model.addAttribute("project", project);
         return "edit-project";
@@ -82,23 +80,20 @@ public class ProjectController {
     }
 
     @GetMapping("/archived-project-overview")
-    public String showArchivedProjects(Model model) throws Errorhandling {
-        List<Project> archivedProjects = projectService.getArchivedProjects(); // hent arkiverede projekter
+    public String showArchivedProjects(HttpSession session, Model model) throws Errorhandling {
+        Employee employee = (Employee) session.getAttribute("employee");
+        List<ProjectEmployeeCostDTO> archivedProjects = projectService.getArchivedProjects(employee.getEmployeeId()); // hent arkiverede projekter
         model.addAttribute("archivedProjects", archivedProjects); // Tilføj til model
         return "archived-project-overview";
     }
 
     @PostMapping("/archive-project")
-    public String archiveProjectOverview(@RequestParam("projectName") String projectName, HttpSession session, Model model) throws Errorhandling {
+    public String archiveProjectOverview(@RequestParam("projectId") int projectId, HttpSession session, Model model) throws Errorhandling {
         Employee employee = (Employee) session.getAttribute("employee");
-        int projectId = projectService.getProjectIdByProjectName(projectName);
 
-        // Arkiver
         projectService.archiveProject(projectId);
 
-        // Refresh listen af aktive projekter
         List<ProjectEmployeeCostDTO> projects = projectService.getProjectsDTOByEmployeeId(employee.getEmployeeId());
-       // List<Project> projects = projectService.getProjectsByEmployeeId(employee.getEmployee_id());
         model.addAttribute("projects", projects);
 
         return "project-leader-overview";

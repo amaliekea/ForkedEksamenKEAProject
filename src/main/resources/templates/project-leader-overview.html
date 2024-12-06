@@ -46,15 +46,15 @@
 
                 <td>
                     <form action="/project-leader-subproject-overview" method="get">
-                        <input type="hidden" name="projectName" th:value="${project.projectName}" />
-                        <button type="submit" class="action-button">See subprojects</button>
+                        <input type="hidden" name="projectId" th:value="${project.projectId}" />
+                        <button type="submit" class="action-button">See Subprojects</button>
                     </form>
-                    <form th:action="@{'/' + ${project.projectName} + '/edit-project'}" method="get">
-                        <input type="hidden" name="projectName" th:value="${project.projectName}" />
+                    <form th:action="@{'/' + ${project.projectId} + '/edit-project'}" method="get">
+                        <input type="hidden" name="projectId" th:value="${project.projectId}" />
                         <button type="submit" class="action-button">Edit Project</button>
                     </form>
                     <form action="/archive-project" method="post">
-                        <input type="hidden" name="projectName" th:value="${project.projectName}" />
+                        <input type="hidden" name="projectId" th:value="${project.projectId}" />
                         <button type="submit" class="action-button">Archive Project</button>
                     </form>
                 </td>

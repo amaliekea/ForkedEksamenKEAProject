@@ -1,8 +1,7 @@
 package org.example.eksamenkea.repository.interfaces;
-
 import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.service.Errorhandling;
-import java.util.Set;
+
 
 public interface ISubprojectRepository {
 

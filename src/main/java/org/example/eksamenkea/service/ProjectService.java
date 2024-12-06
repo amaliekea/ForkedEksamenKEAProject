@@ -28,12 +28,6 @@ public class ProjectService {
         return projectRepository.getWorkerProjectFromEmployeeId(employeeId);
     }
 
-
-    public int getProjectIdByProjectName(String projectName) throws Errorhandling {
-        return projectRepository.getProjectIdByProjectName(projectName);
-    }
-
-
     public List<Subproject> getSubjectsByProjectId(int projectId) throws Errorhandling {
         return projectRepository.getSubjectsByProjectId(projectId);
     }
@@ -46,8 +40,8 @@ public class ProjectService {
         projectRepository.archiveProject(projectId);
     }
 
-    public List<Project> getArchivedProjects() throws Errorhandling {
-        return projectRepository.getArchivedProjects();
+    public List<ProjectEmployeeCostDTO> getArchivedProjects(int employeeId) throws Errorhandling {
+        return projectRepository.getArchivedProjects(employeeId);
     }
 
     public Project getProjectFromProjectId(int projectId) throws Errorhandling {

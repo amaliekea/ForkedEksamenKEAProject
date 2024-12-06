@@ -193,30 +193,34 @@ public class ProjectRepository implements IProjectRepository {
     }
 
 
-    public List<Project> getArchivedProjects() throws Errorhandling {
-        List<Project> archivedProjects = new ArrayList<>();
-        String query = "SELECT * FROM project WHERE is_archived = TRUE";
+    public List<ProjectEmployeeCostDTO> getArchivedProjects(int employeeId) throws Errorhandling {
+        List<ProjectEmployeeCostDTO> projects = new ArrayList<>();
+        String queryView = "SELECT project.*,SUM(task.actual_hours * employee.employee_rate) AS employee_cost FROM project " +
+                "LEFT JOIN subproject ON project.project_id = subproject.project_id " +
+                "LEFT JOIN task ON subproject.subproject_id = task.subproject_id " +
+                "LEFT JOIN employee ON task.employee_id = employee.employee_id " +
+                "WHERE project.employee_id = ? AND project.is_archived = TRUE Group by project.project_id";
 
         try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
+             PreparedStatement preparedStatement1 = connection.prepareStatement(queryView)) {
+            preparedStatement1.setInt(1, employeeId);
 
+            ResultSet resultSet = preparedStatement1.executeQuery();
             while (resultSet.next()) {
-                archivedProjects.add(new Project(
+                projects.add(new ProjectEmployeeCostDTO(
                         resultSet.getInt("project_id"),
                         resultSet.getString("project_name"),
                         resultSet.getDouble("budget"),
                         resultSet.getString("project_description"),
                         resultSet.getInt("employee_id"),
-                        resultSet.getInt("material_cost")
+                        resultSet.getInt("material_cost"),
+                        resultSet.getInt("employee_cost")
                 ));
             }
         } catch (SQLException e) {
-            throw new Errorhandling("Failed to get any archievd projects: " + e.getMessage());
+            throw new Errorhandling("Failed to get projects by employee ID: " + e.getMessage());
         }
-        return archivedProjects;
-
-
+        return projects;
     }
 
     //DELETE-----------------------------------------------------------------------
@@ -261,34 +265,37 @@ public class ProjectRepository implements IProjectRepository {
         }
     }
 
-    @Override
-    public List<ProjectEmployeeCostDTO> getProjectsDTOByEmployeeId(int employeeId) throws Errorhandling {
-        List<ProjectEmployeeCostDTO> projects = new ArrayList<>();
-        String queryView = "SELECT project.*,SUM(task.actual_hours * employee.employee_rate) AS employee_cost FROM project " +
-                "LEFT JOIN subproject ON project.project_id = subproject.project_id " +
-                "LEFT JOIN task ON subproject.subproject_id = task.subproject_id " +
-                "LEFT JOIN employee ON task.employee_id = employee.employee_id " +
-                "WHERE project.employee_id = ? AND project.is_archived = FALSE Group by project.project_id";
 
-        try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement preparedStatement1 = connection.prepareStatement(queryView)) {
-            preparedStatement1.setInt(1, employeeId);
+        @Override
+        public List<ProjectEmployeeCostDTO> getProjectsDTOByEmployeeId (int employeeId) throws Errorhandling {
+            List<ProjectEmployeeCostDTO> projects = new ArrayList<>();
+            String queryView = "SELECT project.*,SUM(task.actual_hours * employee.employee_rate) AS employee_cost FROM project " +
+                    "LEFT JOIN subproject ON project.project_id = subproject.project_id " +
+                    "LEFT JOIN task ON subproject.subproject_id = task.subproject_id " +
+                    "LEFT JOIN employee ON task.employee_id = employee.employee_id " +
+                    "WHERE project.employee_id = ? AND project.is_archived = FALSE Group by project.project_id";
 
-            ResultSet resultSet = preparedStatement1.executeQuery();
-            while (resultSet.next()) {
-                projects.add(new ProjectEmployeeCostDTO(
-                        resultSet.getInt("project_id"),
-                        resultSet.getString("project_name"),
-                        resultSet.getDouble("budget"),
-                        resultSet.getString("project_description"),
-                        resultSet.getInt("employee_id"),
-                        resultSet.getInt("material_cost"),
-                        resultSet.getInt("employee_cost")
-                ));
+            try (Connection connection = ConnectionManager.getConnection();
+                 PreparedStatement preparedStatement1 = connection.prepareStatement(queryView)) {
+                preparedStatement1.setInt(1, employeeId);
+
+                ResultSet resultSet = preparedStatement1.executeQuery();
+                while (resultSet.next()) {
+                    projects.add(new ProjectEmployeeCostDTO(
+                            resultSet.getInt("project_id"),
+                            resultSet.getString("project_name"),
+                            resultSet.getDouble("budget"),
+                            resultSet.getString("project_description"),
+                            resultSet.getInt("employee_id"),
+                            resultSet.getInt("material_cost"),
+                            resultSet.getInt("employee_cost")
+                    ));
+                }
+
+            } catch (SQLException e) {
+                throw new Errorhandling("Failed to get projects by employee ID: " + e.getMessage());
             }
-        } catch (SQLException e) {
-            throw new Errorhandling("Failed to get projects by employee ID: " + e.getMessage());
+            return projects;
         }
-        return projects;
     }
-}
+

@@ -1,12 +1,10 @@
 package org.example.eksamenkea.repository;
-
 import org.example.eksamenkea.model.Status;
 import org.example.eksamenkea.model.Task;
 import org.example.eksamenkea.repository.interfaces.ITaskRepository;
 import org.example.eksamenkea.service.Errorhandling;
 import org.example.eksamenkea.util.ConnectionManager;
 import org.springframework.stereotype.Repository;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,27 +107,6 @@ public class TaskRepository implements ITaskRepository {
         return tasks;
     }
 
-    @Override
-    public int getTaskIdByTaskName(String taskName) throws Errorhandling {
-        String query = "SELECT task_id FROM task WHERE task_name = ?";
-
-        try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setString(1, taskName);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getInt("task_id");
-                } else {
-                    throw new Errorhandling("Task not found for name: " + taskName);
-                }
-            }
-        } catch (SQLException e) {
-            throw new Errorhandling("Failed to get task ID by task name: " + e.getMessage());
-        }
-    }
-
 
     @Override
     public List<Task> getTasklistByEmployeeId(int employeeId) throws Errorhandling {
@@ -163,14 +140,14 @@ public class TaskRepository implements ITaskRepository {
     }
 
     @Override
-    public Task getTaskByName(String taskName) throws Errorhandling {
-        String query = "SELECT * FROM task WHERE task_name = ?";
+    public Task getTaskByTaskId(int taskId) throws Errorhandling {
+        String query = "SELECT * FROM task WHERE task_id = ?";
         Task task = null;
 
         try (Connection connection = ConnectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setString(1, taskName);
+            preparedStatement.setInt(1, taskId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {

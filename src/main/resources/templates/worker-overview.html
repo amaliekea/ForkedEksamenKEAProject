@@ -67,6 +67,7 @@
                     <th>End Date</th>
                     <th>Status</th>
                     <th>Estimated Hours</th>
+                    <th>Actual Hours</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -77,9 +78,10 @@
                     <td th:text="${task.enddate}"></td>
                     <td th:text="${task.status}"></td>
                     <td th:text="${task.estimatedHours}"></td>
+                    <td th:text="${task.actualHours}"></td>
                     <td>
                         <form action="/task-status" method="get" class="action-form">
-                            <input type="hidden" name="taskName" th:value="${task.taskName}" />
+                            <input type="hidden" name="taskId" th:value="${task.taskId}" />
                             <button type="submit" class="action-button">Change Task Status</button>
                         </form>
                     </td>

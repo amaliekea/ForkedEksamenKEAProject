@@ -14,8 +14,8 @@
 
     <main class="form-page-main">
         <div class="white-box">
+            <!-- Hovedformular -->
             <form th:action="@{/edit-project}" th:object="${project}" method="post">
-
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input id="name" class="form-control" type="text" th:field="*{projectName}" placeholder="Enter project name..." required />
@@ -36,15 +36,17 @@
                     <input id="budget" class="form-control" type="text" th:field="*{budget}" placeholder="Enter budget..." required />
                 </div>
 
-                <!-- Hidden Fields -->
-                <form>
+                <!-- Skjulte felter -->
                 <input type="hidden" th:field="*{projectId}" />
                 <input type="hidden" th:field="*{employeeId}" />
-                </form>
-                <button type="submit" class="action-button">Edit Project</button>
-                <form action="/project-leader-overview" method="get">
-                    <button type="submit" class="action-button">Back to Overview</button>
-                </form>
+
+                <!-- Knapper -->
+                <button type="submit" class="action-button">Save Changes</button>
+            </form>
+
+            <!-- Tilbage til oversigt-knap -->
+            <form th:action="@{/project-leader-overview}" method="get">
+                <button type="submit" class="action-button">Back to Overview</button>
             </form>
         </div>
     </main>

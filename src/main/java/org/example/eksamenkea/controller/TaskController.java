@@ -72,8 +72,8 @@ public class TaskController {
 
     //UPDATE------------------------------------------------------------------
     @GetMapping("/task-status")
-    public String updateTaskStatus(@RequestParam("taskName") String taskName, HttpSession session, Model model) throws Errorhandling {
-        model.addAttribute("task", taskService.getTaskByName(taskName));
+    public String updateTaskStatus(@RequestParam("taskId") int taskId, HttpSession session, Model model) throws Errorhandling {
+        model.addAttribute("task", taskService.getTaskByTaskId(taskId));
         return "task-edit-status";
     }
 
@@ -86,11 +86,12 @@ public class TaskController {
 
 
     @PostMapping("/assign-worker")
-    public String assignEmployeeToTask(@RequestParam("subprojectName") String subprojectName, @RequestParam("taskName") String taskName, @RequestParam ("employeeEmail") String employeeEmail, Model model, HttpSession session) throws Errorhandling {
+    public String assignEmployeeToTask(@RequestParam("subprojectId") int subprojectId,
+                                       @RequestParam("taskId") int taskId, @RequestParam ("employeeEmail") String employeeEmail, Model model, HttpSession session) throws Errorhandling {
         Employee employee = employeeService.getEmployeeByEmail(employeeEmail);
         employee.setEmployeeId(employee.getEmployeeId());
-        int taskId = taskService.getTaskIdByTaskName(taskName);
-        int taskHours = taskService.getTaskByName(taskName).getEstimatedHours();
+        Task task1 = taskService.getTaskByTaskId(taskId);
+        int taskHours = task1.getEstimatedHours();
         List<Task> tasklist = taskService.getTasklistByEmployeeId(employee.getEmployeeId());
         int totalTaskHours = 0;
 
