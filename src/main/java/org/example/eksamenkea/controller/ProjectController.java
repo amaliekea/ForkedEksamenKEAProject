@@ -19,10 +19,8 @@ public class ProjectController {
 
     @GetMapping("/project-leader-overview")//Zuhur
     public String showProjectLeaderOverview(HttpSession session, Model model) throws Errorhandling {
-
         Employee employee = (Employee) session.getAttribute("employee");
         List<ProjectEmployeeCostDTO> projects = projectService.getProjectsDTOByEmployeeId(employee.getEmployeeId());
-        System.out.println(projects);
         model.addAttribute("projects", projects);
         return "project-leader-overview";
     }
