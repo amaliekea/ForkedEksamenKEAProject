@@ -27,8 +27,7 @@ public class TaskController {
         this.employeeService = employeeService;
     }
 
-    //CREATE--------------------------------------------------------------
-    @GetMapping("/add-task")
+    @GetMapping("/add-task") //Amalie
     public String addTask(@RequestParam("subprojectId") int subprojectId, HttpSession session, Model model) throws Errorhandling {
         Task task = new Task();
         Employee employee = (Employee) session.getAttribute("employee");  // Henter "user" fra sessionen.
@@ -42,43 +41,41 @@ public class TaskController {
 
     }
 
-    @PostMapping("/task-added")//Amalie
+    @PostMapping("/task-added") //Amalie
     public String addedTask(@RequestParam("subprojectId") int subprojectId, @ModelAttribute Task task) throws Errorhandling {
         taskService.createTask(task);
         return "redirect:/project-leader-tasks?subprojectId=" + subprojectId;
     }
 
-    //READ------------------------------------------------------------------
-    @GetMapping("/project-leader-tasks")
-    public String getTaskBySubprojectName(@RequestParam("subprojectId") int subprojectId, HttpSession session, Model model) throws Errorhandling {
-
-        // Hent subproject ID baseret på subproject name
+    @GetMapping("/project-leader-tasks") //AM-ZU
+    public String getTaskBySubprojectName(@RequestParam("subprojectId") int subprojectId, Model model) throws Errorhandling {
         Subproject subproject = subprojectService.getSubprojectBySubprojectId(subprojectId);
 
-
-        // Hent tasks for det fundne subproject ID
         List<Task> tasks = taskService.getTaskBySubprojectId(subprojectId);
 
-        //Hent liste af employees
         List<Employee> employeeList = employeeService.getAllWorkers();
-
-        // Tilføj tasks og subprojectName til modellen
         model.addAttribute("tasks", tasks);
-        model.addAttribute("subprojectName", subproject.getSubprojectName());
-        model.addAttribute("subprojectId", subprojectId);
+        model.addAttribute("subproject", subproject);
         model.addAttribute("employeeList", employeeList);
 
         return "project-leader-task-overview";
     }
+    @GetMapping("/worker-overview") //Malthe
+    public String showWorkerOverview(HttpSession session, Model model) throws Errorhandling {
+        Employee employee = (Employee) session.getAttribute("employee");
+        List<Task> taskList = taskService.getTasklistByEmployeeId(employee.getEmployeeId());
+        model.addAttribute("tasklist", taskList);
 
-    //UPDATE------------------------------------------------------------------
-    @GetMapping("/task-status")
-    public String updateTaskStatus(@RequestParam("taskId") int taskId, HttpSession session, Model model) throws Errorhandling {
+        return "worker-overview";
+    }
+
+    @GetMapping("/task-status") //Amalie
+    public String updateTaskStatus(@RequestParam("taskId") int taskId, Model model) throws Errorhandling {
         model.addAttribute("task", taskService.getTaskByTaskId(taskId));
         return "task-edit-status";
     }
 
-    @PostMapping("/task-status")
+    @PostMapping("/task-status") //Amalie
     public String updatedTask(@ModelAttribute Task task) throws Errorhandling {
         System.out.println("Received Actual Hours: " + task.getActualHours());
         taskService.updateTask(task);
@@ -86,9 +83,9 @@ public class TaskController {
     }
 
 
-    @PostMapping("/assign-worker")
+    @PostMapping("/assign-worker") //Malthe
     public String assignEmployeeToTask(@RequestParam("subprojectId") int subprojectId,
-                                       @RequestParam("taskId") int taskId, @RequestParam ("employeeEmail") String employeeEmail, Model model, HttpSession session) throws Errorhandling {
+                                       @RequestParam("taskId") int taskId, @RequestParam("employeeEmail") String employeeEmail, Model model, HttpSession session) throws Errorhandling {
         Employee employee = employeeService.getEmployeeByEmail(employeeEmail);
         employee.setEmployeeId(employee.getEmployeeId());
         Task task1 = taskService.getTaskByTaskId(taskId);

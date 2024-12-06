@@ -9,7 +9,7 @@
 <body>
 <div class="overview-container">
     <header>
-        <h1>Tasks for Subproject: <span th:text="${subprojectName}"></span></h1>
+        <h1>Tasks for Subproject: <span th:text="${subproject.subprojectName}"></span></h1>
     </header>
     <main>
         <section class="tasks-section">
@@ -58,7 +58,7 @@
                 <button type="submit">Back to Subproject Overview</button>
             </form>
             <form action="/add-task" method="get">
-                <input type="hidden" name="subprojectName" th:value="${subprojectName}" />
+                <input type="hidden" name="subprojectId" th:value="${subproject.subprojectId}" />
                 <button type="submit">Add Task</button>
             </form>
         </div>

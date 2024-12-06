@@ -17,7 +17,7 @@ import java.util.List;
 @Repository("ISUBPROJECTREPOSITORY")
 public class SubprojectRepository implements ISubprojectRepository {
 
-    // Lavet af Malthe
+    @Override //Malthe
     public Subproject getSubprojectBySubprojectId(int subprojectId) throws Errorhandling {
         Subproject subproject = null;
         String query = "SELECT * FROM subproject WHERE subproject_id = ?;";

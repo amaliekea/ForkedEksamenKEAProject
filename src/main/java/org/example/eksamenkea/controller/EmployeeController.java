@@ -7,7 +7,7 @@ import org.example.eksamenkea.service.Errorhandling;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+//Klassen er udarbejdet af Amalie
 @RequestMapping("")
 @Controller
 public class EmployeeController {
@@ -18,12 +18,12 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping("/login") //Amalie
+    @GetMapping("/login")
     public String login() {
         return "login";
     }
 
-    @GetMapping("/") //Amalie
+    @GetMapping("/")
     public String index(Model model, HttpSession session) {
         if (session.getAttribute("employee") != null) { //tjekker om en bruger er logget ind
             model.addAttribute("employeeAvaliable", true); //angiver at brugeren er tilgængelig
@@ -34,7 +34,7 @@ public class EmployeeController {
         return "homepage";
     }
 
-    @PostMapping("/validate_login") //Amalie
+    @PostMapping("/validate_login")
     public String validateLogin(HttpSession session, @RequestParam String email, @RequestParam String password, Model model) {
         try {
             Employee employee = employeeService.signIn(email, password); // Forsøg at hente medarbejderen baseret på email og adgangskode
@@ -53,7 +53,7 @@ public class EmployeeController {
         }
     }
 
-    @GetMapping("/logged_in") //Amalie
+    @GetMapping("/logged_in")
     public String loggedIn(HttpSession session, Model model) throws Exception {
         Employee employee = (Employee) session.getAttribute("employee");  // Henter "user" fra sessionen.
 
@@ -68,7 +68,7 @@ public class EmployeeController {
         throw new Errorhandling("no role found"); //
     }
 
-    @GetMapping("/logout") //Amalie
+    @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate(); //invaliderer sessionen for at logge ud
         return "redirect:/"; //return til front pagen ved log out

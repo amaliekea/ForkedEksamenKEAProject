@@ -1,11 +1,12 @@
 package org.example.eksamenkea.repository;
+
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.ProjectEmployeeCostDTO;
-import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.repository.interfaces.IProjectRepository;
 import org.example.eksamenkea.service.Errorhandling;
 import org.example.eksamenkea.util.ConnectionManager;
 import org.springframework.stereotype.Repository;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,7 @@ public class ProjectRepository implements IProjectRepository {
         this.employeeRepository = employeeRepository;
     }
 
-    // CREATE------------------------------------------------------------------------------
-    @Override
+    @Override //Amalie
     public void addProject(Project project) throws Errorhandling {
         String sqlAddProject = "INSERT INTO project(project_name, budget, project_description, employee_id, material_cost,is_archived) VALUES (?, ?, ?, ?, ?,?)";
         System.out.println(project);
@@ -61,7 +61,7 @@ public class ProjectRepository implements IProjectRepository {
         }
     }
 
-    @Override
+    @Override //Malthe
     public Project getProjectFromProjectId(int projectId) throws Errorhandling {
         Project project = null;
         String query = "SELECT * FROM project WHERE project_id = ?";
@@ -89,7 +89,7 @@ public class ProjectRepository implements IProjectRepository {
         return project;
     }
 
-    @Override
+    @Override //Malthe
     public void updateProject(Project project) throws Errorhandling {
         String sqlAddProject = "UPDATE project SET project_name = ?, budget = ?, project_description = ?, employee_id = ?, material_cost = ? WHERE project_id = ?";
         try (Connection con = ConnectionManager.getConnection();
@@ -108,7 +108,7 @@ public class ProjectRepository implements IProjectRepository {
         }
     }
 
-
+    @Override //Zuhur
     public List<ProjectEmployeeCostDTO> getArchivedProjects(int employeeId) throws Errorhandling {
         List<ProjectEmployeeCostDTO> projects = new ArrayList<>();
         String queryView = "SELECT project.*,SUM(task.actual_hours * employee.employee_rate) AS employee_cost FROM project " +
@@ -182,36 +182,36 @@ public class ProjectRepository implements IProjectRepository {
     }
 
 
-        @Override
-        public List<ProjectEmployeeCostDTO> getProjectsDTOByEmployeeId (int employeeId) throws Errorhandling {
-            List<ProjectEmployeeCostDTO> projects = new ArrayList<>();
-            String queryView = "SELECT project.*,SUM(task.actual_hours * employee.employee_rate) AS employee_cost FROM project " +
-                    "LEFT JOIN subproject ON project.project_id = subproject.project_id " +
-                    "LEFT JOIN task ON subproject.subproject_id = task.subproject_id " +
-                    "LEFT JOIN employee ON task.employee_id = employee.employee_id " +
-                    "WHERE project.employee_id = ? AND project.is_archived = FALSE Group by project.project_id";
+    @Override //Amalie
+    public List<ProjectEmployeeCostDTO> getProjectsDTOByEmployeeId(int employeeId) throws Errorhandling {
+        List<ProjectEmployeeCostDTO> projects = new ArrayList<>();
+        String queryView = "SELECT project.*,SUM(task.actual_hours * employee.employee_rate) AS employee_cost FROM project " +
+                "LEFT JOIN subproject ON project.project_id = subproject.project_id " +
+                "LEFT JOIN task ON subproject.subproject_id = task.subproject_id " +
+                "LEFT JOIN employee ON task.employee_id = employee.employee_id " +
+                "WHERE project.employee_id = ? AND project.is_archived = FALSE Group by project.project_id";
 
-            try (Connection connection = ConnectionManager.getConnection();
-                 PreparedStatement preparedStatement1 = connection.prepareStatement(queryView)) {
-                preparedStatement1.setInt(1, employeeId);
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement preparedStatement1 = connection.prepareStatement(queryView)) {
+            preparedStatement1.setInt(1, employeeId);
 
-                ResultSet resultSet = preparedStatement1.executeQuery();
-                while (resultSet.next()) {
-                    projects.add(new ProjectEmployeeCostDTO(
-                            resultSet.getInt("project_id"),
-                            resultSet.getString("project_name"),
-                            resultSet.getDouble("budget"),
-                            resultSet.getString("project_description"),
-                            resultSet.getInt("employee_id"),
-                            resultSet.getInt("material_cost"),
-                            resultSet.getInt("employee_cost")
-                    ));
-                }
-
-            } catch (SQLException e) {
-                throw new Errorhandling("Failed to get projects by employee ID: " + e.getMessage());
+            ResultSet resultSet = preparedStatement1.executeQuery();
+            while (resultSet.next()) {
+                projects.add(new ProjectEmployeeCostDTO(
+                        resultSet.getInt("project_id"),
+                        resultSet.getString("project_name"),
+                        resultSet.getDouble("budget"),
+                        resultSet.getString("project_description"),
+                        resultSet.getInt("employee_id"),
+                        resultSet.getInt("material_cost"),
+                        resultSet.getInt("employee_cost")
+                ));
             }
-            return projects;
+
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to get projects by employee ID: " + e.getMessage());
         }
+        return projects;
     }
+}
 

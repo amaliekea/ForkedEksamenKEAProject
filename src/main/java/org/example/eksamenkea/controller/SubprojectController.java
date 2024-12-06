@@ -1,6 +1,4 @@
 package org.example.eksamenkea.controller;
-
-import jakarta.servlet.http.HttpSession;
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.service.Errorhandling;
@@ -9,7 +7,6 @@ import org.example.eksamenkea.service.SubprojectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Controller
@@ -22,7 +19,7 @@ public class SubprojectController {
         this.projectService = projectService;
     }
 
-    @GetMapping("/edit-subproject")
+    @GetMapping("/edit-subproject") //Malthe
     public String getSubprojectToEdit(@RequestParam("subprojectId") int subprojectId, Model model) throws Errorhandling {
         Subproject subproject = subprojectService.getSubprojectBySubprojectId(subprojectId);
         model.addAttribute("subproject", subproject);
@@ -30,7 +27,7 @@ public class SubprojectController {
     }
 
 
-    @PostMapping("/edit-subproject")
+    @PostMapping("/edit-subproject") //malthe
     public String editSubproject(@ModelAttribute Subproject subproject) throws Errorhandling {
         subprojectService.updateSubproject(subproject);
         Project project = projectService.getProjectFromProjectId(subproject.getProjectId());
@@ -39,13 +36,12 @@ public class SubprojectController {
     }
 
     @GetMapping("/project-leader-subproject-overview") // Amalie
-    public String showProjectLeaderSubprojectOverview(@RequestParam("projectId") int projectId, HttpSession session, Model model) throws Errorhandling {
+    public String showProjectLeaderSubprojectOverview(@RequestParam("projectId") int projectId, Model model) throws Errorhandling {
         Project project = projectService.getProjectFromProjectId(projectId);
         List<Subproject> subprojects = subprojectService.getSubjectsByProjectId(projectId);
         model.addAttribute("subprojects", subprojects);
-        model.addAttribute("projectId", projectId); // Send projectId
-        model.addAttribute("projectName", project.getProjectName());
-        return "project-leader-subproject-overview"; //  view
+        model.addAttribute("project", project);
+        return "project-leader-subproject-overview";
     }
 
 }

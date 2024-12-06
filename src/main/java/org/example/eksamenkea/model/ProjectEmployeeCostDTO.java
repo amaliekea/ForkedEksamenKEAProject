@@ -1,6 +1,6 @@
 package org.example.eksamenkea.model;
 
-public class ProjectEmployeeCostDTO { //Amalie
+public class ProjectEmployeeCostDTO {
     private int projectId;
     private String projectName;
     private double budget;
