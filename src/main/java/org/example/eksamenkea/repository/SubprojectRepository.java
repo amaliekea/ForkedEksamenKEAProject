@@ -43,7 +43,7 @@ public class SubprojectRepository implements ISubprojectRepository {
         }
     }
 
-    @Override
+    @Override //Malthe
     public void updateSubproject(Subproject subproject) throws Errorhandling {
         String query = "UPDATE subproject SET subproject_name = ?, subproject_description = ? , project_id = ? WHERE subproject_id = ?";
 
@@ -52,8 +52,9 @@ public class SubprojectRepository implements ISubprojectRepository {
 
             preStat.setString(1, subproject.getSubprojectName());
             preStat.setString(2, subproject.getSubprojectDescription());
-            preStat.setInt(3, subproject.getSubprojectId());
-            preStat.setInt(4, subproject.getProjectId());
+            preStat.setInt(3, subproject.getProjectId());
+            preStat.setInt(4, subproject.getSubprojectId());
+
 
             preStat.executeUpdate();
             System.out.println("Updated subproject");
@@ -61,7 +62,7 @@ public class SubprojectRepository implements ISubprojectRepository {
             throw new Errorhandling("Failed to update subproject " + e.getMessage());
         }
     }
-    @Override
+    @Override //Amalie
     public List<Subproject> getSubjectsByProjectId(int projectId) throws Errorhandling {
         List<Subproject> subprojects = new ArrayList<>();
         String query = "SELECT * FROM subproject WHERE project_id = ?";

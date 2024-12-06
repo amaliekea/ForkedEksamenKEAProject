@@ -6,17 +6,15 @@ import java.util.List;
 
 public interface ITaskRepository {
 
-    List<Task> getTasksByProjectId(int projectId) throws Errorhandling;
+    void createTask(Task task) throws Errorhandling;
 
     List<Task> getTaskBySubprojectId(int subprojectId) throws Errorhandling;
 
     List<Task> getTasklistByEmployeeId(int employeeId) throws Errorhandling;
 
-    void createTask(Task task) throws Errorhandling;
+    Task getTaskByTaskId(int taskId) throws Errorhandling;
 
     void updateTask(Task task) throws Errorhandling;
-
-    Task getTaskByTaskId(int taskId) throws Errorhandling;
 
     void assignWorkerToTask(int taskId, int employeeId) throws Errorhandling;
   

@@ -37,7 +37,7 @@
                     <td>
                         <form th:action="@{/assign-worker}" method="post" class="assign-worker-form">
                             <input type="hidden" name="taskId" th:value="${task.taskId}" />
-                            <input type="hidden" name="subprojectName" th:value="${subprojectName}" />
+                            <input type="hidden" name="subprojectId" th:value="${subproject.subprojectId}" />
                             <select name="employeeEmail" required class="worker-select" onchange="this.form.submit()">
                                 <option value="" disabled selected>Select a worker</option>
                                 <option th:each="employee : ${employeeList}"

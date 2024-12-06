@@ -11,20 +11,20 @@ import java.util.List;
 
 @Service
 public class SubprojectService {
-    private final ISubprojectRepository subprojectRepository;
+    private final ISubprojectRepository iSubprojectRepository;
 
     public SubprojectService(ApplicationContext context, @Value("ISUBPROJECTREPOSITORY") String impl) {
-        this.subprojectRepository = (ISubprojectRepository) context.getBean(impl);
+        this.iSubprojectRepository = (ISubprojectRepository) context.getBean(impl);
     }
 
     public Subproject getSubprojectBySubprojectId(int subprojectId) throws Errorhandling {
-        return subprojectRepository.getSubprojectBySubprojectId(subprojectId);
+        return iSubprojectRepository.getSubprojectBySubprojectId(subprojectId);
     }
     public void updateSubproject(Subproject subproject) throws Errorhandling{
-        subprojectRepository.updateSubproject(subproject);
+        iSubprojectRepository.updateSubproject(subproject);
     };
     public List<Subproject> getSubjectsByProjectId(int projectId) throws Errorhandling {
-        return subprojectRepository.getSubjectsByProjectId(projectId);
+        return iSubprojectRepository.getSubjectsByProjectId(projectId);
     }
 
     }

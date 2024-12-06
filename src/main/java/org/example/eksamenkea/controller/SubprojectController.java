@@ -30,8 +30,6 @@ public class SubprojectController {
     @PostMapping("/edit-subproject") //malthe
     public String editSubproject(@ModelAttribute Subproject subproject) throws Errorhandling {
         subprojectService.updateSubproject(subproject);
-        Project project = projectService.getProjectFromProjectId(subproject.getProjectId());
-        String projectName = project.getProjectName();
         return "redirect:/project-leader-subproject-overview?projectId=" + subproject.getProjectId();
     }
 
