@@ -9,34 +9,34 @@ import java.util.List;
 
 @Service
 public class ProjectService {
-    private final IProjectRepository projectRepository;
+    private final IProjectRepository iProjectRepository;
 
     public ProjectService(ApplicationContext context, @Value("IPROJECTREPOSITORY") String impl) {
-        this.projectRepository = (IProjectRepository) context.getBean(impl);
+        this.iProjectRepository = (IProjectRepository) context.getBean(impl);
     }
 
     public void addProject(Project project) throws Errorhandling {
-        projectRepository.addProject(project);
+        iProjectRepository.addProject(project);
     }
 
     public void archiveProject(int projectId) throws Errorhandling {
-        projectRepository.archiveProject(projectId);
+        iProjectRepository.archiveProject(projectId);
     }
 
     public List<ProjectEmployeeCostDTO> getArchivedProjects(int employeeId) throws Errorhandling {
-        return projectRepository.getArchivedProjects(employeeId);
+        return iProjectRepository.getArchivedProjects(employeeId);
     }
 
     public Project getProjectFromProjectId(int projectId) throws Errorhandling {
-        return projectRepository.getProjectFromProjectId(projectId);
+        return iProjectRepository.getProjectFromProjectId(projectId);
     }
 
     public void updateProject(Project project) throws Errorhandling {
-        projectRepository.updateProject(project);
+        iProjectRepository.updateProject(project);
     }
 
     public List<ProjectEmployeeCostDTO> getProjectsDTOByEmployeeId(int employeeId) throws Errorhandling {
-        return projectRepository.getProjectsDTOByEmployeeId(employeeId);
+        return iProjectRepository.getProjectsDTOByEmployeeId(employeeId);
     }
 
 }

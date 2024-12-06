@@ -41,26 +41,6 @@ public class ProjectRepository implements IProjectRepository {
         }
     }
 
-    public int getProjectIdByProjectName(String projectName) throws Errorhandling {
-        String query = "SELECT project_id FROM project WHERE project_name = ?";
-
-        try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setString(1, projectName);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getInt("project_id");
-                } else {
-                    throw new Errorhandling("Project not found for name: " + projectName);
-                }
-            }
-        } catch (SQLException e) {
-            throw new Errorhandling("Failed to get project ID by project name: " + e.getMessage());
-        }
-    }
-
     @Override //Malthe
     public Project getProjectFromProjectId(int projectId) throws Errorhandling {
         Project project = null;
@@ -139,8 +119,7 @@ public class ProjectRepository implements IProjectRepository {
         return projects;
     }
 
-    //DELETE-----------------------------------------------------------------------
-    @Override
+    @Override //Zuhur
     public void archiveProject(int projectId) throws Errorhandling {
         String archiveProjectQuery = "UPDATE project SET is_archived = TRUE WHERE project_id = ?";
         String archiveSubprojectQuery = "UPDATE subproject SET is_archived = TRUE WHERE project_id = ?";

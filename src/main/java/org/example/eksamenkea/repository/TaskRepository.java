@@ -17,8 +17,7 @@ public class TaskRepository implements ITaskRepository {
         this.subprojectRepository = subprojectRepository;
     }
 
-    // CREATE-------------------------------------------------------------------
-    @Override
+    @Override //Amalie
     public void createTask(Task task) throws Errorhandling {
         String sqlAddTask = "INSERT INTO task(task_name, start_date, end_date, status, employee_id, estimated_hours, subproject_id, actual_hours) VALUES (?, ?, ?, ?, ?, ?, ?, 0)";
         try (Connection con = ConnectionManager.getConnection();
@@ -37,9 +36,7 @@ public class TaskRepository implements ITaskRepository {
             throw new Errorhandling("Failed to add task: " + e.getMessage());
         }
     }
-
-
-    // READ------------------------------------------------------------------
+    @Override //AM-ZU
     public List<Task> getTaskBySubprojectId(int subprojectId) throws Errorhandling {
         List<Task> tasks = new ArrayList<>();
         String query = "SELECT t.task_id, t.task_name, t.start_date, t.end_date, t.status, " +
@@ -75,40 +72,7 @@ public class TaskRepository implements ITaskRepository {
         return tasks;
     }
 
-    // Hent tasks for et specifikt projekt
-    public List<Task> getTasksByProjectId(int projectId) throws Errorhandling {
-        List<Task> tasks = new ArrayList<>();
-        String query = "SELECT t.task_id, t.task_name, t.start_date, t.end_date, t.estimated_hours,t.status,  t.actual_hours, t.subproject_id, t.employee_id " +
-                "FROM task t WHERE task_id = ?";
-
-        try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setInt(1, projectId);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    tasks.add(new Task(
-                            resultSet.getInt("task_id"),
-                            resultSet.getString("task_name"),
-                            resultSet.getDate("start_date") != null ? resultSet.getDate("start_date").toLocalDate() : null,
-                            resultSet.getDate("end_date") != null ? resultSet.getDate("end_date").toLocalDate() : null,
-                            Status.valueOf(resultSet.getString("status").toUpperCase()),
-                            resultSet.getInt("subproject_id"),
-                            resultSet.getInt("estimated_hours"),
-                            resultSet.getObject("employee_id") != null ? resultSet.getInt("employee_id") : 0
-                    ));
-                }
-            }
-        } catch (SQLException e) {
-            throw new Errorhandling("Failed to fetch tasks for project ID " + projectId + ": " + e.getMessage());
-        }
-
-        return tasks;
-    }
-
-
-    @Override
+    @Override //Malthe
     public List<Task> getTasklistByEmployeeId(int employeeId) throws Errorhandling {
         List<Task> taskList = new ArrayList<>();
         String query = "SELECT task_id, task_name, start_date, end_date, estimated_hours, status, actual_hours, subproject_id, employee_id FROM task WHERE employee_id = ?";
@@ -139,7 +103,7 @@ public class TaskRepository implements ITaskRepository {
         }
     }
 
-    @Override
+    @Override //AM-ZU
     public Task getTaskByTaskId(int taskId) throws Errorhandling {
         String query = "SELECT * FROM task WHERE task_id = ?";
         Task task = null;
@@ -170,10 +134,7 @@ public class TaskRepository implements ITaskRepository {
         return task;
     }
 
-
-
-    //UPDATE------------------------------------------------------------------------------------
-    @Override
+    @Override //Amalie
     public void updateTask(Task task) throws Errorhandling {
         String updateSql = "UPDATE task SET status = ?, actual_hours = ? WHERE task_id = ?";
         try (Connection connection = ConnectionManager.getConnection();
@@ -182,22 +143,12 @@ public class TaskRepository implements ITaskRepository {
             preparedStatement.setInt(2, task.getActualHours());
             preparedStatement.setInt(3, task.getTaskId());
 
-            // Log SQL-forespørgslen for debugging
-            System.out.println("Executing SQL: " + preparedStatement.toString());
-
-            int rowsAffected = preparedStatement.executeUpdate();
-            System.out.println("Rows affected: " + rowsAffected);
-
-            if (rowsAffected == 0) {
-                throw new Errorhandling("No rows were updated. Check if task_id exists.");
-            }
         } catch (SQLException e) {
             throw new Errorhandling("Failed to update task: " + e.getMessage());
         }
     }
 
-    //DELETE----------------------------------------------------------------------------------------
-    @Override
+    @Override //Malthe
     public void assignWorkerToTask(int taskId, int employeeId) throws Errorhandling {
         String updateSql = "UPDATE task SET employee_id = ? WHERE task_id = ?";
         try {

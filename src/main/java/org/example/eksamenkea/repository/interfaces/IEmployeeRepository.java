@@ -4,6 +4,7 @@ import org.example.eksamenkea.service.Errorhandling;
 import java.util.List;
 
 public interface IEmployeeRepository {
+
     Employee signIn(String email, String password) throws Errorhandling;
 
     List<Employee> getAllWorkers() throws Errorhandling;
