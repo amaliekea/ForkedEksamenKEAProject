@@ -27,57 +27,55 @@ public class TaskController {
         this.employeeService = employeeService;
     }
 
-    //CREATE--------------------------------------------------------------
-    @GetMapping("/add-task")
-    public String addTask(@RequestParam("subprojectName") String subprojectName, HttpSession session, Model model) throws Errorhandling {
+    @GetMapping("/add-task") //Amalie
+    public String addTask(@RequestParam("subprojectId") int subprojectId, HttpSession session, Model model) throws Errorhandling {
         Task task = new Task();
         Employee employee = (Employee) session.getAttribute("employee");  // Henter "user" fra sessionen.
-        int subprojectId = subprojectService.getSubprojectIdBySubprojectName(subprojectName);
+        Subproject subproject = subprojectService.getSubprojectBySubprojectId(subprojectId);
 
         model.addAttribute("task", task);
         model.addAttribute("employeeId", employee.getEmployeeId());
         model.addAttribute("subprojectId", subprojectId);
-        model.addAttribute("subprojectName", subprojectName);
+        model.addAttribute("subprojectName", subproject.getSubprojectName());
         return "add-task";
 
     }
 
     @PostMapping("/task-added") //Amalie
-    public String addedTask(@RequestParam("subprojectName") String subprojectName, @ModelAttribute Task task) throws Errorhandling {
+    public String addedTask(@RequestParam("subprojectId") int subprojectId, @ModelAttribute Task task) throws Errorhandling {
         taskService.createTask(task);
-        return "redirect:/project-leader-tasks?subprojectName=" + subprojectName;
+        return "redirect:/project-leader-tasks?subprojectId=" + subprojectId;
     }
 
-    //READ------------------------------------------------------------------
-    @GetMapping("/project-leader-tasks")
-    public String getTaskBySubprojectName(@RequestParam("subprojectName") String subprojectName, HttpSession session, Model model) throws Errorhandling {
+    @GetMapping("/project-leader-tasks") //AM-ZU
+    public String getTaskBySubprojectName(@RequestParam("subprojectId") int subprojectId, Model model) throws Errorhandling {
+        Subproject subproject = subprojectService.getSubprojectBySubprojectId(subprojectId);
 
-        // Hent subproject ID baseret på subproject name
-        int subprojectId = subprojectService.getSubprojectIdBySubprojectName(subprojectName);
-
-
-        // Hent tasks for det fundne subproject ID
         List<Task> tasks = taskService.getTaskBySubprojectId(subprojectId);
 
-        //Hent liste af employees
         List<Employee> employeeList = employeeService.getAllWorkers();
-
-        // Tilføj tasks og subprojectName til modellen
         model.addAttribute("tasks", tasks);
-        model.addAttribute("subprojectName", subprojectName);
+        model.addAttribute("subproject", subproject);
         model.addAttribute("employeeList", employeeList);
 
         return "project-leader-task-overview";
     }
+    @GetMapping("/worker-overview") //Malthe
+    public String showWorkerOverview(HttpSession session, Model model) throws Errorhandling {
+        Employee employee = (Employee) session.getAttribute("employee");
+        List<Task> taskList = taskService.getTasklistByEmployeeId(employee.getEmployeeId());
+        model.addAttribute("tasklist", taskList);
 
-    //UPDATE------------------------------------------------------------------
-    @GetMapping("/task-status")
-    public String updateTaskStatus(@RequestParam("taskName") String taskName, HttpSession session, Model model) throws Errorhandling {
-        model.addAttribute("task", taskService.getTaskByName(taskName));
+        return "worker-overview";
+    }
+
+    @GetMapping("/task-status") //Amalie
+    public String updateTaskStatus(@RequestParam("taskId") int taskId, Model model) throws Errorhandling {
+        model.addAttribute("task", taskService.getTaskByTaskId(taskId));
         return "task-edit-status";
     }
 
-    @PostMapping("/task-status")
+    @PostMapping("/task-status") //Amalie
     public String updatedTask(@ModelAttribute Task task) throws Errorhandling {
         System.out.println("Received Actual Hours: " + task.getActualHours());
         taskService.updateTask(task);
@@ -85,12 +83,13 @@ public class TaskController {
     }
 
 
-    @PostMapping("/assign-worker")
-    public String assignEmployeeToTask(@RequestParam("subprojectName") String subprojectName, @RequestParam("taskName") String taskName, @RequestParam ("employeeEmail") String employeeEmail, Model model, HttpSession session) throws Errorhandling {
+    @PostMapping("/assign-worker") //Malthe
+    public String assignEmployeeToTask(@RequestParam("subprojectId") int subprojectId,
+                                       @RequestParam("taskId") int taskId, @RequestParam("employeeEmail") String employeeEmail, Model model, HttpSession session) throws Errorhandling {
         Employee employee = employeeService.getEmployeeByEmail(employeeEmail);
         employee.setEmployeeId(employee.getEmployeeId());
-        int taskId = taskService.getTaskIdByTaskName(taskName);
-        int taskHours = taskService.getTaskByName(taskName).getEstimatedHours();
+        Task task1 = taskService.getTaskByTaskId(taskId);
+        int taskHours = task1.getEstimatedHours();
         List<Task> tasklist = taskService.getTasklistByEmployeeId(employee.getEmployeeId());
         int totalTaskHours = 0;
 
@@ -98,7 +97,7 @@ public class TaskController {
             totalTaskHours += task.getEstimatedHours();
         }
 
-        model.addAttribute("subprojectName", subprojectName);
+        model.addAttribute("subprojectId", subprojectId);
         model.addAttribute("taskId", taskId);
         model.addAttribute("totalTaskHours", totalTaskHours);
         model.addAttribute("employee", employee);
@@ -108,7 +107,8 @@ public class TaskController {
         } else {
             return "error/error-exceed-max-hours-for-worker";
         }
-        return "redirect:/project-leader-tasks?subprojectName=" + subprojectName;
+        return "redirect:/project-leader-tasks?subprojectId=" + subprojectId;
+
     }
 
 

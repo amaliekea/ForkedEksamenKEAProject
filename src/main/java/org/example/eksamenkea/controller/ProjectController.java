@@ -1,27 +1,23 @@
 package org.example.eksamenkea.controller;
-
 import jakarta.servlet.http.HttpSession;
 import org.example.eksamenkea.model.*;
 import org.example.eksamenkea.service.Errorhandling;
 import org.example.eksamenkea.service.ProjectService;
-import org.example.eksamenkea.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Controller
 public class ProjectController {
     private ProjectService projectService;
-    private TaskService taskService;
 
-    public ProjectController(ProjectService projectService, TaskService taskService) {
+
+    public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
-        this.taskService = taskService;
     }
 
-    @GetMapping("/project-leader-overview")
+    @GetMapping("/project-leader-overview")//Zuhur
     public String showProjectLeaderOverview(HttpSession session, Model model) throws Errorhandling {
 
         Employee employee = (Employee) session.getAttribute("employee");
@@ -29,15 +25,6 @@ public class ProjectController {
         System.out.println(projects);
         model.addAttribute("projects", projects);
         return "project-leader-overview";
-    }
-
-    @GetMapping("/project-leader-subproject-overview") // Amalie
-    public String showProjectLeaderSubprojectOverview(@RequestParam("projectName") String projectName, HttpSession session, Model model) throws Errorhandling {
-        int projectId = projectService.getProjectIdByProjectName(projectName);  // Hent projectId baseret på projectName
-        List<Subproject> subprojects = projectService.getSubjectsByProjectId(projectId); // Henter subprojekter baseret på det fundne projectId
-        model.addAttribute("subprojects", subprojects);
-        model.addAttribute("projectName", projectName);
-        return "project-leader-subproject-overview"; // Returnerer view
     }
 
 
@@ -58,47 +45,32 @@ public class ProjectController {
     }
 
 
-    @GetMapping("/worker-overview")
-    public String showWorkerOverview(HttpSession session, Model model) throws Errorhandling {
-        Employee employee = (Employee) session.getAttribute("employee");
-        List<Task> taskList = taskService.getTasklistByEmployeeId(employee.getEmployeeId());
-        model.addAttribute("tasklist", taskList);
-
-        return "worker-overview";
-    }
-
-    @GetMapping("/{projectName}/edit-project")
-    public String getprojectToEdit(@PathVariable String projectName, Model model) throws Errorhandling {
-        int projectId = projectService.getProjectIdByProjectName(projectName);
+    @GetMapping("/{projectId}/edit-project") //Malthe
+    public String getprojectToEdit(@PathVariable int projectId, Model model) throws Errorhandling {
         Project project = projectService.getProjectFromProjectId(projectId);
         model.addAttribute("project", project);
         return "edit-project";
     }
 
-    @PostMapping("/edit-project")
+    @PostMapping("/edit-project") //Malthe
     public String editProject(@ModelAttribute Project project) throws Errorhandling {
         projectService.updateProject(project);
         return "redirect:/project-leader-subproject-overview?projectName=" + project.getProjectName();
     }
 
-    @GetMapping("/archived-project-overview")
-    public String showArchivedProjects(Model model) throws Errorhandling {
-        List<Project> archivedProjects = projectService.getArchivedProjects(); // hent arkiverede projekter
-        model.addAttribute("archivedProjects", archivedProjects); // Tilføj til model
+    @GetMapping("/archived-project-overview") //Zuhur
+    public String showArchivedProjects(HttpSession session, Model model) throws Errorhandling {
+        Employee employee = (Employee) session.getAttribute("employee");
+        List<ProjectEmployeeCostDTO> archivedProjects = projectService.getArchivedProjects(employee.getEmployeeId());
+        model.addAttribute("archivedProjects", archivedProjects);
         return "archived-project-overview";
     }
 
-    @PostMapping("/archive-project")
-    public String archiveProjectOverview(@RequestParam("projectName") String projectName, HttpSession session, Model model) throws Errorhandling {
+    @PostMapping("/archive-project") //Zuhur
+    public String archiveProjectOverview(@RequestParam("projectId") int projectId, HttpSession session, Model model) throws Errorhandling {
         Employee employee = (Employee) session.getAttribute("employee");
-        int projectId = projectService.getProjectIdByProjectName(projectName);
-
-        // Arkiver
         projectService.archiveProject(projectId);
-
-        // Refresh listen af aktive projekter
         List<ProjectEmployeeCostDTO> projects = projectService.getProjectsDTOByEmployeeId(employee.getEmployeeId());
-       // List<Project> projects = projectService.getProjectsByEmployeeId(employee.getEmployee_id());
         model.addAttribute("projects", projects);
 
         return "project-leader-overview";
