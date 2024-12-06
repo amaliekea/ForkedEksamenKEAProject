@@ -12,7 +12,7 @@ import java.util.List;
 public class EmployeeService  {
     private final IEmployeeRepository iEmployeeRepository;
 
-    public EmployeeService(ApplicationContext context, @Value("IUSERREPOSITORY") String impl) {
+    public EmployeeService(ApplicationContext context, @Value("IEMPLOYEEREPOSITORY") String impl) {
         this.iEmployeeRepository = (IEmployeeRepository) context.getBean(impl);
     }
 

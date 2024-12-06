@@ -52,8 +52,9 @@ public class SubprojectRepository implements ISubprojectRepository {
 
             preStat.setString(1, subproject.getSubprojectName());
             preStat.setString(2, subproject.getSubprojectDescription());
-            preStat.setInt(3, subproject.getSubprojectId());
-            preStat.setInt(4, subproject.getProjectId());
+            preStat.setInt(3, subproject.getProjectId());
+            preStat.setInt(4, subproject.getSubprojectId());
+
 
             preStat.executeUpdate();
             System.out.println("Updated subproject");

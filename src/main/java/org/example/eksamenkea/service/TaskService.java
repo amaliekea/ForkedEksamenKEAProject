@@ -8,33 +8,33 @@ import java.util.List;
 
 @Service
 public class TaskService {
-    private final ITaskRepository taskRepository;
+    private final ITaskRepository iTaskRepository;
 
     public TaskService(ApplicationContext context, @Value("ITASKREPOSITORY") String impl) {
-        this.taskRepository = (ITaskRepository) context.getBean(impl);
+        this.iTaskRepository = (ITaskRepository) context.getBean(impl);
     }
 
     public List<Task> getTaskBySubprojectId(int subprojectId) throws Errorhandling {
-        return taskRepository.getTaskBySubprojectId(subprojectId);
+        return iTaskRepository.getTaskBySubprojectId(subprojectId);
     }
 
     public List<Task> getTasklistByEmployeeId(int employeeId) throws Errorhandling {
-        return taskRepository.getTasklistByEmployeeId(employeeId);
+        return iTaskRepository.getTasklistByEmployeeId(employeeId);
     }
 
     public void createTask(Task task) throws Errorhandling {
-        taskRepository.createTask(task);
+        iTaskRepository.createTask(task);
     }
 
     public void updateTask(Task task) throws Errorhandling {
-        taskRepository.updateTask(task);
+        iTaskRepository.updateTask(task);
     }
 
     public Task getTaskByTaskId(int taskId) throws Errorhandling {
-        return taskRepository.getTaskByTaskId(taskId);
+        return iTaskRepository.getTaskByTaskId(taskId);
     }
     public void assignEmployeeToTask(int taskId,int employeeId) throws Errorhandling {
-        taskRepository.assignWorkerToTask(taskId, employeeId);
+        iTaskRepository.assignWorkerToTask(taskId, employeeId);
     }
 
 }
