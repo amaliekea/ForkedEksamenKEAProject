@@ -26,5 +26,5 @@ The project was developed by the following team members:
 - **Team Member 1**: [GitHub Profile](https://github.com/zuunun) 
 - **Team Member 2**: [GitHub Profile](https://github.com/amaliekea)
 - **Team Member 3**: [GitHub Profile](https://github.com/Malthe-kea)
-- **Team Member 4**: [GitHub Profile](https://github.com/DhanielV)
+
 
