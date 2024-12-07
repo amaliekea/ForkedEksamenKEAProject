@@ -1,30 +1,24 @@
-# **Alpha Solutions Project calculation Tool**
+# **Projektberegningsværktøj for Alpha Solutions**
 
-## **This is our project calculation tool**
-
----
-
-## **Features**
-- Create, Read, Update, and Delete (CRUD) operations for projects.
-- Cost estimation based on tasks and cost categories.
-- User interface designed with Thymeleaf, HTML, and CSS.
-- Deployment via Azure Cloud with database integration.
+## **Beskrivelse**
+Dette er vores projektberegningsværktøj, designet til at hjælpe med administration og beregning af projektomkostninger på en brugervenlig måde.
 
 ---
 
-## **Technologies Used**
-- **Backend**: Spring Boot 
-- **Frontend**: Thymeleaf, HTML, CSS
-- **Database**: MySQL 
-- **Cloud Hosting**: Azure
-- **Version Control**: GitHub
+## **Funktioner**
+- Opret, Læs, Opdater og Slet (CRUD)-operationer for projekter.
+- Omkostningsestimering baseret på opgaver og omkostningskategorier.
+- Brugergrænseflade designet med Thymeleaf og CSS.
+- Deployment via Azure Cloud med databaseintegration.
 
 ---
-## **Collaborators**
-The project was developed by the following team members:
 
-- **Zuhur**: [GitHub Profile](https://github.com/zuunun) 
-- **Amalie**: [GitHub Profile](https://github.com/amaliekea)
-- **Malthe**: [GitHub Profile](https://github.com/Malthe-kea)
+## **Anvendte teknologier**
+- **Backend**: Spring Boot  
+- **Frontend**: Thymeleaf, HTML, CSS  
+- **Database**: MySQL  
+- **Cloud Hosting**: Azure  
+- **Versionsstyring**: GitHub
+- **Code scan**: Qodana  
 
 
