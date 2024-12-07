@@ -1,4 +1,4 @@
-# Contributing to [Eksamen]
+# Contributing 
 
 Vi sætter pris på dit bidrag! Følg venligst disse retningslinjer for at sikre en god oplevelse for alle.
 
