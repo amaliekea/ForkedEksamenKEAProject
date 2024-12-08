@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import java.sql.*;
 
-@Repository("IUSERREPOSITORY")
+@Repository("IEMPLOYEEREPOSITORY")
 @Lazy // Angiver, at denne bean kun bliver initialiseret, når den er nødvendig, og ikke ved opstart
 public class EmployeeRepository implements IEmployeeRepository {
 

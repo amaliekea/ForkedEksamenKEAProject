@@ -77,11 +77,11 @@ public class TaskController {
 
     @PostMapping("/task-status") //Amalie
     public String updatedTask(@ModelAttribute Task task) throws Errorhandling {
+        System.out.println("Received task: " + task);
         System.out.println("Received Actual Hours: " + task.getActualHours());
         taskService.updateTask(task);
         return "redirect:/worker-overview";
     }
-
 
     @PostMapping("/assign-worker") //Malthe
     public String assignEmployeeToTask(@RequestParam("subprojectId") int subprojectId,
@@ -103,7 +103,7 @@ public class TaskController {
         model.addAttribute("employee", employee);
 
         if ((totalTaskHours + taskHours) <= employee.getMaxHours()) {
-            taskService.assignEmployeeToTask(taskId, employee.getEmployeeId());
+            taskService.assignWorkerToTask(taskId, employee.getEmployeeId());
         } else {
             return "error/error-exceed-max-hours-for-worker";
         }

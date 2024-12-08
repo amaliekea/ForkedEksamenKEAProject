@@ -60,6 +60,7 @@ public class TaskRepository implements ITaskRepository {
                             Status.valueOf(resultSet.getString("status").toUpperCase()),
                             resultSet.getInt("subproject_id"),
                             resultSet.getInt("estimated_hours"),
+                            resultSet.getInt("actual_hours"),
                             resultSet.getInt("employee_id") // Fjern actual_hours
                     ));
 
@@ -92,6 +93,7 @@ public class TaskRepository implements ITaskRepository {
                             Status.valueOf(resultSet.getString("status").toUpperCase()),
                             resultSet.getInt("subproject_id"),
                             resultSet.getInt("estimated_hours"),
+                            resultSet.getInt("actual_hours"),
                             resultSet.getObject("employee_id") != null ? resultSet.getInt("employee_id") : 0
 
                     ));
@@ -123,6 +125,7 @@ public class TaskRepository implements ITaskRepository {
                         Status.valueOf(resultSet.getString("status").toUpperCase()),
                         resultSet.getInt("subproject_id"),
                         resultSet.getInt("estimated_hours"),
+                        resultSet.getInt("actual_hours"),
                         resultSet.getInt("employee_id")
                 );
 
@@ -142,7 +145,7 @@ public class TaskRepository implements ITaskRepository {
             preparedStatement.setString(1, task.getStatus().name());
             preparedStatement.setInt(2, task.getActualHours());
             preparedStatement.setInt(3, task.getTaskId());
-
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new Errorhandling("Failed to update task: " + e.getMessage());
         }
