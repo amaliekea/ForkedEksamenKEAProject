@@ -12,4 +12,6 @@ public interface ISubprojectRepository {
     void updateSubproject(Subproject subproject) throws Errorhandling;
 
     List<Subproject> getSubjectsByProjectId(int projectId) throws Errorhandling;
+
+    int calculateTimeConsumptionSubproject(int subprojectId) throws Errorhandling;
     }
