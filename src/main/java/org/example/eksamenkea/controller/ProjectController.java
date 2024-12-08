@@ -25,7 +25,6 @@ public class ProjectController {
         return "project-leader-overview";
     }
 
-
     @GetMapping("/add-project") //Amalie
     public String addNewProject(HttpSession session, Model model) throws Errorhandling {
         Project project = new Project();
