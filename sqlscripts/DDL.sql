@@ -57,18 +57,3 @@ CREATE TABLE task (
                       FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
 );
 
--- Opret view til dynamisk beregning af ansættelsesomkostninger
-CREATE VIEW spend AS
-SELECT
-    project.project_id,
-    SUM(task.actual_hours * employee.employee_rate) AS spend
-FROM
-    project
-        JOIN
-    subproject ON project.project_id = subproject.project_id
-        JOIN
-    task ON subproject.subproject_id = task.subproject_id
-        JOIN
-    employee ON task.employee_id = employee.employee_id
-GROUP BY
-    project.project_id;
