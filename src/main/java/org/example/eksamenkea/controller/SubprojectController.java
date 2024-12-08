@@ -39,6 +39,7 @@ public class SubprojectController {
         List<Subproject> subprojects = subprojectService.getSubjectsByProjectId(projectId);
         model.addAttribute("subprojects", subprojects);
         model.addAttribute("project", project);
+        model.addAttribute("calculatedTime", subprojectService.calculateTimeConsumptionSubproject(1)); //LAVES OM
         return "project-leader-subproject-overview";
     }
 

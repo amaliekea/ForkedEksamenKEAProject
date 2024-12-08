@@ -35,6 +35,7 @@
         <tr>
           <th>Subproject Name</th>
           <th>Description</th>
+          <th>Estimated time</th>
           <th>Actions</th>
         </tr>
         </thead>
@@ -42,6 +43,7 @@
         <tr th:each="subproject : ${subprojects}">
           <td th:text="${subproject.subprojectName}"></td>
           <td th:text="${subproject.subprojectDescription}"></td>
+          <td th:text="${calculatedTime}"></td> <!--SLET-->
           <td>
             <form action="/project-leader-tasks" method="get" class="action-form">
               <input type="hidden" name="subprojectId" th:value="${subproject.subprojectId}" />
