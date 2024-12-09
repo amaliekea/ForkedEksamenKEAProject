@@ -8,11 +8,13 @@
 </head>
 <body>
 <div class="overview-container">
-    <header>
+    <header class="header">
         <h1>Project Leader Overview</h1>
     </header>
     <main>
-        <h2>Projects</h2>
+        <header class="header">
+            <h2>Projects</h2>
+        </header>
         <table class="styled-table">
             <thead>
             <tr>
@@ -46,15 +48,15 @@
 
                 <td>
                     <form action="/project-leader-subproject-overview" method="get">
-                        <input type="hidden" name="projectId" th:value="${project.projectId}" />
+                        <input type="hidden" name="projectId" th:value="${project.projectId}"/>
                         <button type="submit" class="action-button">See Subprojects</button>
                     </form>
                     <form th:action="@{'/' + ${project.projectId} + '/edit-project'}" method="get">
-                        <input type="hidden" name="projectId" th:value="${project.projectId}" />
+                        <input type="hidden" name="projectId" th:value="${project.projectId}"/>
                         <button type="submit" class="action-button">Edit Project</button>
                     </form>
                     <form action="/archive-project" method="post">
-                        <input type="hidden" name="projectId" th:value="${project.projectId}" />
+                        <input type="hidden" name="projectId" th:value="${project.projectId}"/>
                         <button type="submit" class="action-button">Archive Project</button>
                     </form>
                 </td>
