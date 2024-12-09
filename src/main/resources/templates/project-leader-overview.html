@@ -44,7 +44,8 @@
                           class="label not-sustainable">Not Sustainable</span>
                 </td>
                 <td th:text="${project.employeeCost}"></td>
-                <td th:text="${project.estimatedTimeConsumption}"></td>
+                <td th:text="${project.estimatedTimeConsumption + ' hours'}"></td>
+
 
                 <td>
                     <form action="/project-leader-subproject-overview" method="get">
