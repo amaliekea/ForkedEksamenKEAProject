@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import java.util.List;
-
+//SLet mig
 @Service
 public class ProjectService {
     private final IProjectRepository iProjectRepository;
