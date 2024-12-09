@@ -21,6 +21,7 @@
                 <th>Total Budget</th>
                 <th>Material Cost</th>
                 <th>Employee Cost</th>
+                <th>Time consumption</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -43,6 +44,7 @@
                           class="label not-sustainable">Not Sustainable</span>
                 </td>
                 <td th:text="${project.employeeCost}"></td>
+                <td th:text="${project.estimatedTimeConsumption}"></td>
 
                 <td>
                     <form action="/project-leader-subproject-overview" method="get">

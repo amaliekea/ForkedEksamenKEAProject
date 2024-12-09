@@ -20,11 +20,17 @@ public class SubprojectService {
     public Subproject getSubprojectBySubprojectId(int subprojectId) throws Errorhandling {
         return iSubprojectRepository.getSubprojectBySubprojectId(subprojectId);
     }
-    public void updateSubproject(Subproject subproject) throws Errorhandling{
+
+    public void updateSubproject(Subproject subproject) throws Errorhandling {
         iSubprojectRepository.updateSubproject(subproject);
-    };
+    }
+
     public List<Subproject> getSubjectsByProjectId(int projectId) throws Errorhandling {
         return iSubprojectRepository.getSubjectsByProjectId(projectId);
     }
 
+    public int calculateTimeConsumptionSubproject(int subprojectId) throws Errorhandling {
+        return iSubprojectRepository.calculateTimeConsumptionSubproject(subprojectId);
     }
+
+}

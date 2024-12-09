@@ -8,8 +8,9 @@ public class ProjectEmployeeCostDTO {
     private int employeeId;
     private int materialCost;
     private int employeeCost;
+    private int estimatedTimeConsumption;
 
-    public ProjectEmployeeCostDTO(int projectId, String projectName, double budget, String projectDescription, int employeeId, int materialCost, int employeeCost) {
+    public ProjectEmployeeCostDTO(int projectId, String projectName, double budget, String projectDescription, int employeeId, int materialCost, int employeeCost, int estimatedTimeConsumption) {
         this.projectId = projectId;
         this.projectName = projectName;
         this.budget = budget;
@@ -17,6 +18,15 @@ public class ProjectEmployeeCostDTO {
         this.employeeId = employeeId;
         this.materialCost = materialCost;
         this.employeeCost = employeeCost;
+        this.estimatedTimeConsumption = estimatedTimeConsumption;
+    }
+
+    public int getEstimatedTimeConsumption() {
+        return estimatedTimeConsumption;
+    }
+
+    public void setEstimatedTimeConsumption(int estimatedTimeConsumption) {
+        this.estimatedTimeConsumption = estimatedTimeConsumption;
     }
 
     public int getProjectId() {

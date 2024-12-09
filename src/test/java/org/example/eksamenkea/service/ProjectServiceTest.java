@@ -39,7 +39,7 @@ class ProjectServiceTest {
 
         // Sample project for tests
         project = new Project(1, "testproject", 200, "testdescription", 1, 200);
-        projectEmployeeCostDTO = new ProjectEmployeeCostDTO(1, "testproject", 200, "testdescription", 1, 200, 100);
+        projectEmployeeCostDTO = new ProjectEmployeeCostDTO(1, "testproject", 200, "testdescription", 1, 200, 100, 100);
     }
 
     @Test

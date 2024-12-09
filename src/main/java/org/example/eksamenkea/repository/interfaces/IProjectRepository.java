@@ -2,6 +2,12 @@ package org.example.eksamenkea.repository.interfaces;
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.ProjectEmployeeCostDTO;
 import org.example.eksamenkea.service.Errorhandling;
+import org.example.eksamenkea.util.ConnectionManager;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface IProjectRepository {
@@ -18,5 +24,6 @@ public interface IProjectRepository {
 
      List<ProjectEmployeeCostDTO>getProjectsDTOByEmployeeId(int employeeId) throws Errorhandling;
 
+     int calculateTimeConsumptionProject(Connection connection, int subprojectId) throws Errorhandling; //kan måske slettes
 }
 

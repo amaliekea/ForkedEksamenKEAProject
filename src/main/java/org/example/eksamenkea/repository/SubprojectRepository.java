@@ -87,4 +87,23 @@ public class SubprojectRepository implements ISubprojectRepository {
         }
         return subprojects;
     }
+
+    @Override
+    public int calculateTimeConsumptionSubproject(int subprojectId) throws Errorhandling {
+        int totalTime =0;
+        String query = "SELECT SUM(estimated_hours) AS total_hours FROM task WHERE subproject_id = ?";
+        try (Connection con = ConnectionManager.getConnection()){
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setInt(1, subprojectId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    totalTime = resultSet.getInt("total_hours");
+                }
+            }
+        } catch (SQLException e) {
+            throw new Errorhandling("Failed to calculate time");
+        }
+        return totalTime;
+    }
 }
