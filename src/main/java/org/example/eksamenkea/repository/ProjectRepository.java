@@ -103,14 +103,18 @@ public class ProjectRepository implements IProjectRepository {
 
             ResultSet resultSet = preparedStatement1.executeQuery();
             while (resultSet.next()) {
+                int projectId = resultSet.getInt("project_id");
+                int totalTime = calculateTimeConsumptionProject(connection,projectId);
+
                 projects.add(new ProjectEmployeeCostDTO(
-                        resultSet.getInt("project_id"),
+                        projectId,
                         resultSet.getString("project_name"),
                         resultSet.getDouble("budget"),
                         resultSet.getString("project_description"),
                         resultSet.getInt("employee_id"),
                         resultSet.getInt("material_cost"),
-                        resultSet.getInt("employee_cost")
+                        resultSet.getInt("employee_cost"),
+                        totalTime
                 ));
             }
         } catch (SQLException e) {
@@ -161,48 +165,58 @@ public class ProjectRepository implements IProjectRepository {
     }
 
 
-    @Override //Amalie
+    @Override
     public List<ProjectEmployeeCostDTO> getProjectsDTOByEmployeeId(int employeeId) throws Errorhandling {
         List<ProjectEmployeeCostDTO> projects = new ArrayList<>();
-        String queryView = "SELECT project.*,SUM(task.actual_hours * employee.employee_rate) AS employee_cost FROM project " +
-                "LEFT JOIN subproject ON project.project_id = subproject.project_id " +
-                "LEFT JOIN task ON subproject.subproject_id = task.subproject_id " +
-                "LEFT JOIN employee ON task.employee_id = employee.employee_id " +
-                "WHERE project.employee_id = ? AND project.is_archived = FALSE Group by project.project_id";
+        String queryView =
+                "SELECT project.project_id, project.project_name, project.budget, project.project_description, " +
+                        "project.employee_id, project.material_cost, " +
+                        "SUM(task.actual_hours * employee.employee_rate) AS employee_cost " +
+                        "FROM project " +
+                        "LEFT JOIN subproject ON project.project_id = subproject.project_id " +
+                        "LEFT JOIN task ON subproject.subproject_id = task.subproject_id " +
+                        "LEFT JOIN employee ON task.employee_id = employee.employee_id " +
+                        "WHERE project.employee_id = ? AND project.is_archived = FALSE " +
+                        "GROUP BY project.project_id";
 
         try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement preparedStatement1 = connection.prepareStatement(queryView)) {
-            preparedStatement1.setInt(1, employeeId);
+             PreparedStatement preparedStatement = connection.prepareStatement(queryView)) {
+            preparedStatement.setInt(1, employeeId);
 
-            ResultSet resultSet = preparedStatement1.executeQuery();
-            while (resultSet.next()) {
-                projects.add(new ProjectEmployeeCostDTO(
-                        resultSet.getInt("project_id"),
-                        resultSet.getString("project_name"),
-                        resultSet.getDouble("budget"),
-                        resultSet.getString("project_description"),
-                        resultSet.getInt("employee_id"),
-                        resultSet.getInt("material_cost"),
-                        resultSet.getInt("employee_cost")
-                ));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int projectId = resultSet.getInt("project_id");
+
+                    // Brug den eksisterende forbindelse til at beregne tid
+                    int totalTime = calculateTimeConsumptionProject(connection, projectId);
+
+                    projects.add(new ProjectEmployeeCostDTO(
+                            projectId,
+                            resultSet.getString("project_name"),
+                            resultSet.getDouble("budget"),
+                            resultSet.getString("project_description"),
+                            resultSet.getInt("employee_id"),
+                            resultSet.getInt("material_cost"),
+                            resultSet.getInt("employee_cost"),
+                            totalTime // Tilføj samlet tid
+                    ));
+                }
             }
-
         } catch (SQLException e) {
             throw new Errorhandling("Failed to get projects by employee ID: " + e.getMessage());
         }
         return projects;
     }
 
-    @Override
-    public int calculateTimeConsumptionProject(int projectId) throws Errorhandling {
+    public int calculateTimeConsumptionProject(Connection connection, int projectId) throws Errorhandling {
         int totalTime = 0;
         String query =
-        "SELECT SUM(task.estimated_hours) AS total_hours FROM task JOIN subproject ON task.subproject_id = subproject.subproject_id " +
-                "WHERE subproject.project_id = ?";
+                "SELECT SUM(task.estimated_hours) AS total_hours " +
+                        "FROM task " +
+                        "JOIN subproject ON task.subproject_id = subproject.subproject_id " +
+                        "WHERE subproject.project_id = ?";
 
-        try (Connection con = ConnectionManager.getConnection();
-             PreparedStatement preparedStatement = con.prepareStatement(query)) {
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, projectId);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -211,10 +225,11 @@ public class ProjectRepository implements IProjectRepository {
                 }
             }
         } catch (SQLException e) {
-            throw new Errorhandling("Failed to calculate time for project: " + e.getMessage());
+            throw new Errorhandling("Failed to calculate time for project ID " + projectId + ": " + e.getMessage());
         }
         return totalTime;
     }
+
 
 }
 

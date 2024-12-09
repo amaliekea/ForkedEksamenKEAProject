@@ -24,6 +24,6 @@ public interface IProjectRepository {
 
      List<ProjectEmployeeCostDTO>getProjectsDTOByEmployeeId(int employeeId) throws Errorhandling;
 
-     int calculateTimeConsumptionProject(int subprojectId) throws Errorhandling;
+     int calculateTimeConsumptionProject(Connection connection, int subprojectId) throws Errorhandling; //kan måske slettes
 }
 
