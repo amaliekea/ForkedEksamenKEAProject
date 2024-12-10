@@ -394,16 +394,19 @@ button:hover,
     .styled-table-container {
         width: 100%; /* Sørger for at elementer fylder skærmens bredde */
         padding: 15px; /* Mindre padding for bedre pasform */
+        overflow-x: auto; /* Aktiverer horisontal scroll, hvis tabellen er for bred */
     }
 
     .styled-table {
-        font-size: 14px; /* Reducerer tekststørrelsen for små skærme */
-        max-height: 300px; /* Reducerer maksimal højde for små skærme */
+        width: 100%; /* Sørger for, at tabellen skalerer */
+        max-height: 300px; /* Begrænser tabelhøjden på små skærme */
+        font-size: 14px; /* Reducer skrifttype for at spare plads */
     }
 
     .styled-table th,
     .styled-table td {
         padding: 8px; /* Mindre padding for at spare plads */
+        word-wrap: break-word; /* Tillader tekst at bryde linjer for små celler */
     }
 
     .action-button,
