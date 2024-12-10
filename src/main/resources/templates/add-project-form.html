@@ -8,7 +8,7 @@
 <body>
 
 <div class="form-page-container">
-    <header class="form-page-header">
+    <header class="header">
         <h1>Add Project</h1>
     </header>
     <main class="form-page-main">
@@ -52,18 +52,13 @@
                            placeholder="Enter estimated material cost"
                            min="0" />
                 </div>
-
-                <!-- Hidden Employee ID -->
                 <input type="hidden" name="employeeId" th:value="${employeeId}" />
-
-                <!-- Submit Button -->
                 <div class="form-actions">
                     <button type="submit" class="action-button">Submit and Add Project</button>
                     <form action="//project-leader-overview" method="get">
                         <button type="submit">Regret</button>
                     </form>
                 </div>
-
             </form>
         </div>
     </main>

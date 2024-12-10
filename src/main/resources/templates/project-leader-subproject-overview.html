@@ -8,12 +8,14 @@
 </head>
 <body>
 <div class="overview-container">
-  <header>
+  <header class="header">
     <h1>Project Leader Overview over Subprojects</h1>
   </header>
   <main>
     <section class="project-section">
+      <header class="header">
       <h2>Project Details</h2>
+      </header>
       <table class="styled-table">
         <thead>
         <tr>
@@ -29,7 +31,9 @@
     </section>
 
     <section class="subprojects-section">
+      <header class="header">
       <h2>Subprojects</h2>
+      </header>
       <table class="styled-table">
         <thead>
         <tr>
@@ -61,12 +65,12 @@
       </table>
     </section>
 
-    <div class="logout-button">
-      <form action="/logout" method="get">
-        <button type="submit">Log out</button>
-      </form>
+    <div class="button-group">
       <form action="/project-leader-overview" method="get">
         <button type="submit">Back to Project Overview</button>
+      </form>
+      <form action="/logout" method="get">
+        <button type="submit">Log out</button>
       </form>
     </div>
   </main>
