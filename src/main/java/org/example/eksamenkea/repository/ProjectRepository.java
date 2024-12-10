@@ -211,9 +211,7 @@ public class ProjectRepository implements IProjectRepository {
     public int calculateTimeConsumptionProject(Connection connection, int projectId) throws Errorhandling {
         int totalTime = 0;
         String query =
-                "SELECT SUM(task.estimated_hours) AS total_hours " +
-                        "FROM task " +
-                        "JOIN subproject ON task.subproject_id = subproject.subproject_id " +
+                "SELECT SUM(task.estimated_hours) AS total_hours FROM task JOIN subproject ON task.subproject_id = subproject.subproject_id " +
                         "WHERE subproject.project_id = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
