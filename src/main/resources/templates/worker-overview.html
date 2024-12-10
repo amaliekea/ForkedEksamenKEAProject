@@ -12,51 +12,6 @@
         <h1>Worker Overview</h1>
     </header>
     <main>
-        <!-- Project Section -->
-        <section class="project-section">
-            <h2>Project</h2>
-            <table class="styled-table">
-                <thead>
-                <tr>
-                    <th>Project Name</th>
-                    <th>Description</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:if="${project == null}">
-                    <td colspan="2">No project available</td>
-                </tr>
-                <tr th:if="${project != null}">
-                    <td th:text="${project.projectName}"></td>
-                    <td th:text="${project.projectDescription}"></td>
-                </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <!-- Subproject Section -->
-        <section class="subproject-section">
-            <h2>Subprojects</h2>
-            <table class="styled-table">
-                <thead>
-                <tr>
-                    <th>Subproject Name</th>
-                    <th>Description</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:if="${subprojects == null}">
-                    <td colspan="2">No subproject available</td>
-                </tr>
-                <tr th:each="subproject : ${subprojects}">
-                    <td th:text="${subproject.subprojectName}"></td>
-                    <td th:text="${subproject.subprojectDescription}"></td>
-                </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <!-- Task Section -->
         <section class="task-section">
             <h2>Tasks</h2>
             <table class="styled-table">
