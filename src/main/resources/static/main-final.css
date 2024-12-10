@@ -12,8 +12,8 @@ body {
     background: url('pictures/login-screen.jpg') no-repeat center center fixed;
     background-size: cover;
     display: flex;
-    align-items: center;
     justify-content: center;
+    overflow: auto; /* Tillader scrolling af indholdet */
 }
 
 /* Login container */
@@ -88,23 +88,30 @@ body {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
+    margin-top: 130px; /* Skaber afstand under headeren */
     font-size: 16px;
     text-align: left;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    overflow: hidden;
+    max-height: 200px; /* Sætter en maksimal højde på tabellen */
+    overflow-y: initial; /* Aktiverer vertikal rulle, hvis højden overskrides */
+    flex-grow: 1;
+
 }
 
 .styled-table thead tr {
     background-color: #4A90E2;
     color: #ffffff;
     font-weight: bold;
+    border-radius: 10px; /* Rounded edges */
+
 }
 
 .styled-table th,
 .styled-table td {
     padding: 12px 15px;
     border: 1px solid #ddd;
+
 }
 
 .styled-table tbody tr {
@@ -205,6 +212,26 @@ button:hover,
     border-radius: 10px; /* Rounded edges */
     padding: 20px; /* Optional: Adds spacing inside the header */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow for better visual appeal */
+    box-sizing: border-box; /* Ensures padding is included in the width calculation */
+    overflow: hidden; /* Prevents overflow if there is too much content */
+    width: 100%;
+    position: fixed; /* Fixes the header at the top */
+    top: 0; /* Ensures it's positioned at the top of the page */
+    left: 0; /* Optional: ensures it's aligned to the left edge of the page */
+    z-index: 1000; /* Optional: ensures the header stays above other content */
+
+}
+
+.smaller-header{
+    background-color: rgba(255, 255, 255, 0.8); /* White background with 80% opacity */
+    border-radius: 10px; /* Rounded edges */
+    padding: 20px; /* Optional: Adds spacing inside the header */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow for better visual appeal */
+    box-sizing: border-box; /* Ensures padding is included in the width calculation */
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
 }
 
 .homepage-header {
@@ -231,6 +258,7 @@ button:hover,
     display: inline-block;
     text-align: center;
     margin: 20px auto;
+    width: 100%;
 }
 
 .logo {
@@ -372,3 +400,41 @@ button:hover,
 .label.not-sustainable {
     background-color: #f44336; /* Rød for ikke-bæredygtige projekter */
 }
+
+/* Mobile styling */
+@media (max-width: 480px) {
+    body {
+        padding: 10px; /* Tilføjer lidt indvendig afstand for små skærme */
+    }
+
+    .login-box,
+    .styled-table-container {
+        width: 100%; /* Sørger for at elementer fylder skærmens bredde */
+        padding: 15px; /* Mindre padding for bedre pasform */
+        overflow-x: auto; /* Aktiverer horisontal scroll, hvis tabellen er for bred */
+    }
+
+    .styled-table {
+        width: 100%; /* Sørger for, at tabellen skalerer */
+        max-height: 300px; /* Begrænser tabelhøjden på små skærme */
+        font-size: 14px; /* Reducer skrifttype for at spare plads */
+    }
+
+    .styled-table th,
+    .styled-table td {
+        padding: 8px; /* Mindre padding for at spare plads */
+        word-wrap: break-word; /* Tillader tekst at bryde linjer for små celler */
+    }
+
+    .action-button,
+    .logout-button {
+        width: 100%; /* Gør knapperne fuldbredde på små skærme */
+        font-size: 14px; /* Reducerer knaptekststørrelse */
+    }
+
+    .header {
+        padding: 10px; /* Mindre padding for små skærme */
+        font-size: 18px; /* Mindre skriftstørrelse */
+    }
+}
+
