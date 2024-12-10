@@ -10,8 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -21,18 +20,23 @@ class ProjectRepositoryTest {
     @Autowired
     private ProjectRepository projectRepository;
 
-    Project project = new Project(1, "testproject", 2000, "testdescription", 1, 100);
 
-
+    //DENNE TEST VIRKER MED MYSQL
     @Test
     void addProject() throws Errorhandling {
-        // Arrange
 
+        // Arrange
+        int projectId = 100;
+        Project testProject1 = new Project(projectId, "projectTest",5000.00, "test project", 1,5000);
         // Act
-        projectRepository.addProject(project);
+
+        projectRepository.addProject(testProject1);
+        Project nonExistentProject = projectRepository.getProjectFromProjectId(999);
+        Project testProject2 = projectRepository.getProjectFromProjectId(projectId);
 
         // Assert
-        verify(projectRepository).addProject(project);
+        assertEquals("projectTest",testProject1.getProjectName());
+        assertNull(nonExistentProject);
     }
 
     @Test
