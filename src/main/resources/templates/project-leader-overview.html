@@ -22,8 +22,8 @@
                 <th>Description</th>
                 <th>Total Budget</th>
                 <th>Material Cost</th>
-                <th>Employee Cost</th>
-                <th>Time consumption</th>
+                <th>Current Workforce Expenses</th>
+                <th>Estimated time consumption</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -45,7 +45,7 @@
                     <span th:if="${project.materialCost / project.budget > 0.30}"
                           class="label not-sustainable">Not Sustainable</span>
                 </td>
-                <td th:text="${project.employeeCost}"></td>
+                <td th:text="${project.employeeCost + ' DKK'}"></td>
                 <td th:text="${project.estimatedTimeConsumption + ' hours'}"></td>
 
 
