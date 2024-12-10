@@ -40,7 +40,7 @@ public class TaskController {
         return "add-task";
 
     }
-//h
+
     @PostMapping("/task-added") //Amalie
     public String addedTask(@RequestParam("subprojectId") int subprojectId, @ModelAttribute Task task) throws Errorhandling {
         taskService.createTask(task);
