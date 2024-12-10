@@ -50,7 +50,6 @@ public class TaskController {
     @GetMapping("/project-leader-tasks") //AM-ZU
     public String getTaskBySubprojectName(@RequestParam("subprojectId") int subprojectId, Model model) throws Errorhandling {
         Subproject subproject = subprojectService.getSubprojectBySubprojectId(subprojectId);
-
         List<Task> tasks = taskService.getTaskBySubprojectId(subprojectId);
 
         List<Employee> employeeList = employeeService.getAllWorkers();
