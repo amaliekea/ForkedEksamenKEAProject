@@ -383,3 +383,38 @@ button:hover,
 .label.not-sustainable {
     background-color: #f44336; /* Rød for ikke-bæredygtige projekter */
 }
+
+/* Mobile styling */
+@media (max-width: 480px) {
+    body {
+        padding: 10px; /* Tilføjer lidt indvendig afstand for små skærme */
+    }
+
+    .login-box,
+    .styled-table-container {
+        width: 100%; /* Sørger for at elementer fylder skærmens bredde */
+        padding: 15px; /* Mindre padding for bedre pasform */
+    }
+
+    .styled-table {
+        font-size: 14px; /* Reducerer tekststørrelsen for små skærme */
+        max-height: 300px; /* Reducerer maksimal højde for små skærme */
+    }
+
+    .styled-table th,
+    .styled-table td {
+        padding: 8px; /* Mindre padding for at spare plads */
+    }
+
+    .action-button,
+    .logout-button {
+        width: 100%; /* Gør knapperne fuldbredde på små skærme */
+        font-size: 14px; /* Reducerer knaptekststørrelse */
+    }
+
+    .header {
+        padding: 10px; /* Mindre padding for små skærme */
+        font-size: 18px; /* Mindre skriftstørrelse */
+    }
+}
+
