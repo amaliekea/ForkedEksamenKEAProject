@@ -26,7 +26,7 @@ public class TaskRepository implements ITaskRepository {
             statement.setString(1, task.getTaskName());
             statement.setDate(2, Date.valueOf(task.getStartdate())); // Konverter LocalDate til java.sql.Date
             statement.setDate(3, Date.valueOf(task.getEnddate()));
-            statement.setInt(4, task.getStatus().ordinal()); // Enum-værdi
+            statement.setInt(4, 4); // Enum værdi 'notstarted' default
             statement.setInt(5, task.getEmployeeId());
             statement.setInt(6, task.getEstimatedHours());
             statement.setInt(7, task.getSubprojectId());
