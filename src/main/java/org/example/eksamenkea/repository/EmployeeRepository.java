@@ -7,6 +7,8 @@ import org.example.eksamenkea.util.ConnectionManager;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository("IEMPLOYEEREPOSITORY")
 @Lazy // Angiver, at denne bean kun bliver initialiseret, når den er nødvendig, og ikke ved opstart
@@ -91,4 +93,31 @@ public class EmployeeRepository implements IEmployeeRepository {
             throw new Errorhandling("Failed to get worker: " + e.getMessage());
         }
     }
+    @Override
+    public List<List<Object>> getWorkloadByEmployeeId(int employeeId) throws Errorhandling {
+        List<List<Object>> workloadList = new ArrayList<>();
+        String query = "SELECT * FROM employee_workload_pr_day WHERE employee_id = ?";
+
+        try (Connection con = ConnectionManager.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setInt(1, employeeId);
+
+            try (ResultSet resultSet = pstmt.executeQuery()) {
+                while (resultSet.next()) {
+                    List<Object> row = new ArrayList<>();
+                    row.add(resultSet.getDate("date_column"));
+                    double totalHours = resultSet.getDouble("total_hours_per_day");
+                    row.add(String.format("%.1f", totalHours)); // Formater tildecimal
+                    row.add(resultSet.getInt("employee_id"));
+                    row.add(resultSet.getInt("max_hours_per_employee"));
+
+                    workloadList.add(row);
+                }
+            }
+        } catch (SQLException e) {
+            throw new Errorhandling("Error retrieving workload for employee ID " + employeeId + ": " + e.getMessage());
+        }
+        return workloadList;
+    }
+
 }

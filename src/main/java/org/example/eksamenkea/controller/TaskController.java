@@ -66,6 +66,9 @@ public class TaskController {
         List<Task> taskList = taskService.getTasklistByEmployeeId(employee.getEmployeeId());
         model.addAttribute("tasklist", taskList);
 
+        List<List<Object>> getWorkloadByEmployeeId = employeeService.getWorkloadByEmployeeId(employee.getEmployeeId());
+
+        model.addAttribute("Workload", getWorkloadByEmployeeId);
         return "worker-overview";
     }
 
