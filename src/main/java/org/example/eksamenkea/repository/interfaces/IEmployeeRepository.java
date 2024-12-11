@@ -10,4 +10,7 @@ public interface IEmployeeRepository {
     List<Employee> getAllWorkers() throws Errorhandling;
 
     Employee getEmployeeByEmail(String email) throws Errorhandling;
+
+    public List<List<Object>> getWorkloadByEmployeeId(int employeeId) throws Errorhandling;
+
 }

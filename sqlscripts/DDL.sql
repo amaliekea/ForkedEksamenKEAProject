@@ -1,9 +1,7 @@
--- Slet eksisterende database og opret en ny
 DROP DATABASE IF EXISTS project_management;
 CREATE DATABASE project_management;
 USE project_management;
 
--- Opret Employee tabel (fælles for både Worker og Project Leader)
 CREATE TABLE employee (
                           employee_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                           email VARCHAR(255) NOT NULL UNIQUE,
@@ -19,7 +17,6 @@ CREATE TABLE employee (
     );
 
 
--- Opret Project tabel
 CREATE TABLE project (
                          project_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                          project_name VARCHAR(255) NOT NULL,
@@ -31,7 +28,6 @@ CREATE TABLE project (
                          FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
 );
 
--- Opret Subproject tabel
 CREATE TABLE subproject (
                             subproject_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                             subproject_name VARCHAR(255) NOT NULL,
@@ -41,7 +37,6 @@ CREATE TABLE subproject (
                             FOREIGN KEY (project_id) REFERENCES project(project_id)
 );
 
--- Opret Task tabel
 CREATE TABLE task (
                       task_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                       task_name VARCHAR(255) NOT NULL,
@@ -56,4 +51,3 @@ CREATE TABLE task (
                       FOREIGN KEY (subproject_id) REFERENCES subproject(subproject_id),
                       FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
 );
-
