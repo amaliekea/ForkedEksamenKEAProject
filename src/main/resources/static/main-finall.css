@@ -9,7 +9,7 @@
 /* Body styling */
 body {
     height: 100vh;
-    background: url('pictures/login-screen.jpg') no-repeat center center fixed;
+    background: url('pictures/background.jpg') no-repeat center center fixed;
     background-size: cover;
     display: flex;
     justify-content: center;
@@ -96,7 +96,6 @@ body {
     max-height: 200px; /* Sætter en maksimal højde på tabellen */
     overflow-y: initial; /* Aktiverer vertikal rulle, hvis højden overskrides */
     flex-grow: 1;
-
 }
 
 .styled-table thead tr {
