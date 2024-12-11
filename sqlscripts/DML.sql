@@ -1,3 +1,4 @@
+
 INSERT INTO employee (email, password, role, employee_rate, max_hours)
 VALUES
     ('ama', 'Amalie123', 'PROJECTLEADER', 180, 5),
@@ -64,16 +65,23 @@ FROM (
                   SELECT
                       task.*,
                       employee.max_hours,
-                      estimated_hours / DATEDIFF(end_date, start_date) AS hours_per_day
+                      estimated_hours / NULLIF(COUNT(DateRange.date_column), 0) AS hours_per_day
                   FROM
                       task
                           JOIN
                       employee
                       ON task.employee_id = employee.employee_id
+                          JOIN
+                      DateRange
+                      ON task.start_date <= DateRange.date_column
+                          AND task.end_date >= DateRange.date_column
+                  WHERE DAYOFWEEK(DateRange.date_column) NOT IN (1, 7) -- Udeluk weekender
+                  GROUP BY task.task_id, employee.employee_id
               ) AS task_employee
                   JOIN DateRange
                        ON task_employee.start_date <= DateRange.date_column
                            AND task_employee.end_date >= DateRange.date_column
+                           AND DAYOFWEEK(DateRange.date_column) NOT IN (1, 7) -- Udeluk weekender
      ) AS h
 GROUP BY
     employee_id,
