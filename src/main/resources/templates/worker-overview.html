@@ -11,6 +11,25 @@
         <h1>Worker Overview - Tasks</h1>
     </header>
     <main>
+        <section class="workload-section">
+            <table class="styled-table">
+                <thead>
+                <tr>
+                    <th>Work days </th>
+                    <th>Required hours</th>
+                    <th>Daily hour limit</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${Workload}">
+                    <td th:text="${row[0]}"></td> <!-- Date -->
+                    <td th:text="${row[1]}"></td> <!-- Total Hours -->
+                    <td th:text="${row[3]}"></td> <!-- Max Hours -->
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
         <section class="task-section">
             <table class="styled-table">
                 <thead>
@@ -43,7 +62,6 @@
             </table>
         </section>
 
-        <!-- Logout Section -->
         <div class="button-group">
             <form action="/logout" method="get">
                 <button type="submit" class="action-button">Log Out</button>

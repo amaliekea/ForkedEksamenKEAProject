@@ -55,10 +55,11 @@
                 <input type="hidden" name="employeeId" th:value="${employeeId}" />
                 <div class="form-actions">
                     <button type="submit" class="action-button">Submit and Add Project</button>
-                    <form action="//project-leader-overview" method="get">
-                        <button type="submit">Regret</button>
-                    </form>
                 </div>
+            </form>
+
+            <form action="/project-leader-overview" method="get">
+                <button type="submit">Regret</button>
             </form>
         </div>
     </main>
