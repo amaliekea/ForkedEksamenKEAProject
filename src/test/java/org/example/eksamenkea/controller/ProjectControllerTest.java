@@ -93,7 +93,7 @@ class ProjectControllerTest {
 
         mockMvc.perform(post("/edit-project").flashAttr("project", mockProject))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/project-leader-subproject-overview?projectName=" + mockProject.getProjectName()));
+                .andExpect(redirectedUrl("/project-leader-overview?projectId=" + mockProject.getProjectId()));
 
         Mockito.verify(projectService, Mockito.times(1)).updateProject(mockProject);
     }
