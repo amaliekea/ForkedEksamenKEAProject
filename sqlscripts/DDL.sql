@@ -11,8 +11,8 @@ CREATE TABLE employee (
                           max_hours INT DEFAULT 0,
                           CONSTRAINT chk_password CHECK (
                               LENGTH(password) >= 8 AND -- passwordet er mindst 8 tegn langt.
-                              password REGEXP '.*[A-Z].*' AND -- passwordet skal indeholde mindst ét stort bogstav
-                              password REGEXP '.*[0-9].*' -- Tjekker, at passwordet indeholder mindst ét tal
+                              password REGEXP '.*[A-Z].*' AND -- passwordet skal indeholde mindst et stort bogstav
+                              password REGEXP '.*[0-9].*' -- Tjekker, at passwordet indeholder mindst et tal
 )
     );
 
@@ -22,9 +22,9 @@ CREATE TABLE project (
                          project_name VARCHAR(255) NOT NULL,
                          budget DECIMAL(10, 2) NOT NULL,
                          project_description VARCHAR(255) NOT NULL,
-                         employee_id INT, -- Reference til employee_id fra Employee tabellen (projektlederen)
-                         material_cost DECIMAL(10, 2) DEFAULT 0.00, -- Materialeomkostninger med standardværdi
-                         is_archived BOOLEAN DEFAULT FALSE, --  til arkivering
+                         employee_id INT,
+                         material_cost DECIMAL(10, 2) DEFAULT 0.00,
+                         is_archived BOOLEAN DEFAULT FALSE,
                          FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
 );
 
