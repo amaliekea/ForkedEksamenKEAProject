@@ -3,7 +3,7 @@ VALUES
     ('ama', 'Amalie123', 'PROJECTLEADER', 180, 5),
     ('zuzu', 'Zuhur1234', 'PROJECTLEADER', 200, 6),
     ('worker', 'Worker123', 'WORKER', 250, 7),
-    ('worker2@example.com', 'Worker123', 'WORKER', 500, 8);
+    ('worker2@example.com', 'Worker1234', 'WORKER', 500, 8);
 
 INSERT INTO project (project_name, budget, project_description, employee_id, material_cost, is_archived)
 VALUES
