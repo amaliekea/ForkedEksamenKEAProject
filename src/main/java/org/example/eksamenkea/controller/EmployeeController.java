@@ -42,7 +42,7 @@ public class EmployeeController {
                 session.setAttribute("employee", employee);// Gem medarbejderen i sessionen
                 session.setAttribute("userRole", employee.getRole());
                 session.setAttribute("employeeId", employee.getEmployeeId());
-                session.setMaxInactiveInterval(360); // set session til maks 360 sekunder
+                session.setMaxInactiveInterval(1800); // set session til maks 30 minutter
                 return "redirect:/logged_in";
             } else {
                 model.addAttribute("errorMessage", "Forkert email eller adgangskode.");
