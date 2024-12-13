@@ -178,7 +178,7 @@ public class ProjectRepository implements IProjectRepository {
         }
     }
 
-    @Override
+    @Override//Amalie
     public List<ProjectCostDTO> getProjectsDTOByEmployeeId(int employeeId) throws Errorhandling {
         List<ProjectCostDTO> projects = new ArrayList<>();
         String queryView =
