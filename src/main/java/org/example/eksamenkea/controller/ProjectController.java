@@ -12,7 +12,6 @@ import java.util.List;
 public class ProjectController {
     private ProjectService projectService;
 
-
     public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
     }

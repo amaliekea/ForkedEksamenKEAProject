@@ -30,15 +30,12 @@ public class TaskController {
     @GetMapping("/add-task") //Amalie
     public String addTask(@RequestParam("subprojectId") int subprojectId, HttpSession session, Model model) throws Errorhandling {
         Task task = new Task();
-        Employee employee = (Employee) session.getAttribute("employee");  // Henter "user" fra sessionen.
-        Subproject subproject = subprojectService.getSubprojectBySubprojectId(subprojectId);
+        Employee employee = (Employee) session.getAttribute("employee");
 
         model.addAttribute("task", task);
         model.addAttribute("employeeId", employee.getEmployeeId());
         model.addAttribute("subprojectId", subprojectId);
-        model.addAttribute("subprojectName", subproject.getSubprojectName());
         return "add-task";
-
     }
 
     @PostMapping("/task-added") //Amalie
