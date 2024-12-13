@@ -24,7 +24,7 @@ public class ProjectRepository implements IProjectRepository {
     @Override //Amalie
     public void addProject(Project project) throws Errorhandling {
         String sqlAddProject = "INSERT INTO project(project_name, budget, project_description, employee_id, material_cost,is_archived) VALUES (?, ?, ?, ?, ?,?)";
-        System.out.println(project);
+
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sqlAddProject)) {
             statement.setString(1, project.getProjectName());
@@ -95,8 +95,10 @@ public class ProjectRepository implements IProjectRepository {
                 "LEFT JOIN task ON subproject.subproject_id = task.subproject_id " +
                 "LEFT JOIN employee ON task.employee_id = employee.employee_id " +
                 "WHERE project.employee_id = ? AND project.is_archived = TRUE Group by project.project_id";
-
+        Statement statement = null;
         try (Connection connection = ConnectionManager.getConnection()) {
+            statement = connection.createStatement();
+            statement.execute("START TRANSACTION");
             PreparedStatement preparedStatement1 = connection.prepareStatement(queryView);
             preparedStatement1.setInt(1, employeeId);
 
@@ -115,9 +117,23 @@ public class ProjectRepository implements IProjectRepository {
                         resultSet.getInt("employee_cost"),
                         totalTime
                 ));
+
             }
+            statement.execute("COMMIT");
         } catch (SQLException e) {
-            throw new Errorhandling("Failed to get projects by employee ID: " + e.getMessage());
+            if (statement != null) {
+                try {
+                    statement.execute("ROLLBACK ");
+                } catch (SQLException ex) {
+                    throw new Errorhandling("Failed to get archived projects and related data: " + e.getMessage());
+                }
+            }
+        } finally {
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return projects;
     }
@@ -130,29 +146,38 @@ public class ProjectRepository implements IProjectRepository {
                 "JOIN subproject sp ON t.subproject_id = sp.subproject_id " +
                 "SET t.is_archived = TRUE " +
                 "WHERE sp.project_id = ?";
-
+        Statement statement = null;
         try (Connection connection = ConnectionManager.getConnection()) {
-            connection.setAutoCommit(false);
+            statement = connection.createStatement();
+            statement.execute("START TRANSACTION");
+            PreparedStatement projectStmt = connection.prepareStatement(archiveProjectQuery);
+            PreparedStatement subprojectStmt = connection.prepareStatement(archiveSubprojectQuery);
+            PreparedStatement taskStmt = connection.prepareStatement(archiveTaskQuery);
 
-            try (PreparedStatement projectStmt = connection.prepareStatement(archiveProjectQuery);
-                 PreparedStatement subprojectStmt = connection.prepareStatement(archiveSubprojectQuery);
-                 PreparedStatement taskStmt = connection.prepareStatement(archiveTaskQuery)) {
+            projectStmt.setInt(1, projectId);
+            projectStmt.executeUpdate();
 
-                projectStmt.setInt(1, projectId);
+            subprojectStmt.setInt(1, projectId);
+            subprojectStmt.executeUpdate();
 
-                subprojectStmt.setInt(1, projectId);
-                subprojectStmt.executeUpdate();
+            taskStmt.setInt(1, projectId);
+            taskStmt.executeUpdate();
 
-                taskStmt.setInt(1, projectId);
-                taskStmt.executeUpdate();
-
-                connection.commit();
-            } catch (SQLException e) {
-                connection.rollback();
-                throw new Errorhandling("Failed to archive project and related data: " + e.getMessage());
-            }
+            statement.execute("COMMIT");
         } catch (SQLException e) {
-            throw new Errorhandling("Database error during archiving: " + e.getMessage());
+            if (statement != null) {
+                try {
+                    statement.execute("ROLLBACK ");
+                } catch (SQLException ex) {
+                    throw new Errorhandling("Failed to archive project and related data: " + e.getMessage());
+                }
+            }
+        } finally {
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -200,7 +225,7 @@ public class ProjectRepository implements IProjectRepository {
     public int calculateTimeConsumptionProject(Connection connection, int projectId) throws Errorhandling {
         int totalTime = 0;
         String query = "SELECT SUM(task.estimated_hours) AS total_hours FROM task JOIN subproject ON task.subproject_id = subproject.subproject_id " +
-                        "WHERE subproject.project_id = ?";
+                "WHERE subproject.project_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, projectId);
 
