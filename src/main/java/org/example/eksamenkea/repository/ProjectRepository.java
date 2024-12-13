@@ -1,12 +1,10 @@
 package org.example.eksamenkea.repository;
-
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.ProjectCostDTO;
 import org.example.eksamenkea.repository.interfaces.IProjectRepository;
 import org.example.eksamenkea.service.Errorhandling;
 import org.example.eksamenkea.util.ConnectionManager;
 import org.springframework.stereotype.Repository;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,10 +93,7 @@ public class ProjectRepository implements IProjectRepository {
                 "LEFT JOIN task ON subproject.subproject_id = task.subproject_id " +
                 "LEFT JOIN employee ON task.employee_id = employee.employee_id " +
                 "WHERE project.employee_id = ? AND project.is_archived = TRUE Group by project.project_id";
-        Statement statement = null;
         try (Connection connection = ConnectionManager.getConnection()) {
-            statement = connection.createStatement();
-            statement.execute("START TRANSACTION");
             PreparedStatement preparedStatement1 = connection.prepareStatement(queryView);
             preparedStatement1.setInt(1, employeeId);
 
@@ -119,21 +114,8 @@ public class ProjectRepository implements IProjectRepository {
                 ));
 
             }
-            statement.execute("COMMIT");
         } catch (SQLException e) {
-            if (statement != null) {
-                try {
-                    statement.execute("ROLLBACK ");
-                } catch (SQLException ex) {
-                    throw new Errorhandling("Failed to get archived projects and related data: " + e.getMessage());
-                }
-            }
-        } finally {
-            try {
-                if (statement != null) statement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            throw new Errorhandling("Failed to get archived projects and related data: " + e.getMessage());
         }
         return projects;
     }
@@ -191,10 +173,7 @@ public class ProjectRepository implements IProjectRepository {
                         "LEFT JOIN employee ON task.employee_id = employee.employee_id " +
                         "WHERE project.employee_id = ? AND project.is_archived = FALSE " +
                         "GROUP BY project.project_id";
-        Statement statement = null;
         try (Connection connection = ConnectionManager.getConnection()) {
-            statement = connection.createStatement();
-            statement.execute("START TRANSACTION");
             PreparedStatement preparedStatement = connection.prepareStatement(queryView);
             preparedStatement.setInt(1, employeeId);
 
@@ -214,21 +193,8 @@ public class ProjectRepository implements IProjectRepository {
                         totalTime
                 ));
             }
-            statement.execute("COMMIT");
         } catch (SQLException e) {
-            if (statement != null) {
-                try {
-                    statement.execute("ROLLBACK ");
-                } catch (SQLException ex) {
-                    throw new Errorhandling("Failed to get projects: " + e.getMessage());
-                }
-            }
-        } finally {
-            try {
-                if (statement != null) statement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            throw new Errorhandling("Failed to get projects: " + e.getMessage());
         }
         return projects;
     }
