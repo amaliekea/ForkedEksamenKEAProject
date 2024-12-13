@@ -66,7 +66,6 @@ class ProjectControllerTest {
     void AddProjectAndRedirect() throws Exception {
         Project mockProject = new Project();
 
-        // Act + Assert
         mockMvc.perform(post("/project-added").flashAttr("project", mockProject))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/project-leader-overview"));
@@ -93,7 +92,7 @@ class ProjectControllerTest {
 
         mockMvc.perform(post("/edit-project").flashAttr("project", mockProject))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/project-leader-overview?projectId=" + mockProject.getProjectId()));
+                .andExpect(redirectedUrl("/project-leader-overview"));
 
         Mockito.verify(projectService, Mockito.times(1)).updateProject(mockProject);
     }
@@ -118,8 +117,8 @@ class ProjectControllerTest {
         sessionAttributes.put("employee", mockEmployee);
 
         mockMvc.perform(post("/archive-project").param("projectId", String.valueOf(projectId)).sessionAttrs(sessionAttributes))
-                .andExpect(status().isOk())
-                .andExpect(view().name("project-leader-overview"));
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/project-leader-overview"));
 
         Mockito.verify(projectService, Mockito.times(1)).archiveProject(projectId);
     }

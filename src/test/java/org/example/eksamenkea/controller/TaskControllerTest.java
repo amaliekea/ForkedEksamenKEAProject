@@ -1,5 +1,4 @@
 package org.example.eksamenkea.controller;
-
 import org.example.eksamenkea.model.Employee;
 import org.example.eksamenkea.model.Role;
 import org.example.eksamenkea.model.Subproject;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -62,8 +60,7 @@ class TaskControllerTest {
                 .andExpect(view().name("add-task"))
                 .andExpect(model().attributeExists("task"))
                 .andExpect(model().attribute("employeeId", mockEmployee.getEmployeeId()))
-                .andExpect(model().attribute("subprojectId", subprojectId))
-                .andExpect(model().attribute("subprojectName", "Test Subproject"));
+                .andExpect(model().attribute("subprojectId", subprojectId));
     }
 
     @Test

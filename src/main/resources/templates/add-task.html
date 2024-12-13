@@ -20,7 +20,6 @@
     <div class="white-box">
       <form th:action="@{/task-added}" th:object="${task}" method="post" class="form-container">
 
-        <!-- Task Name -->
         <div class="form-group">
           <label for="taskName">Task Name:</label>
           <input id="taskName" class="form-control"
@@ -29,7 +28,6 @@
                  placeholder="Enter task name" required />
         </div>
 
-        <!-- Start Date -->
         <div class="form-group">
           <label for="startdate">Start Date:</label>
           <input id="startdate" class="form-control"
@@ -38,7 +36,6 @@
                  required />
         </div>
 
-        <!-- End Date -->
         <div class="form-group">
           <label for="enddate">End Date:</label>
           <input id="enddate" class="form-control"
@@ -47,7 +44,6 @@
                  required />
         </div>
 
-        <!-- Estimated Hours -->
         <div class="form-group">
           <label for="estimatedHours">Estimated Hours:</label>
           <input id="estimatedHours" class="form-control"
@@ -56,13 +52,11 @@
                  placeholder="Enter estimated hours" required />
         </div>
 
-        <!-- Hidden Fields -->
+
         <input type="hidden" name="subprojectId" th:value="${subprojectId}" />
         <input type="hidden" name="employeeId" th:value="${employeeId}" />
         <input type="hidden" th:field="*{status}" th:value="NOTSTARTED" />
-        <input type="hidden" name="subprojectName" th:value="${subprojectName}" />
 
-        <!-- Submit Button -->
         <div class="form-actions">
           <button type="submit" class="action-button">Add Task</button>
         </div>

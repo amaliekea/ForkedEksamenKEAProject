@@ -1,10 +1,12 @@
 package org.example.eksamenkea.repository;
+
 import org.example.eksamenkea.model.Status;
 import org.example.eksamenkea.model.Task;
 import org.example.eksamenkea.repository.interfaces.ITaskRepository;
 import org.example.eksamenkea.service.Errorhandling;
 import org.example.eksamenkea.util.ConnectionManager;
 import org.springframework.stereotype.Repository;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +21,7 @@ public class TaskRepository implements ITaskRepository {
 
     @Override //Amalie
     public void createTask(Task task) throws Errorhandling {
-        String sqlAddTask = "INSERT INTO task(task_name, start_date, end_date, status, employee_id, estimated_hours, subproject_id, actual_hours) VALUES (?, ?, ?, ?, ?, ?, ?, 0)";
+        String sqlAddTask = "INSERT INTO task(task_name, start_date, end_date, status, employee_id, estimated_hours, subproject_id, actual_hours) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sqlAddTask)) {
 
@@ -30,12 +32,14 @@ public class TaskRepository implements ITaskRepository {
             statement.setInt(5, task.getEmployeeId());
             statement.setInt(6, task.getEstimatedHours());
             statement.setInt(7, task.getSubprojectId());
+            statement.setInt(7, 0);
 
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new Errorhandling("Failed to add task: " + e.getMessage());
         }
     }
+
     @Override //AM-ZU
     public List<Task> getTaskBySubprojectId(int subprojectId) throws Errorhandling {
         List<Task> tasks = new ArrayList<>();
@@ -43,7 +47,6 @@ public class TaskRepository implements ITaskRepository {
                 "t.subproject_id, t.estimated_hours, t.actual_hours , t.employee_id " +
                 "FROM task t " +
                 "WHERE t.subproject_id = ? AND t.status != 'COMPLETE'";
-
 
         try (Connection connection = ConnectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -61,7 +64,7 @@ public class TaskRepository implements ITaskRepository {
                             resultSet.getInt("subproject_id"),
                             resultSet.getInt("estimated_hours"),
                             resultSet.getInt("actual_hours"),
-                            resultSet.getInt("employee_id") // Fjern actual_hours
+                            resultSet.getInt("employee_id")
                     ));
 
                 }
@@ -69,7 +72,6 @@ public class TaskRepository implements ITaskRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Failed to fetch tasks for subproject ID " + subprojectId + ": " + e.getMessage());
         }
-
         return tasks;
     }
 
@@ -111,9 +113,7 @@ public class TaskRepository implements ITaskRepository {
 
         try (Connection connection = ConnectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
             preparedStatement.setInt(1, taskId);
-
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 task = new Task(
@@ -129,7 +129,6 @@ public class TaskRepository implements ITaskRepository {
                 );
 
             }
-
         } catch (SQLException e) {
             throw new Errorhandling("Failed to get task: " + e.getMessage());
         }

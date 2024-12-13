@@ -1,18 +1,15 @@
 package org.example.eksamenkea.repository;
-
 import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.repository.interfaces.ISubprojectRepository;
 import org.example.eksamenkea.service.Errorhandling;
 import org.example.eksamenkea.util.ConnectionManager;
 import org.springframework.stereotype.Repository;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Repository("ISUBPROJECTREPOSITORY")
 public class SubprojectRepository implements ISubprojectRepository {
@@ -54,10 +51,7 @@ public class SubprojectRepository implements ISubprojectRepository {
             preStat.setString(2, subproject.getSubprojectDescription());
             preStat.setInt(3, subproject.getProjectId());
             preStat.setInt(4, subproject.getSubprojectId());
-
-
             preStat.executeUpdate();
-            System.out.println("Updated subproject");
         } catch (SQLException e) {
             throw new Errorhandling("Failed to update subproject " + e.getMessage());
         }
@@ -86,24 +80,5 @@ public class SubprojectRepository implements ISubprojectRepository {
             throw new Errorhandling("Failed to get subprojects by project ID: " + e.getMessage());
         }
         return subprojects;
-    }
-
-    @Override
-    public int calculateTimeConsumptionSubproject(int subprojectId) throws Errorhandling {
-        int totalTime =0;
-        String query = "SELECT SUM(estimated_hours) AS total_hours FROM task WHERE subproject_id = ?";
-        try (Connection con = ConnectionManager.getConnection()){
-            PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.setInt(1, subprojectId);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    totalTime = resultSet.getInt("total_hours");
-                }
-            }
-        } catch (SQLException e) {
-            throw new Errorhandling("Failed to calculate time");
-        }
-        return totalTime;
     }
 }

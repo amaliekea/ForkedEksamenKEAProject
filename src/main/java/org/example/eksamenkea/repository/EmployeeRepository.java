@@ -1,4 +1,5 @@
 package org.example.eksamenkea.repository;
+
 import org.example.eksamenkea.model.Employee;
 import org.example.eksamenkea.model.Role;
 import org.example.eksamenkea.repository.interfaces.IEmployeeRepository;
@@ -6,6 +7,7 @@ import org.example.eksamenkea.service.Errorhandling;
 import org.example.eksamenkea.util.ConnectionManager;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +34,6 @@ public class EmployeeRepository implements IEmployeeRepository {
                         Role role = Role.valueOf(roleString); // Konvertering fra String til ENUM
                         int employee_rate = resultSet.getInt("employee_rate");
                         int max_hours = resultSet.getInt("max_hours");
-
                         employee = new Employee(employee_id, email, password, role, employee_rate, max_hours);
                     }
                 }
@@ -49,7 +50,7 @@ public class EmployeeRepository implements IEmployeeRepository {
         String query = "SELECT * FROM employee WHERE role = 'Worker'";
 
         try (Connection con = ConnectionManager.getConnection();
-        PreparedStatement preSta = con.prepareStatement(query)) {
+             PreparedStatement preSta = con.prepareStatement(query)) {
             try (ResultSet resultSet = preSta.executeQuery()) {
                 while (resultSet.next()) {
                     workerList.add(new Employee(
@@ -93,6 +94,7 @@ public class EmployeeRepository implements IEmployeeRepository {
             throw new Errorhandling("Failed to get worker: " + e.getMessage());
         }
     }
+
     @Override
     public List<List<Object>> getWorkloadByEmployeeId(int employeeId) throws Errorhandling {
         List<List<Object>> workloadList = new ArrayList<>();
@@ -110,7 +112,6 @@ public class EmployeeRepository implements IEmployeeRepository {
                     row.add(String.format("%.1f", totalHours)); // Formater tildecimal
                     row.add(resultSet.getInt("employee_id"));
                     row.add(resultSet.getInt("max_hours_per_employee"));
-
                     workloadList.add(row);
                 }
             }

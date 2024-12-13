@@ -28,7 +28,6 @@
                 <tr>
                     <td>
                         <form th:action="@{/task-status}" th:object="${task}" method="post" class="status-update-form">
-                            <!-- Hidden fields -->
                             <input type="hidden" name="taskId" th:value="${task.taskId}" />
                             <input type="hidden" name="taskName" th:value="${task.taskName}" />
                             <input type="hidden" name="startdate" th:value="${task.startdate}" />
@@ -54,7 +53,6 @@
                                     <option value="OVERDUE">Overdue</option>
                                 </select>
                             </div>
-
                             <div class="form-group">
                                 <button type="submit" class="action-button">Update Status</button>
                             </div>

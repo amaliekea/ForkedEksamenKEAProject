@@ -16,7 +16,6 @@ public class EmployeeService  {
         this.iEmployeeRepository = (IEmployeeRepository) context.getBean(impl);
     }
 
-    //Sign in
     public Employee signIn(String email, String password) throws Errorhandling{
         return iEmployeeRepository.signIn(email, password);
     }
@@ -31,6 +30,4 @@ public class EmployeeService  {
     public List<List<Object>> getWorkloadByEmployeeId(int employeeId) throws Errorhandling{
         return iEmployeeRepository.getWorkloadByEmployeeId(employeeId);
     }
-
-
 }

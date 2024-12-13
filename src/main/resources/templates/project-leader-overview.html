@@ -37,7 +37,6 @@
             <td th:text="${#numbers.formatDecimal(project.budget, 0, 0) + ' kr'}"></td>
             <td>
                 <span th:text="${project.materialCost}"></span>
-                <!-- Dynamisk bæredygtighedslabel -->
                 <span th:if="${project.materialCost / project.budget <= 0.30}"
                       class="label sustainable">Sustainable</span>
                 <span th:if="${project.materialCost / project.budget > 0.30}"
@@ -45,7 +44,6 @@
             </td>
             <td th:text="${project.employeeCost + ' DKK'}"></td>
             <td th:text="${project.estimatedTimeConsumption + ' hours'}"></td>
-
 
             <td>
                 <form action="/project-leader-subproject-overview" method="get">

@@ -12,7 +12,6 @@ import java.util.List;
 public class ProjectController {
     private ProjectService projectService;
 
-
     public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
     }
@@ -26,7 +25,7 @@ public class ProjectController {
     }
 
     @GetMapping("/add-project") //Amalie
-    public String addNewProject(HttpSession session, Model model) throws Errorhandling {
+    public String addNewProject(HttpSession session, Model model) {
         Project project = new Project();
         Employee employee = (Employee) session.getAttribute("employee");
         model.addAttribute("project", project);
@@ -50,7 +49,7 @@ public class ProjectController {
     @PostMapping("/edit-project") //Malthe
     public String editProject(@ModelAttribute Project project) throws Errorhandling {
         projectService.updateProject(project);
-        return "redirect:/project-leader-overview?projectId=" + project.getProjectId();
+        return "redirect:/project-leader-overview";
     }
 
     @GetMapping("/archived-project-overview") //Zuhur
