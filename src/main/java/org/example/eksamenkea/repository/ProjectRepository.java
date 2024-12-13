@@ -13,13 +13,13 @@ import java.util.List;
 
 @Repository("IPROJECTREPOSITORY")
 public class ProjectRepository implements IProjectRepository {
-    private final TaskRepository taskRepository;
-    private final EmployeeRepository employeeRepository;
+//    private final TaskRepository taskRepository;
+//    private final EmployeeRepository employeeRepository;
 
-    public ProjectRepository(TaskRepository taskRepository, EmployeeRepository employeeRepository) {
-        this.taskRepository = taskRepository;
-        this.employeeRepository = employeeRepository;
-    }
+//    public ProjectRepository(TaskRepository taskRepository, EmployeeRepository employeeRepository) {
+//        this.taskRepository = taskRepository;
+//        this.employeeRepository = employeeRepository;
+//    }
 
     @Override //Amalie
     public void addProject(Project project) throws Errorhandling {
@@ -142,10 +142,7 @@ public class ProjectRepository implements IProjectRepository {
     public void archiveProject(int projectId) throws Errorhandling {
         String archiveProjectQuery = "UPDATE project SET is_archived = TRUE WHERE project_id = ?";
         String archiveSubprojectQuery = "UPDATE subproject SET is_archived = TRUE WHERE project_id = ?";
-        String archiveTaskQuery = "UPDATE task t " +
-                "JOIN subproject sp ON t.subproject_id = sp.subproject_id " +
-                "SET t.is_archived = TRUE " +
-                "WHERE sp.project_id = ?";
+        String archiveTaskQuery = "UPDATE task t JOIN subproject sp ON t.subproject_id = sp.subproject_id SET t.is_archived = TRUE WHERE sp.project_id = ?";
         Statement statement = null;
         try (Connection connection = ConnectionManager.getConnection()) {
             statement = connection.createStatement();
@@ -194,9 +191,11 @@ public class ProjectRepository implements IProjectRepository {
                         "LEFT JOIN employee ON task.employee_id = employee.employee_id " +
                         "WHERE project.employee_id = ? AND project.is_archived = FALSE " +
                         "GROUP BY project.project_id";
-
-        try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(queryView)) {
+        Statement statement = null;
+        try (Connection connection = ConnectionManager.getConnection()) {
+            statement = connection.createStatement();
+            statement.execute("START TRANSACTION");
+            PreparedStatement preparedStatement = connection.prepareStatement(queryView);
             preparedStatement.setInt(1, employeeId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -215,9 +214,21 @@ public class ProjectRepository implements IProjectRepository {
                         totalTime
                 ));
             }
-
+            statement.execute("COMMIT");
         } catch (SQLException e) {
-            throw new Errorhandling("Failed to get projects by employee ID: " + e.getMessage());
+            if (statement != null) {
+                try {
+                    statement.execute("ROLLBACK ");
+                } catch (SQLException ex) {
+                    throw new Errorhandling("Failed to get projects: " + e.getMessage());
+                }
+            }
+        } finally {
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return projects;
     }
