@@ -28,7 +28,7 @@ body {
 
 /* Login box */
 .login-box {
-    background: #ffffff;
+    background: rgb(151 164 164 / 61%);
     border-radius: 10px;
     padding: 20px 30px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -201,18 +201,29 @@ button:hover,
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center; /* Centers the container vertically */
+    padding: 20px;
+    text-align: center;
+    height: 100vh; /* Ensures the container takes the full height of the viewport */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
     text-align: center;
 }
 
 /* Header */
 .header {
-    background-color: rgba(255, 255, 255, 0.8); /* White background with 80% opacity */
+    background-color: rgb(151 164 164 / 61%); /* White background with 80% opacity */
     border-radius: 10px; /* Rounded edges */
     padding: 20px; /* Optional: Adds spacing inside the header */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow for better visual appeal */
-    box-sizing: border-box; /* Ensures padding is included in the width calculation */
-    overflow: hidden; /* Prevents overflow if there is too much content */
     width: 100%;
     position: fixed; /* Fixes the header at the top */
     top: 0; /* Ensures it's positioned at the top of the page */
@@ -221,7 +232,6 @@ button:hover,
     display: flex;
     align-items: center; /* Centers content vertically */
     justify-content: space-between; /* Spreads elements horizontally */
-
 }
 
 .smaller-header{
@@ -239,10 +249,13 @@ button:hover,
 .homepage-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
+    justify-content: center;
     max-width: 900px;
-    margin-bottom: 30px;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .homepage-header h1 {
@@ -253,14 +266,10 @@ button:hover,
 
 /* Logo container */
 .logo-container {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgb(151 164 164 / 61%);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: inline-block;
-    text-align: center;
-    margin: 20px auto;
-    width: 100%;
 }
 
 .logo {
@@ -451,6 +460,5 @@ button:hover,
         padding: 10px; /* Mindre padding for små skærme */
         font-size: 18px; /* Mindre skriftstørrelse */
     }
-
 }
 
