@@ -3,7 +3,7 @@ package org.example.eksamenkea.repository;
 import org.example.eksamenkea.model.Employee;
 import org.example.eksamenkea.model.Role;
 import org.example.eksamenkea.repository.interfaces.IEmployeeRepository;
-import org.example.eksamenkea.service.Errorhandling;
+import org.example.eksamenkea.Errorhandling;
 import org.example.eksamenkea.util.ConnectionManager;
 import org.springframework.stereotype.Repository;
 import java.sql.*;

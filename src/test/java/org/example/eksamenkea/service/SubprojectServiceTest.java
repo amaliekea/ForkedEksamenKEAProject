@@ -1,5 +1,6 @@
 package org.example.eksamenkea.service;
 
+import org.example.eksamenkea.Errorhandling;
 import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.repository.interfaces.ISubprojectRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,7 +58,7 @@ class SubprojectServiceTest {
     }
 
     @Test
-    void getSubjectsByProjectId() throws Errorhandling{
+    void getSubjectsByProjectId() throws Errorhandling {
         subprojectService.getSubjectsByProjectId(1);
         verify(iSubprojectRepository).getSubjectsByProjectId(1);
         assertNotNull(subproject);

@@ -1,7 +1,7 @@
 package org.example.eksamenkea.repository;
 import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.repository.interfaces.ISubprojectRepository;
-import org.example.eksamenkea.service.Errorhandling;
+import org.example.eksamenkea.Errorhandling;
 import org.example.eksamenkea.util.ConnectionManager;
 import org.springframework.stereotype.Repository;
 import java.sql.Connection;

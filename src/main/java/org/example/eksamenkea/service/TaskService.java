@@ -1,4 +1,5 @@
 package org.example.eksamenkea.service;
+import org.example.eksamenkea.Errorhandling;
 import org.example.eksamenkea.model.Task;
 import org.example.eksamenkea.repository.interfaces.ITaskRepository;
 import org.springframework.beans.factory.annotation.Value;

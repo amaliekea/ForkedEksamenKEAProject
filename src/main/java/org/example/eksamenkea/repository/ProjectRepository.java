@@ -2,7 +2,7 @@ package org.example.eksamenkea.repository;
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.ProjectCostDTO;
 import org.example.eksamenkea.repository.interfaces.IProjectRepository;
-import org.example.eksamenkea.service.Errorhandling;
+import org.example.eksamenkea.Errorhandling;
 import org.example.eksamenkea.util.ConnectionManager;
 import org.springframework.stereotype.Repository;
 import java.sql.*;
@@ -56,6 +56,7 @@ public class ProjectRepository implements IProjectRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Failed to fetch project for project ID " + projectId + ": " + e.getMessage());
         }
+        if(project==null) throw new Errorhandling("Failed to fetch project for project ID " + projectId);
         return project;
     }
 
