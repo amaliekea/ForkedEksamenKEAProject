@@ -7,10 +7,10 @@ import org.example.eksamenkea.service.Errorhandling;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-//Klassen er udarbejdet af Amalie
+
 @RequestMapping("")
 @Controller
-public class EmployeeController {
+public class EmployeeController { //Amalie
 
     private EmployeeService employeeService;
 
@@ -37,7 +37,7 @@ public class EmployeeController {
     @PostMapping("/validate_login")
     public String validateLogin(HttpSession session, @RequestParam String email, @RequestParam String password, Model model) {
         try {
-            Employee employee = employeeService.signIn(email, password); // Forsøg at hente medarbejderen baseret på email og adgangskode
+            Employee employee = employeeService.signIn(email, password); // hent den specifikke medarbejder
             if (employee != null) {
                 session.setAttribute("employee", employee);// Gem medarbejderen i sessionen
                 session.setAttribute("userRole", employee.getRole());
@@ -45,7 +45,7 @@ public class EmployeeController {
                 session.setMaxInactiveInterval(1800); // set session til maks 30 minutter
                 return "redirect:/logged_in";
             } else {
-                model.addAttribute("errorMessage", "Forkert email eller adgangskode.");
+                model.addAttribute("errorMessage", "Wrong email or password.");
                 return "login";
             }
         } catch (Errorhandling e) {
@@ -55,24 +55,23 @@ public class EmployeeController {
     }
 
     @GetMapping("/logged_in")
-    public String loggedIn(HttpSession session, Model model) throws Exception {
-        Employee employee = (Employee) session.getAttribute("employee");  // Henter "user" fra sessionen.
-
+    public String loggedIn(HttpSession session) throws Exception {
+        Employee employee = (Employee) session.getAttribute("employee");  // Henter "employee" fra sessionen.
         if (employee == null) {
-            return "redirect:/login"; // Hvis ikke logget ind, send til login
+            return "redirect:/login";
         }
         if (employee.getRole() == Role.PROJECTLEADER) {
             return "redirect:/project-leader-overview";
         } else if (employee.getRole() == Role.WORKER) {
             return "redirect:/worker-overview";
         }
-        throw new Errorhandling("no role found"); //
+        throw new Errorhandling("no role found");
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate(); //invaliderer sessionen for at logge ud
-        return "redirect:/"; //return til front pagen ved log out
+        return "redirect:/"; //return til front pagen
     }
 
 }
