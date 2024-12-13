@@ -48,24 +48,4 @@ public class SubprojectController {
         System.out.println("This is project-leader-subproject-overview with projectid" + projectId);
         return "project-leader-subproject-overview";
     }
-    @ExceptionHandler(Errorhandling.class) //metoden skal håndterer undtagelser af typen 'Errorhandling'
-    public String handleError(Model model, Exception exception, HttpServletRequest request) { //HttpServletRequest request indeholder information om HTTP-forespørgslen
-        System.out.println("MESSAGE"+exception.getMessage());
-        System.out.println("Exception handler kaldt: " + exception.getMessage());
-        model.addAttribute("message", exception.getMessage());
-        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE); //hentning af fejlkode
-        if (status != null) {
-            int statusCode = Integer.parseInt(status.toString());
-            if (statusCode == HttpStatus.NOT_FOUND.value()) {
-                return "error/404";
-            } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-                return "error/500";
-            } else if (statusCode == HttpStatus.BAD_REQUEST.value()) {
-                return "error/400";
-            } else if (statusCode == HttpStatus.BAD_GATEWAY.value()) {
-                return "error/502";
-            }
-        }
-        return "error/error"; // Fallback error view
-    }
 }

@@ -111,6 +111,7 @@ public class ProjectRepository implements IProjectRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Failed to get archived projects and related data: " + e.getMessage());
         }
+        if(projects.isEmpty()) throw new Errorhandling("Failed to get archived projects and related data.");
         return projects;
     }
 
@@ -190,6 +191,7 @@ public class ProjectRepository implements IProjectRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Failed to get projects: " + e.getMessage());
         }
+        if(projects.isEmpty()) throw new Errorhandling("Failed to get projects and related data");
         return projects;
     }
 
@@ -208,6 +210,7 @@ public class ProjectRepository implements IProjectRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Failed to calculate time for project ID " + projectId + ": " + e.getMessage());
         }
+        if(totalTime==0) throw new Errorhandling("Failed to calculate time");
         return totalTime;
     }
 }

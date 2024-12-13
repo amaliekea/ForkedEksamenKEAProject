@@ -3,11 +3,11 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import org.example.eksamenkea.Errorhandling;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-@Controller("/")
+@ControllerAdvice //gør det muligt at håndtere fejl globalt for hele applikationen uden at gentage fejlhåndteringslogikken i hver controller.
 public class ErrorHandleController { //Amalie
     @ExceptionHandler(Errorhandling.class) //metoden skal håndterer undtagelser af typen 'Errorhandling'
     public String handleError(Model model, Exception exception, HttpServletRequest request) { //HttpServletRequest request indeholder information om HTTP-forespørgslen
