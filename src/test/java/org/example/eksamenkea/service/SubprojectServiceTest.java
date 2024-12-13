@@ -32,22 +32,18 @@ class SubprojectServiceTest {
     void setup() {
         when(context.getBean("ISUBPROJECTREPOSITORY")).thenReturn(iSubprojectRepository);
 
-        // Initialize ProjectService with the mocked ApplicationContext
         subprojectService = new SubprojectService(context, "ISUBPROJECTREPOSITORY");
 
-        // Sample project for tests
+        // subproject til at teste på
         subproject = new Subproject(1,"subprojecttest", "testdescription",1);
     }
 
     @Test
     void getSubprojectBySubprojectId() throws Errorhandling{
-        // Arrange
         when(iSubprojectRepository.getSubprojectBySubprojectId(1)).thenReturn(subproject);
 
-        // Act
         Subproject result = subprojectService.getSubprojectBySubprojectId(1);
 
-        // Assert
         assertNotNull(result);
         assertEquals("subprojecttest", result.getSubprojectName());
         assertEquals("testdescription", result.getSubprojectDescription());
@@ -55,19 +51,14 @@ class SubprojectServiceTest {
 
     @Test
     void updateSubproject() throws Errorhandling{
-        // Act
         subprojectService.updateSubproject(subproject);
 
-        // Assert
         verify(iSubprojectRepository).updateSubproject(subproject);
     }
 
     @Test
     void getSubjectsByProjectId() throws Errorhandling{
-        // Act
         subprojectService.getSubjectsByProjectId(1);
-
-        // Assert
         verify(iSubprojectRepository).getSubjectsByProjectId(1);
         assertNotNull(subproject);
     }
