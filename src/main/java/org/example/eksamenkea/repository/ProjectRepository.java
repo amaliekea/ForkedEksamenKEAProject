@@ -11,13 +11,6 @@ import java.util.List;
 
 @Repository("IPROJECTREPOSITORY")
 public class ProjectRepository implements IProjectRepository {
-    private final TaskRepository taskRepository;
-    private final EmployeeRepository employeeRepository;
-
-    public ProjectRepository(TaskRepository taskRepository, EmployeeRepository employeeRepository) {
-        this.taskRepository = taskRepository;
-        this.employeeRepository = employeeRepository;
-    }
 
     @Override //Amalie
     public void addProject(Project project) throws Errorhandling {
