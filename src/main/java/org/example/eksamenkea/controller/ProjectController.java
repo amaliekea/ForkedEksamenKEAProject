@@ -28,8 +28,7 @@ public class ProjectController {
     @GetMapping("/add-project") //Amalie
     public String addNewProject(HttpSession session, Model model) throws Errorhandling {
         Project project = new Project();
-        Employee employee = (Employee) session.getAttribute("employee");  // Henter "user" fra sessionen.
-        System.out.println("Employee ID: " + employee.getEmployeeId());
+        Employee employee = (Employee) session.getAttribute("employee");
         model.addAttribute("project", project);
         model.addAttribute("employeeId", employee.getEmployeeId());
         return "add-project-form";
@@ -40,7 +39,6 @@ public class ProjectController {
         projectService.addProject(project);
         return "redirect:/project-leader-overview";
     }
-
 
     @GetMapping("/{projectId}/edit-project") //Malthe
     public String getprojectToEdit(@PathVariable int projectId, Model model) throws Errorhandling {
@@ -64,13 +62,9 @@ public class ProjectController {
     }
 
     @PostMapping("/archive-project") //Zuhur
-    public String archiveProjectOverview(@RequestParam("projectId") int projectId, HttpSession session, Model model) throws Errorhandling {
-        Employee employee = (Employee) session.getAttribute("employee");
+    public String archiveProjectOverview(@RequestParam("projectId") int projectId) throws Errorhandling {
         projectService.archiveProject(projectId);
-        List<ProjectCostDTO> projects = projectService.getProjectsDTOByEmployeeId(employee.getEmployeeId());
-        model.addAttribute("projects", projects);
-
-        return "project-leader-overview";
+        return "redirect:/project-leader-overview";
     }
 
 }
