@@ -1,12 +1,10 @@
 package org.example.eksamenkea.repository;
-
 import org.example.eksamenkea.model.Status;
 import org.example.eksamenkea.model.Task;
 import org.example.eksamenkea.repository.interfaces.ITaskRepository;
 import org.example.eksamenkea.service.Errorhandling;
 import org.example.eksamenkea.util.ConnectionManager;
 import org.springframework.stereotype.Repository;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
