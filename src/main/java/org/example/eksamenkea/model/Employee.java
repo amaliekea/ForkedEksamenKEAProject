@@ -6,7 +6,7 @@ public class Employee {
     private String password;
     private Role role; // Enum type
     private int employeeRate;
-    private int maxHours; // Maksimale timer
+    private int maxHours;
 
     public Employee(int employeeId, String email, String password, Role role, int employeeRate, int maxHours) {
         this.employeeId = employeeId;

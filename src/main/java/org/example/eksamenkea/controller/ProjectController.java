@@ -25,7 +25,7 @@ public class ProjectController {
     }
 
     @GetMapping("/add-project") //Amalie
-    public String addNewProject(HttpSession session, Model model) throws Errorhandling {
+    public String addNewProject(HttpSession session, Model model) {
         Project project = new Project();
         Employee employee = (Employee) session.getAttribute("employee");
         model.addAttribute("project", project);

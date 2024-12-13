@@ -27,7 +27,6 @@ public class ProjectRepository implements IProjectRepository {
         System.out.println(project);
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sqlAddProject)) {
-
             statement.setString(1, project.getProjectName());
             statement.setDouble(2, project.getBudget());
             statement.setString(3, project.getProjectDescription());
@@ -97,14 +96,14 @@ public class ProjectRepository implements IProjectRepository {
                 "LEFT JOIN employee ON task.employee_id = employee.employee_id " +
                 "WHERE project.employee_id = ? AND project.is_archived = TRUE Group by project.project_id";
 
-        try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement preparedStatement1 = connection.prepareStatement(queryView)) {
+        try (Connection connection = ConnectionManager.getConnection()) {
+            PreparedStatement preparedStatement1 = connection.prepareStatement(queryView);
             preparedStatement1.setInt(1, employeeId);
 
             ResultSet resultSet = preparedStatement1.executeQuery();
             while (resultSet.next()) {
                 int projectId = resultSet.getInt("project_id");
-                int totalTime = calculateTimeConsumptionProject(connection,projectId);
+                int totalTime = calculateTimeConsumptionProject(connection, projectId);
 
                 projects.add(new ProjectCostDTO(
                         projectId,
@@ -133,37 +132,29 @@ public class ProjectRepository implements IProjectRepository {
                 "WHERE sp.project_id = ?";
 
         try (Connection connection = ConnectionManager.getConnection()) {
-            connection.setAutoCommit(false); // Start transaktion
+            connection.setAutoCommit(false);
 
             try (PreparedStatement projectStmt = connection.prepareStatement(archiveProjectQuery);
                  PreparedStatement subprojectStmt = connection.prepareStatement(archiveSubprojectQuery);
                  PreparedStatement taskStmt = connection.prepareStatement(archiveTaskQuery)) {
 
-                // Arkiver projekt
                 projectStmt.setInt(1, projectId);
-                int projectRows = projectStmt.executeUpdate();
-                if (projectRows == 0) {
-                    throw new Errorhandling("No project found with ID: " + projectId);
-                }
 
-                // Arkiver tilknyttede subprojekter
                 subprojectStmt.setInt(1, projectId);
                 subprojectStmt.executeUpdate();
 
-                // Arkiver tilknyttede tasks
                 taskStmt.setInt(1, projectId);
                 taskStmt.executeUpdate();
 
-                connection.commit(); // Udfør transaktionen
+                connection.commit();
             } catch (SQLException e) {
-                connection.rollback(); // Rul tilbage ved fejl
+                connection.rollback();
                 throw new Errorhandling("Failed to archive project and related data: " + e.getMessage());
             }
         } catch (SQLException e) {
             throw new Errorhandling("Database error during archiving: " + e.getMessage());
         }
     }
-
 
     @Override
     public List<ProjectCostDTO> getProjectsDTOByEmployeeId(int employeeId) throws Errorhandling {
@@ -184,23 +175,21 @@ public class ProjectRepository implements IProjectRepository {
             preparedStatement.setInt(1, employeeId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-                while (resultSet.next()) {
-                    int projectId = resultSet.getInt("project_id");
+            while (resultSet.next()) {
+                int projectId = resultSet.getInt("project_id");
+                int totalTime = calculateTimeConsumptionProject(connection, projectId);  // Brug den eksisterende forbindelse til at beregne tid
 
-                    // Brug den eksisterende forbindelse til at beregne tid
-                    int totalTime = calculateTimeConsumptionProject(connection, projectId);
-
-                    projects.add(new ProjectCostDTO(
-                            projectId,
-                            resultSet.getString("project_name"),
-                            resultSet.getDouble("budget"),
-                            resultSet.getString("project_description"),
-                            resultSet.getInt("employee_id"),
-                            resultSet.getInt("material_cost"),
-                            resultSet.getInt("employee_cost"),
-                            totalTime // Tilføj samlet tid
-                    ));
-                }
+                projects.add(new ProjectCostDTO(
+                        projectId,
+                        resultSet.getString("project_name"),
+                        resultSet.getDouble("budget"),
+                        resultSet.getString("project_description"),
+                        resultSet.getInt("employee_id"),
+                        resultSet.getInt("material_cost"),
+                        resultSet.getInt("employee_cost"),
+                        totalTime
+                ));
+            }
 
         } catch (SQLException e) {
             throw new Errorhandling("Failed to get projects by employee ID: " + e.getMessage());
@@ -210,10 +199,8 @@ public class ProjectRepository implements IProjectRepository {
 
     public int calculateTimeConsumptionProject(Connection connection, int projectId) throws Errorhandling {
         int totalTime = 0;
-        String query =
-                "SELECT SUM(task.estimated_hours) AS total_hours FROM task JOIN subproject ON task.subproject_id = subproject.subproject_id " +
+        String query = "SELECT SUM(task.estimated_hours) AS total_hours FROM task JOIN subproject ON task.subproject_id = subproject.subproject_id " +
                         "WHERE subproject.project_id = ?";
-
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, projectId);
 
@@ -227,8 +214,6 @@ public class ProjectRepository implements IProjectRepository {
         }
         return totalTime;
     }
-
-
 }
 
 
