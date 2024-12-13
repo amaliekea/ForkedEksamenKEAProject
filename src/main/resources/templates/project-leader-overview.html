@@ -28,7 +28,6 @@
         </tr>
         </thead>
         <tbody>
-        <!-- Iteration over projekter -->
         <tr th:if="${#lists.isEmpty(projects)}">
             <td colspan="6">No projects available.</td>
         </tr>
@@ -37,7 +36,6 @@
             <td th:text="${project.projectDescription}"></td>
             <td th:text="${#numbers.formatDecimal(project.budget, 0, 0) + ' kr'}"></td>
             <td>
-                <!-- Vis materialekost -->
                 <span th:text="${project.materialCost}"></span>
                 <!-- Dynamisk bæredygtighedslabel -->
                 <span th:if="${project.materialCost / project.budget <= 0.30}"
