@@ -31,35 +31,26 @@ class ProjectServiceTest {
 
     @BeforeEach
     void setup() {
-        // Configure ApplicationContext to return the mocked repository
+
         when(context.getBean("IPROJECTREPOSITORY")).thenReturn(iProjectRepository);
 
-        // Initialize ProjectService with the mocked ApplicationContext
         projectService = new ProjectService(context, "IPROJECTREPOSITORY");
 
-        // Sample project for tests
+        //projekter til at teste på
         project = new Project(1, "testproject", 200, "testdescription", 1, 200);
         projectCostDTO = new ProjectCostDTO(1, "testproject", 200, "testdescription", 1, 200, 100, 100);
     }
 
     @Test
     void addProject() throws Exception {
-        // Act
         projectService.addProject(project);
-
-        // Assert
         verify(iProjectRepository).addProject(project); // Verify method call
     }
 
     @Test
     void getProjectFromProjectId() throws Exception {
-        // Arrange
         when(iProjectRepository.getProjectFromProjectId(1)).thenReturn(project);
-
-        // Act
         Project result = projectService.getProjectFromProjectId(1);
-
-        // Assert
         assertNotNull(result);
         assertEquals("testproject", result.getProjectName());
         assertEquals(200, result.getBudget());
@@ -67,37 +58,25 @@ class ProjectServiceTest {
 
     @Test
     void archiveProject() throws Exception {
-        // Act
         projectService.archiveProject(1);
-
-        // Assert
         verify(iProjectRepository).archiveProject(1);
     }
 
     @Test
     void getArchivedProjects() throws Exception {
-        // Act
         projectService.getArchivedProjects(1);
-
-        // Assert
         verify(iProjectRepository).getArchivedProjects(1);
     }
 
     @Test
     void updateProject() throws Exception {
-        // Act
         projectService.updateProject(project);
-
-        // Assert
         verify(iProjectRepository).updateProject(project);
     }
 
     @Test
     void getProjectsDTOByEmployeeId() throws Exception {
-        // Act
         projectService.getProjectsDTOByEmployeeId(1);
-
-        // Assert
         verify(iProjectRepository).getProjectsDTOByEmployeeId(1);
         assertNotNull(projectCostDTO);
         assertEquals("testproject", projectCostDTO.getProjectName());
