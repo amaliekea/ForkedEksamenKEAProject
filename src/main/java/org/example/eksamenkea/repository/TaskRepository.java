@@ -13,11 +13,7 @@ import java.util.List;
 
 @Repository("ITASKREPOSITORY")
 public class TaskRepository implements ITaskRepository {
-    private final SubprojectRepository subprojectRepository;
 
-    public TaskRepository(SubprojectRepository subprojectRepository) {
-        this.subprojectRepository = subprojectRepository;
-    }
 
     @Override //Amalie
     public void createTask(Task task) throws Errorhandling {
@@ -32,7 +28,7 @@ public class TaskRepository implements ITaskRepository {
             statement.setInt(5, task.getEmployeeId());
             statement.setInt(6, task.getEstimatedHours());
             statement.setInt(7, task.getSubprojectId());
-            statement.setInt(7, 0);
+            statement.setInt(8, 0);
 
             statement.executeUpdate();
         } catch (SQLException e) {

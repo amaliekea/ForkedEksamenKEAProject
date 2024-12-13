@@ -5,19 +5,14 @@ import org.example.eksamenkea.model.Role;
 import org.example.eksamenkea.repository.interfaces.IEmployeeRepository;
 import org.example.eksamenkea.service.Errorhandling;
 import org.example.eksamenkea.util.ConnectionManager;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository("IEMPLOYEEREPOSITORY")
-@Lazy // Angiver, at denne bean kun bliver initialiseret, når den er nødvendig, og ikke ved opstart
-public class EmployeeRepository implements IEmployeeRepository {
 
-    public EmployeeRepository() {
-    }
+public class EmployeeRepository implements IEmployeeRepository {
 
     @Override
     public Employee signIn(String email, String password) throws Errorhandling { //Amalie
