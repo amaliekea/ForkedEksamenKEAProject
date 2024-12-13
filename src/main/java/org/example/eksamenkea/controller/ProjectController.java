@@ -50,7 +50,7 @@ public class ProjectController {
     @PostMapping("/edit-project") //Malthe
     public String editProject(@ModelAttribute Project project) throws Errorhandling {
         projectService.updateProject(project);
-        return "redirect:/project-leader-overview?projectId=" + project.getProjectId();
+        return "redirect:/project-leader-overview";
     }
 
     @GetMapping("/archived-project-overview") //Zuhur
