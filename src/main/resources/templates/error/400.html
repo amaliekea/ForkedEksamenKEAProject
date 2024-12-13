@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
-<h1>There has been an 400 bad request error</h1>
-<h4> Try cheching your syntax or contact the administrator on AMZDstud.kea.dk</h4><p><span th:text="${message}"></span></p></h4></body>
+<body class="header">
+<header>
+<h1>There has been a 400 bad request error</h1>
+<br>
+<h4> Try cheching your syntax or contact the administrator on AMZDstud.kea.dk</h4>
+    <p><span th:text="${message}"></span></p>
 <p><span th:text="${message}"></span></p>
+</header>
 <form action="/" method="get">
     <button type="submit">Go to loginpage</button>
 </form>
