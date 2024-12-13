@@ -45,7 +45,7 @@ public class EmployeeController {
                 session.setMaxInactiveInterval(1800); // set session til maks 30 minutter
                 return "redirect:/logged_in";
             } else {
-                model.addAttribute("errorMessage", "Forkert email eller adgangskode.");
+                model.addAttribute("errorMessage", "Wrong e-mail or password");
                 return "login";
             }
         } catch (Errorhandling e) {
