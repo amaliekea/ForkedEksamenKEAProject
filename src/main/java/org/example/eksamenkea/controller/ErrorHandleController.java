@@ -28,5 +28,6 @@ public class ErrorHandleController { //Amalie
             }
         }
         return "error/error"; // Fallback error view
+        //
     }
 }
