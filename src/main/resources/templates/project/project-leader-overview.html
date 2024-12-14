@@ -46,11 +46,11 @@
             <td th:text="${project.estimatedTimeConsumption + ' hours'}"></td>
 
             <td>
-                <form action="/project-leader-subproject-overview" method="get">
+                <form action="/subproject/project-leader-subproject-overview" method="get">
                     <input type="hidden" name="projectId" th:value="${project.projectId}"/>
                     <button type="submit" class="action-button">See Subprojects</button>
                 </form>
-                <form th:action="@{'/' + ${project.projectId} + '/edit-project'}" method="get">
+                <form th:action="@{'/project/' + ${project.projectId} + '/edit-project'}" method="get">
                     <input type="hidden" name="projectId" th:value="${project.projectId}"/>
                     <button type="submit" class="action-button">Edit Project</button>
                 </form>

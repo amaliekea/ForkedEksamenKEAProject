@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("")
+@RequestMapping("/")
 @Controller
 public class EmployeeController { //Amalie
 
@@ -20,7 +20,7 @@ public class EmployeeController { //Amalie
 
     @GetMapping("/login")
     public String login() {
-        return "login";
+        return "employee/login";
     }
 
     @GetMapping("/")
@@ -31,7 +31,7 @@ public class EmployeeController { //Amalie
         } else {
             model.addAttribute("employeeAvaliable", false);
         }
-        return "homepage";
+        return "employee/homepage";
     }
 
     @PostMapping("/validate_login")
@@ -46,11 +46,11 @@ public class EmployeeController { //Amalie
                 return "redirect:/logged_in";
             } else {
                 model.addAttribute("errorMessage", "Wrong email or password.");
-                return "login";
+                return "employee/login";
             }
         } catch (Errorhandling e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "login";
+            return "employee/login";
         }
     }
 
@@ -63,7 +63,7 @@ public class EmployeeController { //Amalie
         if (employee.getRole() == Role.PROJECTLEADER) {
             return "redirect:/project/project-leader-overview";
         } else if (employee.getRole() == Role.WORKER) {
-            return "redirect:/worker-overview";
+            return "redirect:/task/worker-overview";
         }
         throw new Errorhandling("no role found");
     }

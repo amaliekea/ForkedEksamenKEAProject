@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+@RequestMapping("/project")
 @Controller
 public class ProjectController {
     private ProjectService projectService;
@@ -49,7 +50,7 @@ public class ProjectController {
     @PostMapping("/edit-project") //Malthe
     public String editProject(@ModelAttribute Project project) throws Errorhandling {
         projectService.updateProject(project);
-        return "redirect:/project-leader-overview";
+        return "redirect:/project/project-leader-overview";
     }
 
     @GetMapping("/archived-project-overview") //Zuhur

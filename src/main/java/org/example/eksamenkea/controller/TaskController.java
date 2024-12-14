@@ -8,13 +8,10 @@ import org.example.eksamenkea.service.SubprojectService;
 import org.example.eksamenkea.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@RequestMapping("/task")
 @Controller
 public class TaskController {
     private final TaskService taskService;
@@ -35,13 +32,13 @@ public class TaskController {
         model.addAttribute("task", task);
         model.addAttribute("employeeId", employee.getEmployeeId());
         model.addAttribute("subprojectId", subprojectId);
-        return "add-task";
+        return "task/add-task";
     }
 
     @PostMapping("/task-added") //Amalie
     public String addedTask(@RequestParam("subprojectId") int subprojectId, @ModelAttribute Task task) throws Errorhandling {
         taskService.createTask(task);
-        return "redirect:/project-leader-tasks?subprojectId=" + subprojectId;
+        return "redirect:/task/project-leader-tasks?subprojectId=" + subprojectId;
     }
 
     @GetMapping("/project-leader-tasks") //AM-ZU
@@ -53,7 +50,7 @@ public class TaskController {
         model.addAttribute("tasks", tasks);
         model.addAttribute("subproject", subproject);
         model.addAttribute("employeeList", employeeList);
-        return "project-leader-task-overview";
+        return "task/project-leader-task-overview";
     }
 
     @GetMapping("/worker-overview") //Malthe
@@ -63,19 +60,19 @@ public class TaskController {
         model.addAttribute("tasklist", taskList);
         List<List<Object>> getWorkloadByEmployeeId = employeeService.getWorkloadByEmployeeId(employee.getEmployeeId());
         model.addAttribute("Workload", getWorkloadByEmployeeId);
-        return "worker-overview";
+        return "task/worker-overview";
     }
 
     @GetMapping("/task-status") //Amalie
     public String updateTaskStatus(@RequestParam("taskId") int taskId, Model model) throws Errorhandling {
         model.addAttribute("task", taskService.getTaskByTaskId(taskId));
-        return "task-edit-status";
+        return "task/task-edit-status";
     }
 
     @PostMapping("/task-status") //Amalie
     public String updatedTask(@ModelAttribute Task task) throws Errorhandling {
         taskService.updateTask(task);
-        return "redirect:/worker-overview";
+        return "redirect:/task/worker-overview";
     }
 
     @PostMapping("/assign-worker") //Malthe
@@ -84,7 +81,7 @@ public class TaskController {
         employee.setEmployeeId(employee.getEmployeeId());
         taskService.assignWorkerToTask(taskId, employee.getEmployeeId());
 
-        return "redirect:/project-leader-tasks?subprojectId=" + subprojectId;
+        return "redirect:/task/project-leader-tasks?subprojectId=" + subprojectId;
     }
 
 

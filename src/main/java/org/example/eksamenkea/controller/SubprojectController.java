@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
+@RequestMapping("/subproject")
 @Controller
 public class SubprojectController {
     private final SubprojectService subprojectService;
@@ -23,14 +23,14 @@ public class SubprojectController {
     public String getSubprojectToEdit(@RequestParam("subprojectId") int subprojectId, Model model) throws Errorhandling {
         Subproject subproject = subprojectService.getSubprojectBySubprojectId(subprojectId);
         model.addAttribute("subproject", subproject);
-        return "edit-subproject";
+        return "subproject/edit-subproject";
     }
 
 
     @PostMapping("/edit-subproject") //malthe
     public String editSubproject(@ModelAttribute Subproject subproject) throws Errorhandling {
         subprojectService.updateSubproject(subproject);
-        return "redirect:/project-leader-subproject-overview?projectId=" + subproject.getProjectId();
+        return "redirect:/subproject/project-leader-subproject-overview?projectId=" + subproject.getProjectId();
     }
 
     @GetMapping("/project-leader-subproject-overview") // Amalie
@@ -39,7 +39,7 @@ public class SubprojectController {
         List<Subproject> subprojects = subprojectService.getSubjectsByProjectId(projectId);
         model.addAttribute("subprojects", subprojects);
         model.addAttribute("project", project);
-        return "project-leader-subproject-overview";
+        return "subproject/project-leader-subproject-overview";
     }
 
 }

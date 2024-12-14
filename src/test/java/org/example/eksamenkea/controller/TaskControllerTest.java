@@ -55,9 +55,9 @@ class TaskControllerTest {
 
         when(subprojectService.getSubprojectBySubprojectId(subprojectId)).thenReturn(mockSubproject);
 
-        mockMvc.perform(get("/add-task").param("subprojectId", String.valueOf(subprojectId)).sessionAttrs(sessionAttributes))
+        mockMvc.perform(get("/task/add-task").param("subprojectId", String.valueOf(subprojectId)).sessionAttrs(sessionAttributes))
                 .andExpect(status().isOk())
-                .andExpect(view().name("add-task"))
+                .andExpect(view().name("task/add-task"))
                 .andExpect(model().attributeExists("task"))
                 .andExpect(model().attribute("employeeId", mockEmployee.getEmployeeId()))
                 .andExpect(model().attribute("subprojectId", subprojectId));
@@ -68,11 +68,11 @@ class TaskControllerTest {
         int subprojectId = 1;
         Task mockTask = new Task();
 
-        mockMvc.perform(post("/task-added")
+        mockMvc.perform(post("/task/task-added")
                         .param("subprojectId", String.valueOf(subprojectId))
                         .flashAttr("task", mockTask))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/project-leader-tasks?subprojectId=" + subprojectId));
+                .andExpect(redirectedUrl("/task/project-leader-tasks?subprojectId=" + subprojectId));
 
         Mockito.verify(taskService, Mockito.times(1)).createTask(mockTask);
     }
@@ -89,9 +89,9 @@ class TaskControllerTest {
         when(employeeService.getAllWorkers()).thenReturn(mockEmployees);
 
 
-        mockMvc.perform(get("/project-leader-tasks").param("subprojectId", String.valueOf(subprojectId)))
+        mockMvc.perform(get("/task/project-leader-tasks").param("subprojectId", String.valueOf(subprojectId)))
                 .andExpect(status().isOk())
-                .andExpect(view().name("project-leader-task-overview"))
+                .andExpect(view().name("task/project-leader-task-overview"))
                 .andExpect(model().attribute("tasks", mockTasks))
                 .andExpect(model().attribute("subproject", mockSubproject))
                 .andExpect(model().attribute("employeeList", mockEmployees));
@@ -105,9 +105,9 @@ class TaskControllerTest {
 
         when(taskService.getTasklistByEmployeeId(mockEmployee.getEmployeeId())).thenReturn(mockTasks);
 
-        mockMvc.perform(get("/worker-overview").sessionAttrs(sessionAttributes))
+        mockMvc.perform(get("/task/worker-overview").sessionAttrs(sessionAttributes))
                 .andExpect(status().isOk())
-                .andExpect(view().name("worker-overview"))
+                .andExpect(view().name("task/worker-overview"))
                 .andExpect(model().attribute("tasklist", mockTasks));
     }
 
@@ -119,9 +119,9 @@ class TaskControllerTest {
 
         when(taskService.getTaskByTaskId(taskId)).thenReturn(mockTask);
 
-        mockMvc.perform(get("/task-status").param("taskId", String.valueOf(taskId)))
+        mockMvc.perform(get("/task/task-status").param("taskId", String.valueOf(taskId)))
                 .andExpect(status().isOk())
-                .andExpect(view().name("task-edit-status"))
+                .andExpect(view().name("task/task-edit-status"))
                 .andExpect(model().attribute("task", mockTask));
     }
 }
