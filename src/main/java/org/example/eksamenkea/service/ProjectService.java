@@ -1,4 +1,5 @@
 package org.example.eksamenkea.service;
+import org.example.eksamenkea.Errorhandling;
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.ProjectCostDTO;
 import org.example.eksamenkea.repository.interfaces.IProjectRepository;

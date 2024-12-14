@@ -19,7 +19,7 @@
 
     <main class="form-page-main">
         <div class="white-box">
-            <form th:action="@{/edit-subproject}" th:object="${subproject}" method="post">
+            <form th:action="@{/subproject/edit-subproject}" th:object="${subproject}" method="post">
 
                 <div class="form-group">
                     <label for="name">Name</label>
@@ -36,7 +36,7 @@
 
                 <button type="submit" class="action-button">Edit Subproject</button>
             </form>
-            <form action="/project-leader-overview" method="get">
+            <form action="/project/project-leader-overview" method="get">
                 <button type="submit" class="action-button">Regret</button>
             </form>
         </div>

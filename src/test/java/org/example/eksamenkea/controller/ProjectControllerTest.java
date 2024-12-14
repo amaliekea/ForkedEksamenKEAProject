@@ -44,9 +44,9 @@ class ProjectControllerTest {
         when(projectService.getProjectsDTOByEmployeeId(mockEmployee.getEmployeeId()))
                 .thenReturn(Collections.emptyList());
 
-        mockMvc.perform(get("/project-leader-overview").sessionAttrs(sessionAttributes))
+        mockMvc.perform(get("/project/project-leader-overview").sessionAttrs(sessionAttributes))
                 .andExpect(status().isOk())
-                .andExpect(view().name("project-leader-overview"))
+                .andExpect(view().name("project/project-leader-overview"))
                 .andExpect(model().attribute("projects", Collections.emptyList()));
     }
 
@@ -55,9 +55,9 @@ class ProjectControllerTest {
         Map<String, Object> sessionAttributes = new HashMap<>();
         sessionAttributes.put("employee", mockEmployee);
 
-        mockMvc.perform(get("/add-project").sessionAttrs(sessionAttributes))
+        mockMvc.perform(get("/project/add-project").sessionAttrs(sessionAttributes))
                 .andExpect(status().isOk())
-                .andExpect(view().name("add-project-form"))
+                .andExpect(view().name("project/add-project-form"))
                 .andExpect(model().attributeExists("project"))
                 .andExpect(model().attribute("employeeId", mockEmployee.getEmployeeId()));
     }
@@ -66,9 +66,9 @@ class ProjectControllerTest {
     void AddProjectAndRedirect() throws Exception {
         Project mockProject = new Project();
 
-        mockMvc.perform(post("/project-added").flashAttr("project", mockProject))
+        mockMvc.perform(post("/project/project-added").flashAttr("project", mockProject))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/project-leader-overview"));
+                .andExpect(redirectedUrl("/project/project-leader-overview"));
 
         Mockito.verify(projectService, Mockito.times(1)).addProject(mockProject);
     }
@@ -79,9 +79,9 @@ class ProjectControllerTest {
         Project mockProject = new Project();
         when(projectService.getProjectFromProjectId(projectId)).thenReturn(mockProject);
 
-        mockMvc.perform(get("/" + projectId + "/edit-project"))
+        mockMvc.perform(get("/project/" + projectId + "/edit-project"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("edit-project"))
+                .andExpect(view().name("project/edit-project"))
                 .andExpect(model().attribute("project", mockProject));
     }
 
@@ -90,9 +90,9 @@ class ProjectControllerTest {
         Project mockProject = new Project();
         mockProject.setProjectName("New Project Name");
 
-        mockMvc.perform(post("/edit-project").flashAttr("project", mockProject))
+        mockMvc.perform(post("/project/edit-project").flashAttr("project", mockProject))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/project-leader-overview"));
+                .andExpect(redirectedUrl("/project/project-leader-overview"));
 
         Mockito.verify(projectService, Mockito.times(1)).updateProject(mockProject);
     }
@@ -104,9 +104,9 @@ class ProjectControllerTest {
         when(projectService.getArchivedProjects(mockEmployee.getEmployeeId()))
                 .thenReturn(Collections.emptyList());
 
-        mockMvc.perform(get("/archived-project-overview").sessionAttrs(sessionAttributes))
+        mockMvc.perform(get("/project/archived-project-overview").sessionAttrs(sessionAttributes))
                 .andExpect(status().isOk())
-                .andExpect(view().name("archived-project-overview"))
+                .andExpect(view().name("project/archived-project-overview"))
                 .andExpect(model().attribute("archivedProjects", Collections.emptyList()));
     }
 
@@ -116,9 +116,9 @@ class ProjectControllerTest {
         Map<String, Object> sessionAttributes = new HashMap<>();
         sessionAttributes.put("employee", mockEmployee);
 
-        mockMvc.perform(post("/archive-project").param("projectId", String.valueOf(projectId)).sessionAttrs(sessionAttributes))
+        mockMvc.perform(post("/project/archive-project").param("projectId", String.valueOf(projectId)).sessionAttrs(sessionAttributes))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/project-leader-overview"));
+                .andExpect(redirectedUrl("/project/project-leader-overview"));
 
         Mockito.verify(projectService, Mockito.times(1)).archiveProject(projectId);
     }

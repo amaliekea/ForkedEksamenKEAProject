@@ -19,7 +19,7 @@
     <main class="form-page-main">
         <!-- Hvid boks omkring formularen -->
         <div class="white-box">
-            <form th:action="@{/project-added}" th:object="${project}" method="post" class="form-container">
+            <form th:action="@{/project/project-added}" th:object="${project}" method="post" class="form-container">
                 <!-- Project Name -->
                 <div class="form-group">
                     <label for="projectName">Project Name:</label>
@@ -62,7 +62,7 @@
                 </div>
             </form>
 
-            <form action="/project-leader-overview" method="get">
+            <form action="/project/project-leader-overview" method="get">
                 <button type="submit">Regret</button>
             </form>
         </div>

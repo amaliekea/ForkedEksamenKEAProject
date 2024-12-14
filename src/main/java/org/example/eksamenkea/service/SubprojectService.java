@@ -1,5 +1,6 @@
 package org.example.eksamenkea.service;
 
+import org.example.eksamenkea.Errorhandling;
 import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.repository.interfaces.ISubprojectRepository;
 import org.springframework.beans.factory.annotation.Value;

@@ -27,7 +27,7 @@
                 <tbody>
                 <tr>
                     <td>
-                        <form th:action="@{/task-status}" th:object="${task}" method="post" class="status-update-form">
+                        <form th:action="@{/task/task-status}" th:object="${task}" method="post" class="status-update-form">
                             <input type="hidden" name="taskId" th:value="${task.taskId}" />
                             <input type="hidden" name="taskName" th:value="${task.taskName}" />
                             <input type="hidden" name="startdate" th:value="${task.startdate}" />

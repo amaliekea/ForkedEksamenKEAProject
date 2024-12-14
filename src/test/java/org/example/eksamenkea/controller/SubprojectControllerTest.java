@@ -2,7 +2,6 @@ package org.example.eksamenkea.controller;
 
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.Subproject;
-import org.example.eksamenkea.service.Errorhandling;
 import org.example.eksamenkea.service.ProjectService;
 import org.example.eksamenkea.service.SubprojectService;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +38,7 @@ class SubprojectControllerTest {
         // Mock Subproject og Project objekter
         mockSubproject = new Subproject(1, "Mock subproject",
                 "Mock Description", 1);
-        mockProject = new Project(1, "mock project", 12.0,
+        mockProject = new Project(1, "mock project", 12.00,
                 "mock description", 1, 120);
     }
 
@@ -48,14 +47,14 @@ class SubprojectControllerTest {
         //Arrange
         int subprojectId = 1; // Mock subproject id
 
-        //simulere at subprojectservice returnere mocksubproject , når metoden kaldes
+        //simulere at subprojectservice returnere mocksubproject, når metoden kaldes
         when(subprojectService.getSubprojectBySubprojectId(subprojectId)).thenReturn(mockSubproject);
 
         // Udfør en GET-anmodning til /edit-subproject med subprojectId som parameter
-        mockMvc.perform(get("/edit-subproject")
+        mockMvc.perform(get("/subproject/edit-subproject")
                         .param("subprojectId", String.valueOf(subprojectId)))
                 .andExpect(status().isOk())//tjekker at status er ok
-                .andExpect(view().name("edit-subproject"))//kontrollere at det rigtige view returneres
+                .andExpect(view().name("subproject/edit-subproject"))//kontrollere at det rigtige view returneres
                 .andExpect(model().attribute("subproject", mockSubproject));//kontrollere at modellen indeholder mocksub
 
 
@@ -68,10 +67,10 @@ class SubprojectControllerTest {
         doNothing().when(subprojectService).updateSubproject(mockSubproject);// Mock opførsel for void-metoden
 
         //act og assert
-        mockMvc.perform(post("/edit-subproject")
+        mockMvc.perform(post("/subproject/edit-subproject")
                         .flashAttr("subproject", mockSubproject))//// Simulerer, at en @ModelAttribute sendes med requesten
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/project-leader-subproject-overview?projectId="
+                .andExpect(redirectedUrl("/subproject/project-leader-subproject-overview?projectId="
                         + mockSubproject.getProjectId()));
 
         //bekræft at updatesubproject service  bliver kaldt mindst 1 gang med mocksubprojekt som argument
@@ -89,10 +88,10 @@ class SubprojectControllerTest {
         when(subprojectService.getSubjectsByProjectId(projectId)).thenReturn(List.of(mockSubproject));
 
         // Udfør en GET-anmodning til /project-leader-subproject-overview med projectId som parameter
-        mockMvc.perform(get("/project-leader-subproject-overview")
+        mockMvc.perform(get("/subproject/project-leader-subproject-overview")
                 .param("projectId", String.valueOf(projectId)))
                 .andExpect(status().isOk())
-                .andExpect(view().name("project-leader-subproject-overview"))
+                .andExpect(view().name("subproject/project-leader-subproject-overview"))
                 .andExpect(model().attribute("project", mockProject))
                 .andExpect(model().attribute("subprojects",List.of(mockSubproject)));//kontroller at model indeholder listen
 

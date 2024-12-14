@@ -18,7 +18,7 @@ public class Project {
         this.materialCost = materialCost;
     }
 
-    public Project(String projectName, double budget, String projectDescription, int employeeId, int materialCost) {
+    public Project(String projectName, int budget, String projectDescription, int employeeId, int materialCost) {
         this.projectName = projectName;
         this.budget = budget;
         this.projectDescription = projectDescription;

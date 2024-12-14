@@ -34,7 +34,7 @@
         <tr th:each="project : ${projects}">
             <td th:text="${project.projectName}"></td>
             <td th:text="${project.projectDescription}"></td>
-            <td th:text="${#numbers.formatDecimal(project.budget, 0, 0) + ' kr'}"></td>
+            <td th:text="${#numbers.formatDecimal(project.budget, 0, 0) + ' DKK'}"></td>
             <td>
                 <span th:text="${project.materialCost}"></span>
                 <span th:if="${project.materialCost / project.budget <= 0.30}"
@@ -46,15 +46,15 @@
             <td th:text="${project.estimatedTimeConsumption + ' hours'}"></td>
 
             <td>
-                <form action="/project-leader-subproject-overview" method="get">
+                <form action="/subproject/project-leader-subproject-overview" method="get">
                     <input type="hidden" name="projectId" th:value="${project.projectId}"/>
                     <button type="submit" class="action-button">See Subprojects</button>
                 </form>
-                <form th:action="@{'/' + ${project.projectId} + '/edit-project'}" method="get">
+                <form th:action="@{'/project/' + ${project.projectId} + '/edit-project'}" method="get">
                     <input type="hidden" name="projectId" th:value="${project.projectId}"/>
                     <button type="submit" class="action-button">Edit Project</button>
                 </form>
-                <form action="/archive-project" method="post">
+                <form action="/project/archive-project" method="post">
                     <input type="hidden" name="projectId" th:value="${project.projectId}"/>
                     <button type="submit" class="action-button">Archive Project</button>
                 </form>
@@ -63,10 +63,10 @@
         </tbody>
     </table>
     <div class="button-group">
-        <form action="/archived-project-overview" method="get">
+        <form action="/project/archived-project-overview" method="get">
             <button type="submit">View Archived Projects</button>
         </form>
-        <form action="/add-project" method="get">
+        <form action="/project/add-project" method="get">
             <button type="submit">Add Project</button>
         </form>
     </div>
