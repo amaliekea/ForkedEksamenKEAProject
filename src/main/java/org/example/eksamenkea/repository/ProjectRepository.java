@@ -191,7 +191,7 @@ public class ProjectRepository implements IProjectRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Failed to get projects: " + e.getMessage());
         }
-        if(projects.isEmpty()) throw new Errorhandling("Failed to get projects and related data");
+        if(projects.isEmpty()) throw new Errorhandling("You have no projects at the moment");
         return projects;
     }
 
