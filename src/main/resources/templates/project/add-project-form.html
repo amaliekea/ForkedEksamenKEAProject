@@ -6,18 +6,16 @@
     <link th:href="@{/main-final.css}" rel="stylesheet">
 </head>
 <body>
-
+<header class="header">
+    <h1>Add Project</h1>
+    <form action="/logout" method="get">
+        <button type="submit" class="logout-button">
+            <img src="/pictures/log-out-icon.svg" alt="Log out icon" class="logout-icon"> Log out
+        </button>
+    </form>
+</header>
 <div class="form-page-container">
-    <header class="header">
-        <h1>Add Project</h1>
-        <form action="/logout" method="get">
-            <button type="submit" class="logout-button">
-                <img src="/pictures/log-out-icon.svg" alt="Log out icon" class="logout-icon"> Log out
-            </button>
-        </form>
-    </header>
     <main class="form-page-main">
-        <!-- Hvid boks omkring formularen -->
         <div class="white-box">
             <form th:action="@{/project/project-added}" th:object="${project}" method="post" class="form-container">
                 <!-- Project Name -->

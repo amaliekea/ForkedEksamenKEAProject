@@ -36,7 +36,7 @@
             <td th:text="${project.projectDescription}"></td>
             <td th:text="${#numbers.formatDecimal(project.budget, 0, 0) + ' DKK'}"></td>
             <td>
-                <span th:text="${project.materialCost}"></span>
+                <span th:text="${project.materialCost} +  ' DKK'"></span>
                 <span th:if="${project.materialCost / project.budget <= 0.30}"
                       class="label sustainable">Sustainable</span>
                 <span th:if="${project.materialCost / project.budget > 0.30}"

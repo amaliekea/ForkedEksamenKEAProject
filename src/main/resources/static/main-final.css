@@ -341,7 +341,9 @@ button:hover,
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 90vh;
+    margin-top: 80px; /* Adjust this value as needed to create space */
+
 }
 
 .form-page-container {
@@ -419,11 +421,25 @@ button:hover,
 }
 
 .label.sustainable {
-    background-color: #4CAF50; /* Grøn for bæredygtige projekter */
+    background-color: rgba(62, 166, 66, 0.68); /* Green for sustainable projects */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 0.85em;
+    display: block;
+    cursor: default; /* Non-clickable */
+    opacity: 0.8; /* Subtle appearance */
 }
 
 .label.not-sustainable {
-    background-color: #f44336; /* Rød for ikke-bæredygtige projekter */
+    background-color: rgba(201, 113, 113, 0.78); /* Red for non-sustainable projects */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 0.85em;
+    display: block;
+    cursor: default; /* Non-clickable */
+    opacity: 0.8; /* Subtle appearance */
 }
 
 /* Mobile styling */
