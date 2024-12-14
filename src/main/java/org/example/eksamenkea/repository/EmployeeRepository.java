@@ -3,9 +3,10 @@ package org.example.eksamenkea.repository;
 import org.example.eksamenkea.model.Employee;
 import org.example.eksamenkea.model.Role;
 import org.example.eksamenkea.repository.interfaces.IEmployeeRepository;
-import org.example.eksamenkea.service.Errorhandling;
+import org.example.eksamenkea.Errorhandling;
 import org.example.eksamenkea.util.ConnectionManager;
 import org.springframework.stereotype.Repository;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,33 +37,33 @@ public class EmployeeRepository implements IEmployeeRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Sign-in error: " + e.getMessage());
         }
+        if (employee == null) throw new Errorhandling("Failed to sign in");
         return employee;
     }
 
     @Override //Malthe
-    public java.util.List<Employee> getAllWorkers() throws Errorhandling {
+    public List<Employee> getAllWorkers() throws Errorhandling {
         java.util.List<Employee> workerList = new java.util.ArrayList<>();
         String query = "SELECT * FROM employee WHERE role = 'Worker'";
 
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement preSta = con.prepareStatement(query)) {
-            try (ResultSet resultSet = preSta.executeQuery()) {
-                while (resultSet.next()) {
-                    workerList.add(new Employee(
-                            resultSet.getInt("employee_id"),
-                            resultSet.getString("email"),
-                            resultSet.getString("password"),
-                            Role.valueOf(resultSet.getString("role").toUpperCase()),
-                            resultSet.getInt("employee_rate"),
-                            resultSet.getInt("max_hours")
-                    ));
-                }
-                return workerList;
+            ResultSet resultSet = preSta.executeQuery();
+            while (resultSet.next()) {
+                workerList.add(new Employee(
+                        resultSet.getInt("employee_id"),
+                        resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        Role.valueOf(resultSet.getString("role").toUpperCase()),
+                        resultSet.getInt("employee_rate"),
+                        resultSet.getInt("max_hours")
+                ));
             }
-
         } catch (SQLException e) {
             throw new Errorhandling("Failed to get all workers: " + e.getMessage());
         }
+        if (workerList.isEmpty()) throw new Errorhandling("Failed to get workerlist and related data ");
+        return workerList;
     }
 
     @Override //Malthe
@@ -72,22 +73,23 @@ public class EmployeeRepository implements IEmployeeRepository {
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement preSta = con.prepareStatement(query)) {
             preSta.setString(1, email);
-            try (ResultSet resultSet = preSta.executeQuery()) {
-                if (resultSet.next()) {
-                    employee = new Employee(
-                            resultSet.getInt("employee_id"),
-                            resultSet.getString("email"),
-                            resultSet.getString("password"),
-                            Role.valueOf(resultSet.getString("role").toUpperCase()),
-                            resultSet.getInt("employee_rate"),
-                            resultSet.getInt("max_hours")
-                    );
-                }
-                return employee;
+            ResultSet resultSet = preSta.executeQuery();
+            if (resultSet.next()) {
+                employee = new Employee(
+                        resultSet.getInt("employee_id"),
+                        resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        Role.valueOf(resultSet.getString("role").toUpperCase()),
+                        resultSet.getInt("employee_rate"),
+                        resultSet.getInt("max_hours")
+                );
             }
+
         } catch (SQLException e) {
             throw new Errorhandling("Failed to get worker: " + e.getMessage());
         }
+        if (employee == null) throw new Errorhandling("Failed to get employee and related data ");
+        return employee;
     }
 
     @Override
@@ -113,6 +115,7 @@ public class EmployeeRepository implements IEmployeeRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Error retrieving workload for employee ID " + employeeId + ": " + e.getMessage());
         }
+        if(workloadList.isEmpty()) throw new Errorhandling("Failed to get workload and related data ");
         return workloadList;
     }
 

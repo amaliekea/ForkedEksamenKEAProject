@@ -1,17 +1,18 @@
 package org.example.eksamenkea.repository;
+
 import org.example.eksamenkea.model.Status;
 import org.example.eksamenkea.model.Task;
 import org.example.eksamenkea.repository.interfaces.ITaskRepository;
-import org.example.eksamenkea.service.Errorhandling;
+import org.example.eksamenkea.Errorhandling;
 import org.example.eksamenkea.util.ConnectionManager;
 import org.springframework.stereotype.Repository;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository("ITASKREPOSITORY")
 public class TaskRepository implements ITaskRepository {
-
 
     @Override //Amalie
     public void createTask(Task task) throws Errorhandling {
@@ -66,6 +67,7 @@ public class TaskRepository implements ITaskRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Failed to fetch tasks for subproject ID " + subprojectId + ": " + e.getMessage());
         }
+        if (tasks.isEmpty()) throw new Errorhandling("Failed to get tasks and related data ");
         return tasks;
     }
 
@@ -79,25 +81,25 @@ public class TaskRepository implements ITaskRepository {
 
             preparedStatement.setInt(1, employeeId);
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    taskList.add(new Task(
-                            resultSet.getInt("task_id"),
-                            resultSet.getString("task_name"),
-                            resultSet.getDate("start_date").toLocalDate(),
-                            resultSet.getDate("end_date").toLocalDate(),
-                            Status.valueOf(resultSet.getString("status").toUpperCase()),
-                            resultSet.getInt("subproject_id"),
-                            resultSet.getInt("estimated_hours"),
-                            resultSet.getInt("actual_hours"),
-                            resultSet.getInt("employee_id")
-                    ));
-                }
-                return taskList;
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                taskList.add(new Task(
+                        resultSet.getInt("task_id"),
+                        resultSet.getString("task_name"),
+                        resultSet.getDate("start_date").toLocalDate(),
+                        resultSet.getDate("end_date").toLocalDate(),
+                        Status.valueOf(resultSet.getString("status").toUpperCase()),
+                        resultSet.getInt("subproject_id"),
+                        resultSet.getInt("estimated_hours"),
+                        resultSet.getInt("actual_hours"),
+                        resultSet.getInt("employee_id")
+                ));
             }
         } catch (SQLException e) {
             throw new Errorhandling("Failed to fetch tasks for employee ID " + employeeId + ": " + e.getMessage());
         }
+        if (taskList.isEmpty()) throw new Errorhandling("Failed to get workerlist and related data ");
+        return taskList;
     }
 
     @Override //AM-ZU
@@ -126,6 +128,7 @@ public class TaskRepository implements ITaskRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Failed to get task: " + e.getMessage());
         }
+        if (task == null) throw new Errorhandling("Failed to get workerlist and related data ");
         return task;
     }
 
@@ -156,5 +159,4 @@ public class TaskRepository implements ITaskRepository {
             throw new Errorhandling("Failed to assign worker to task: " + e.getMessage());
         }
     }
-
 }

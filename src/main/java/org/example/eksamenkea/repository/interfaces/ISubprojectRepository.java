@@ -1,6 +1,6 @@
 package org.example.eksamenkea.repository.interfaces;
 import org.example.eksamenkea.model.Subproject;
-import org.example.eksamenkea.service.Errorhandling;
+import org.example.eksamenkea.Errorhandling;
 
 import java.util.List;
 

@@ -1,20 +1,26 @@
 package org.example.eksamenkea.controller;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpServletRequest;
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.Subproject;
-import org.example.eksamenkea.service.Errorhandling;
+import org.example.eksamenkea.Errorhandling;
 import org.example.eksamenkea.service.ProjectService;
 import org.example.eksamenkea.service.SubprojectService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+
 
 @Controller
 public class SubprojectController {
     private final SubprojectService subprojectService;
     private final ProjectService projectService;
 
-    public SubprojectController(SubprojectService subprojectService, ProjectService projectService){
+
+    public SubprojectController(SubprojectService subprojectService, ProjectService projectService) {
         this.subprojectService = subprojectService;
         this.projectService = projectService;
     }
@@ -39,7 +45,7 @@ public class SubprojectController {
         List<Subproject> subprojects = subprojectService.getSubjectsByProjectId(projectId);
         model.addAttribute("subprojects", subprojects);
         model.addAttribute("project", project);
+        System.out.println("This is project-leader-subproject-overview with projectid" + projectId);
         return "project-leader-subproject-overview";
     }
-
 }
