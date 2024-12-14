@@ -56,7 +56,7 @@
                     <td th:text="${task.estimatedHours}"></td>
                     <td th:text="${task.getActualHours()}"></td>
                     <td>
-                        <form action="/task-status" method="get" class="action-form">
+                        <form action="/task/task-status" method="get" class="action-form">
                             <input type="hidden" name="taskId" th:value="${task.taskId}" />
                             <button type="submit" class="action-button">Change Task Status</button>
                         </form>

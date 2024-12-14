@@ -1,17 +1,16 @@
 package org.example.eksamenkea.controller;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.http.HttpServletRequest;
+
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.Errorhandling;
 import org.example.eksamenkea.service.ProjectService;
 import org.example.eksamenkea.service.SubprojectService;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+@RequestMapping("/subproject")
 
 
 @Controller
@@ -19,8 +18,7 @@ public class SubprojectController {
     private final SubprojectService subprojectService;
     private final ProjectService projectService;
 
-
-    public SubprojectController(SubprojectService subprojectService, ProjectService projectService) {
+    public SubprojectController(SubprojectService subprojectService, ProjectService projectService){
         this.subprojectService = subprojectService;
         this.projectService = projectService;
     }
@@ -29,14 +27,14 @@ public class SubprojectController {
     public String getSubprojectToEdit(@RequestParam("subprojectId") int subprojectId, Model model) throws Errorhandling {
         Subproject subproject = subprojectService.getSubprojectBySubprojectId(subprojectId);
         model.addAttribute("subproject", subproject);
-        return "edit-subproject";
+        return "subproject/edit-subproject";
     }
 
 
     @PostMapping("/edit-subproject") //malthe
     public String editSubproject(@ModelAttribute Subproject subproject) throws Errorhandling {
         subprojectService.updateSubproject(subproject);
-        return "redirect:/project-leader-subproject-overview?projectId=" + subproject.getProjectId();
+        return "redirect:/subproject/project-leader-subproject-overview?projectId=" + subproject.getProjectId();
     }
 
     @GetMapping("/project-leader-subproject-overview") // Amalie
@@ -46,6 +44,8 @@ public class SubprojectController {
         model.addAttribute("subprojects", subprojects);
         model.addAttribute("project", project);
         System.out.println("This is project-leader-subproject-overview with projectid" + projectId);
-        return "project-leader-subproject-overview";
+        return "subproject/project-leader-subproject-overview";
+
     }
+
 }

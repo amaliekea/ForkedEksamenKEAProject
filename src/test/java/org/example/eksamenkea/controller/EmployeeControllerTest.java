@@ -44,7 +44,7 @@ class EmployeeControllerTest {
         // Tester at GET /login returnerer login-siden
         mockMvc.perform(get("/login"))
                 .andExpect(status().isOk()) // Forvent status 200
-                .andExpect(view().name("login")); // Forvent visning af login-siden
+                .andExpect(view().name("employee/login")); // Forvent visning af login-siden
     }
 
     @Test
@@ -55,7 +55,7 @@ class EmployeeControllerTest {
 
         mockMvc.perform(get("/").sessionAttrs(sessionAttributes)) // GET / med session
                 .andExpect(status().isOk()) // Forvent status 200
-                .andExpect(view().name("homepage")) // Forvent visning af homepage
+                .andExpect(view().name("employee/homepage")) // Forvent visning af homepage
                 .andExpect(model().attribute("employeeAvaliable", true)); // Kontroller, at modellen indeholder korrekt data
     }
 
@@ -88,7 +88,7 @@ class EmployeeControllerTest {
 
         mockMvc.perform(get("/logged_in").sessionAttrs(sessionAttributes)) // GET /logged_in
                 .andExpect(status().is3xxRedirection()) // Forvent redirect status
-                .andExpect(redirectedUrl("/project-leader-overview")); // Redirect til Project Leader-overview
+                .andExpect(redirectedUrl("/project/project-leader-overview")); // Redirect til Project Leader-overview
     }
 
     @Test

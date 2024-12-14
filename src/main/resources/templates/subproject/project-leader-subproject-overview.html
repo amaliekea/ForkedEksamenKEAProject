@@ -32,7 +32,7 @@
     </section>
     <section class="subprojects-section">
       <table class="styled-table">
-        <thead>
+        <thead>´
         <tr>
           <th>Subproject Name</th>
           <th>Description</th>
@@ -44,12 +44,12 @@
           <td th:text="${subproject.subprojectName}"></td>
           <td th:text="${subproject.subprojectDescription}"></td>
           <td>
-            <form action="/project-leader-tasks" method="get" class="action-form">
+            <form action="/task/project-leader-tasks" method="get" class="action-form">
               <input type="hidden" name="subprojectId" th:value="${subproject.subprojectId}" />
               <button type="submit" class="action-button">View Tasks</button>
 
             </form>
-            <form th:action="@{/edit-subproject}" method="get" class="action-form">
+            <form th:action="@{/subproject/edit-subproject}" method="get" class="action-form">
               <input type="hidden" name="subprojectId" th:value="${subproject.subprojectId}" />
               <button type="submit" class="action-button">Edit Subproject</button>
             </form>
@@ -61,7 +61,7 @@
     </section>
 
     <div class="button-group">
-      <form action="/project-leader-overview" method="get">
+      <form action="/project/project-leader-overview" method="get">
         <button type="submit">Back to Project Overview</button>
       </form>
       <form action="/logout" method="get">

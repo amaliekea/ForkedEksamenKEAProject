@@ -19,7 +19,7 @@
 
     <main class="form-page-main">
         <div class="white-box">
-            <form th:action="@{/edit-project}" th:object="${project}" method="post">
+            <form th:action="@{/project/edit-project}" th:object="${project}" method="post">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input id="name" class="form-control" type="text" th:field="*{projectName}" placeholder="Enter project name..." required />
@@ -46,7 +46,7 @@
                 <button type="submit" class="action-button">Save Changes</button>
             </form>
 
-            <form th:action="@{/project-leader-overview}" method="get">
+            <form th:action="@{/project/project-leader-overview}" method="get">
                 <button type="submit" class="action-button">Regret</button>
             </form>
         </div>
