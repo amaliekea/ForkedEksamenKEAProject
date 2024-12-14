@@ -38,7 +38,7 @@ class SubprojectControllerTest {
         // Mock Subproject og Project objekter
         mockSubproject = new Subproject(1, "Mock subproject",
                 "Mock Description", 1);
-        mockProject = new Project(1, "mock project", 12,
+        mockProject = new Project(1, "mock project", 12.00,
                 "mock description", 1, 120);
     }
 
@@ -47,7 +47,7 @@ class SubprojectControllerTest {
         //Arrange
         int subprojectId = 1; // Mock subproject id
 
-        //simulere at subprojectservice returnere mocksubproject , når metoden kaldes
+        //simulere at subprojectservice returnere mocksubproject, når metoden kaldes
         when(subprojectService.getSubprojectBySubprojectId(subprojectId)).thenReturn(mockSubproject);
 
         // Udfør en GET-anmodning til /edit-subproject med subprojectId som parameter

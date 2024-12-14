@@ -46,7 +46,7 @@ public class ProjectRepository implements IProjectRepository {
                     project = new Project(
                             resultSet.getInt("project_id"),
                             resultSet.getString("project_name"),
-                            resultSet.getInt("budget"),
+                            resultSet.getDouble("budget"),
                             resultSet.getString("project_description"),
                             resultSet.getInt("employee_id"),
                             resultSet.getInt("material_cost")
@@ -99,7 +99,7 @@ public class ProjectRepository implements IProjectRepository {
                 projects.add(new ProjectCostDTO(
                         projectId,
                         resultSet.getString("project_name"),
-                        resultSet.getInt("budget"),
+                        resultSet.getDouble("budget"),
                         resultSet.getString("project_description"),
                         resultSet.getInt("employee_id"),
                         resultSet.getInt("material_cost"),
@@ -180,7 +180,7 @@ public class ProjectRepository implements IProjectRepository {
                 projects.add(new ProjectCostDTO(
                         projectId,
                         resultSet.getString("project_name"),
-                        resultSet.getInt("budget"),
+                        resultSet.getDouble("budget"),
                         resultSet.getString("project_description"),
                         resultSet.getInt("employee_id"),
                         resultSet.getInt("material_cost"),

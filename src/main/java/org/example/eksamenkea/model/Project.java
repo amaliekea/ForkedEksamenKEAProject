@@ -4,12 +4,12 @@ package org.example.eksamenkea.model;
 public class Project {
     private int projectId;
     private String projectName;
-    private int budget;
+    private double budget;
     private String projectDescription;
     private int employeeId;
     private int materialCost;
 
-    public Project(int projectId, String projectName, int budget, String projectDescription, int employeeId, int materialCost) {
+    public Project(int projectId, String projectName, double budget, String projectDescription, int employeeId, int materialCost) {
         this.projectId = projectId;
         this.projectName = projectName;
         this.budget = budget;
@@ -48,7 +48,7 @@ public class Project {
         return budget;
     }
 
-    public void setBudget(int budget) {
+    public void setBudget(double budget) {
         this.budget = budget;
     }
 

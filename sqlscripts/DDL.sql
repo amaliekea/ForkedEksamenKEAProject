@@ -23,7 +23,7 @@ CREATE TABLE project (
                          budget DECIMAL(10, 2) NOT NULL,
                          project_description VARCHAR(255) NOT NULL,
                          employee_id INT,
-                         material_cost INT DEFAULT 0,
+                         material_cost DECIMAL(10, 2) DEFAULT 0.00,
                          is_archived BOOLEAN DEFAULT FALSE,
                          FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
 );
