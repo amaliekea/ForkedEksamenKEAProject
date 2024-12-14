@@ -38,7 +38,7 @@ class SubprojectControllerTest {
         // Mock Subproject og Project objekter
         mockSubproject = new Subproject(1, "Mock subproject",
                 "Mock Description", 1);
-        mockProject = new Project(1, "mock project", 12.0,
+        mockProject = new Project(1, "mock project", 12,
                 "mock description", 1, 120);
     }
 

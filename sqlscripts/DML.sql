@@ -7,10 +7,10 @@ VALUES
 
 INSERT INTO project (project_name, budget, project_description, employee_id, material_cost, is_archived)
 VALUES
-    ('Corporate Website Overhaul', 120000, 'Redesign and optimize the corporate website for better UX.', 1, 18000.00, FALSE),
-    ('Mobile App Launch', 80000, 'Develop and launch a customer-facing mobile application.', 2, 25000.00, FALSE),
-    ('Cloud Migration Initiative', 95000, 'Migrate all company data and services to the cloud.', 1, 22000.00, FALSE),
-    ('Security Upgrade Project', 60000, 'Enhance the company’s cybersecurity measures.', 2, 15000.00, TRUE);
+    ('Corporate Website Overhaul', 120000, 'Redesign and optimize the corporate website for better UX.', 1, 18000, FALSE),
+    ('Mobile App Launch', 80000, 'Develop and launch a customer-facing mobile application.', 2, 25000, FALSE),
+    ('Cloud Migration Initiative', 95000, 'Migrate all company data and services to the cloud.', 1, 22000, FALSE),
+    ('Security Upgrade Project', 60000, 'Enhance the company’s cybersecurity measures.', 2, 15000, TRUE);
 
 INSERT INTO subproject (subproject_name, subproject_description, project_id, is_archived)
 VALUES
