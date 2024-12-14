@@ -61,7 +61,7 @@ public class EmployeeController { //Amalie
             return "redirect:/login";
         }
         if (employee.getRole() == Role.PROJECTLEADER) {
-            return "redirect:/project-leader-overview";
+            return "redirect:/project/project-leader-overview";
         } else if (employee.getRole() == Role.WORKER) {
             return "redirect:/worker-overview";
         }
