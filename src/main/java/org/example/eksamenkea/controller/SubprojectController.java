@@ -1,13 +1,11 @@
 package org.example.eksamenkea.controller;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.http.HttpServletRequest;
+
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.Errorhandling;
 import org.example.eksamenkea.service.ProjectService;
 import org.example.eksamenkea.service.SubprojectService;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
