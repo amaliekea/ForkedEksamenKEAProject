@@ -1,7 +1,7 @@
 package org.example.eksamenkea.controller;
 import jakarta.servlet.http.HttpSession;
 import org.example.eksamenkea.model.*;
-import org.example.eksamenkea.service.Errorhandling;
+import org.example.eksamenkea.Errorhandling;
 import org.example.eksamenkea.service.ProjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

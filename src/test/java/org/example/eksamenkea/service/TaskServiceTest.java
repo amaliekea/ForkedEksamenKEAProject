@@ -1,4 +1,5 @@
 package org.example.eksamenkea.service;
+import org.example.eksamenkea.Errorhandling;
 import org.example.eksamenkea.model.Status;
 import org.example.eksamenkea.model.Task;
 import org.example.eksamenkea.repository.interfaces.ITaskRepository;

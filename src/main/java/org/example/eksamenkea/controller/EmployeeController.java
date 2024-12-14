@@ -3,7 +3,7 @@ import jakarta.servlet.http.HttpSession;
 import org.example.eksamenkea.model.Role;
 import org.example.eksamenkea.model.Employee;
 import org.example.eksamenkea.service.EmployeeService;
-import org.example.eksamenkea.service.Errorhandling;
+import org.example.eksamenkea.Errorhandling;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

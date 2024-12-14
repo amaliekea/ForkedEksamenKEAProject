@@ -1,5 +1,6 @@
 package org.example.eksamenkea.service;
 
+import org.example.eksamenkea.Errorhandling;
 import org.example.eksamenkea.model.Employee;
 import org.example.eksamenkea.repository.interfaces.IEmployeeRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +28,7 @@ public class EmployeeService  {
     public Employee getEmployeeByEmail(String email) throws Errorhandling{
         return iEmployeeRepository.getEmployeeByEmail(email);
     }
-    public List<List<Object>> getWorkloadByEmployeeId(int employeeId) throws Errorhandling{
+    public List<List<Object>> getWorkloadByEmployeeId(int employeeId) throws Errorhandling {
         return iEmployeeRepository.getWorkloadByEmployeeId(employeeId);
     }
 }

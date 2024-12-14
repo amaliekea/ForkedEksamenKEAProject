@@ -1,7 +1,7 @@
 package org.example.eksamenkea.repository.interfaces;
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.ProjectCostDTO;
-import org.example.eksamenkea.service.Errorhandling;
+import org.example.eksamenkea.Errorhandling;
 
 import java.sql.Connection;
 import java.util.List;

@@ -2,7 +2,6 @@ package org.example.eksamenkea.controller;
 
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.Subproject;
-import org.example.eksamenkea.service.Errorhandling;
 import org.example.eksamenkea.service.ProjectService;
 import org.example.eksamenkea.service.SubprojectService;
 import org.junit.jupiter.api.BeforeEach;
