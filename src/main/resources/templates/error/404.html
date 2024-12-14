@@ -1,22 +1,19 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
-    <link th:href="@{/main-final.css}" rel="stylesheet">
     <meta charset="UTF-8">
-    <title>404</title>
+    <title>404 - Not Found</title>
+    <link th:href="@{/main-final.css}" rel="stylesheet">
 </head>
-<body class="header">
+<body>
 <header>
-<h1>There has been a 404 not found error</h1>
-<br>
-<h1>Forbidden, you do not have access rights to the content.</h1>
-<br>
-<h1>An Error Occured in the Backend System!</h1>
-<br>
-<h4>Contact the administrator on AMZDstud.kea.dk</h4>
+    <h1>404 - Not Found</h1>
+    <h2>Forbidden: You do not have access rights to the content.</h2>
+    <h3 th:text="${message}"></h3>
+    <h4>Try checking your syntax or contact the administrator at AMZstud@kea.dk</h4>
 </header>
-    <h2><span th:text="${message}"></span></h2>
 <form action="/" method="get">
-    <button type="submit">Go to loginpage</button>
+    <button type="submit">Go to Login Page</button>
 </form>
 </body>
 </html>

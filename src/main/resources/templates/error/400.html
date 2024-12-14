@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<link th:href="@{/main-final.css}" rel="stylesheet">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Error 400 - Bad Request</title>
+    <link th:href="@{/main-final.css}" rel="stylesheet">
 </head>
-<body class="header">
+<body>
 <header>
-<h1>There has been a 400 bad request error</h1>
-<br>
-<h4> Try cheching your syntax or contact the administrator on AMZDstud.kea.dk</h4>
-    <h5><span th:text="${message}"></span></h5>
+    <h1>There has been a 400 Bad Request error. </h1>
+    <h3 th:text="${message}"></h3>
+    <h4>Try checking your syntax or contact the administrator at AMZstud@kea.dk</h4>
 </header>
 <form action="/" method="get">
-    <button type="submit">Go to loginpage</button>
+    <button type="submit">Go to Login Page</button>
 </form>
 </body>
 </html>
