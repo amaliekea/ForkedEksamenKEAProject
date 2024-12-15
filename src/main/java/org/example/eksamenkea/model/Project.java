@@ -1,6 +1,5 @@
 package org.example.eksamenkea.model;
 
-
 public class Project {
     private int projectId;
     private String projectName;
@@ -18,15 +17,7 @@ public class Project {
         this.materialCost = materialCost;
     }
 
-    public Project(String projectName, int budget, String projectDescription, int employeeId, int materialCost) {
-        this.projectName = projectName;
-        this.budget = budget;
-        this.projectDescription = projectDescription;
-        this.employeeId = employeeId;
-        this.materialCost = materialCost;
-    }
     public Project(){
-
     }
     public int getProjectId() {
         return projectId;

@@ -1,10 +1,12 @@
 package org.example.eksamenkea.repository;
+
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.ProjectCostDTO;
 import org.example.eksamenkea.repository.interfaces.IProjectRepository;
 import org.example.eksamenkea.Errorhandling;
 import org.example.eksamenkea.util.ConnectionManager;
 import org.springframework.stereotype.Repository;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +58,7 @@ public class ProjectRepository implements IProjectRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Failed to fetch project for project ID " + projectId + ": " + e.getMessage());
         }
-        if(project==null) throw new Errorhandling("Failed to fetch project for project ID " + projectId);
+        if (project == null) throw new Errorhandling("Failed to fetch project for project ID " + projectId);
         return project;
     }
 
@@ -111,7 +113,7 @@ public class ProjectRepository implements IProjectRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Failed to get archived projects and related data: " + e.getMessage());
         }
-        if(projects.isEmpty()) throw new Errorhandling("Failed to get archived projects and related data.");
+        if (projects.isEmpty()) throw new Errorhandling("Failed to get archived projects and related data.");
         return projects;
     }
 
@@ -191,7 +193,7 @@ public class ProjectRepository implements IProjectRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Failed to get projects: " + e.getMessage());
         }
-        if(projects.isEmpty()) throw new Errorhandling("You have no projects at the moment");
+        if (projects.isEmpty()) throw new Errorhandling("You have no projects at the moment");
         return projects;
     }
 
@@ -202,15 +204,14 @@ public class ProjectRepository implements IProjectRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, projectId);
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    totalTime = resultSet.getInt("total_hours");
-                }
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                totalTime = resultSet.getInt("total_hours");
             }
+
         } catch (SQLException e) {
             throw new Errorhandling("Failed to calculate time for project ID " + projectId + ": " + e.getMessage());
         }
-        if(totalTime==0) throw new Errorhandling("Failed to calculate time");
         return totalTime;
     }
 }

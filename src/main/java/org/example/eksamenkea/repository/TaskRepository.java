@@ -71,10 +71,11 @@ public class TaskRepository implements ITaskRepository {
         return tasks;
     }
 
-    @Override //Malthe
+    @Override //Malthe og Amalie
     public List<Task> getTasklistByEmployeeId(int employeeId) throws Errorhandling {
         List<Task> taskList = new ArrayList<>();
-        String query = "SELECT task_id, task_name, start_date, end_date, estimated_hours, status, actual_hours, subproject_id, employee_id FROM task WHERE employee_id = ?";
+        String query = "SELECT task_id, task_name, start_date, end_date, estimated_hours, status, actual_hours, subproject_id, employee_id FROM task, subproject, project " +
+                "WHERE task.subproject_id = subproject.subproject_id AND subproject.project_id = project.project_id AND employee_id = ? AND project.is_archived = FALSE";
 
         try (Connection connection = ConnectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
