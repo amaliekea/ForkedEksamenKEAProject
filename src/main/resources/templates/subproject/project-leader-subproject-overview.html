@@ -47,7 +47,6 @@
             <form action="/task/project-leader-tasks" method="get" class="action-form">
               <input type="hidden" name="subprojectId" th:value="${subproject.subprojectId}" />
               <button type="submit" class="action-button">View Tasks</button>
-
             </form>
             <form th:action="@{/subproject/edit-subproject}" method="get" class="action-form">
               <input type="hidden" name="subprojectId" th:value="${subproject.subprojectId}" />
@@ -64,8 +63,9 @@
       <form action="/project/project-leader-overview" method="get">
         <button type="submit">Back to Project Overview</button>
       </form>
-      <form action="/logout" method="get">
-        <button type="submit">Log out</button>
+      <form action="/subproject/add-subproject" method="get">
+        <input type="hidden" name="projectId" th:value="${project.projectId}" />
+        <button type="submit">Add subproject</button>
       </form>
     </div>
   </main>

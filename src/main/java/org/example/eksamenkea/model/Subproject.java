@@ -12,7 +12,12 @@ public class Subproject {
         this.subprojectDescription = subprojectDescription;
         this.projectId = projectId;
     }
+
     public Subproject() {
+    }
+
+    public Subproject(int projectId) {
+        this.projectId = projectId;
     }
 
     public int getSubprojectId() {
