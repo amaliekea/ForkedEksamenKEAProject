@@ -35,7 +35,6 @@ public class EmployeeRepository implements IEmployeeRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Sign-in SQL error: " + e.getMessage());
         }
-        if (employee == null) throw new Errorhandling("Wrong email or password");
         return employee;
     }
 
