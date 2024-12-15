@@ -1,6 +1,5 @@
 package org.example.eksamenkea.controller;
 
-
 import org.example.eksamenkea.model.Project;
 import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.Errorhandling;
@@ -11,8 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RequestMapping("/subproject")
-
-
 @Controller
 public class SubprojectController {
     private final SubprojectService subprojectService;
@@ -30,7 +27,6 @@ public class SubprojectController {
         return "subproject/edit-subproject";
     }
 
-
     @PostMapping("/edit-subproject") //malthe
     public String editSubproject(@ModelAttribute Subproject subproject) throws Errorhandling {
         subprojectService.updateSubproject(subproject);
@@ -43,9 +39,6 @@ public class SubprojectController {
         List<Subproject> subprojects = subprojectService.getSubjectsByProjectId(projectId);
         model.addAttribute("subprojects", subprojects);
         model.addAttribute("project", project);
-        System.out.println("This is project-leader-subproject-overview with projectid" + projectId);
         return "subproject/project-leader-subproject-overview";
-
     }
-
 }

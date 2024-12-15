@@ -66,5 +66,4 @@ public class ProjectController {
         projectService.archiveProject(projectId);
         return "redirect:/project/project-leader-overview";
     }
-
 }

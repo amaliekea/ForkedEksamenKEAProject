@@ -2,9 +2,9 @@ package org.example.eksamenkea.model;
 
 public class Employee {
     private int employeeId;
-    private String email; // fungerer som username
+    private String email;
     private String password;
-    private Role role; // Enum type
+    private Role role; // Enum
     private int employeeRate;
     private int maxHours;
 
