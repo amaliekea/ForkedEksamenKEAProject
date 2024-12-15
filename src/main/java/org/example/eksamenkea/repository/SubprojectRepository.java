@@ -5,7 +5,6 @@ import org.example.eksamenkea.repository.interfaces.ISubprojectRepository;
 import org.example.eksamenkea.Errorhandling;
 import org.example.eksamenkea.util.ConnectionManager;
 import org.springframework.stereotype.Repository;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -6,7 +6,6 @@ import org.example.eksamenkea.repository.interfaces.IEmployeeRepository;
 import org.example.eksamenkea.Errorhandling;
 import org.example.eksamenkea.util.ConnectionManager;
 import org.springframework.stereotype.Repository;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +13,8 @@ import java.util.List;
 @Repository("IEMPLOYEEREPOSITORY")
 
 public class EmployeeRepository implements IEmployeeRepository {
-
-    @Override
-    public Employee signIn(String email, String password) throws Errorhandling { //Amalie
+    @Override//Amalie
+    public Employee signIn(String email, String password) throws Errorhandling {
         Employee employee = null;
         try (Connection con = ConnectionManager.getConnection()) {
             String SQLUser = "SELECT * FROM employee WHERE email = ? AND password = ?;";
@@ -62,7 +60,6 @@ public class EmployeeRepository implements IEmployeeRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Failed to get all workers: " + e.getMessage());
         }
-        if (workerList.isEmpty()) throw new Errorhandling("Failed to get workerlist and related data ");
         return workerList;
     }
 
@@ -84,15 +81,13 @@ public class EmployeeRepository implements IEmployeeRepository {
                         resultSet.getInt("max_hours")
                 );
             }
-
         } catch (SQLException e) {
             throw new Errorhandling("Failed to get worker: " + e.getMessage());
         }
-        if (employee == null) throw new Errorhandling("Failed to get employee and related data ");
         return employee;
     }
 
-    @Override
+    @Override//Amalie
     public List<List<Object>> getWorkloadByEmployeeId(int employeeId) throws Errorhandling {
         List<List<Object>> workloadList = new ArrayList<>();
         String query = "SELECT * FROM employee_workload_pr_day WHERE employee_id = ?";
@@ -115,8 +110,6 @@ public class EmployeeRepository implements IEmployeeRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Error retrieving workload for employee ID " + employeeId + ": " + e.getMessage());
         }
-        if(workloadList.isEmpty()) throw new Errorhandling("Failed to get workload and related data ");
         return workloadList;
     }
-
 }
