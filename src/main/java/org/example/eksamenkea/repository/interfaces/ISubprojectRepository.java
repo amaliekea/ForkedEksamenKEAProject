@@ -1,4 +1,5 @@
 package org.example.eksamenkea.repository.interfaces;
+
 import org.example.eksamenkea.model.Subproject;
 import org.example.eksamenkea.Errorhandling;
 
@@ -12,4 +13,6 @@ public interface ISubprojectRepository {
     void updateSubproject(Subproject subproject) throws Errorhandling;
 
     List<Subproject> getSubjectsByProjectId(int projectId) throws Errorhandling;
-    }
+
+    void addSubproject(Subproject subproject) throws Errorhandling;
+}

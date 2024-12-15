@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+  <title>Add Subproject</title>
+  <link th:href="@{/main-final.css}" rel="stylesheet">
+</head>
+<body>
+<div class="form-page-container">
+  <header class="header">
+    <h1>Add Subproject</h1>
+    <form action="/logout" method="get">
+      <button type="submit" class="logout-button">
+        <img src="/pictures/log-out-icon.svg" alt="Log out icon" class="logout-icon"> Log out
+      </button>
+    </form>
+  </header>
+
+  <main class="form-page-main">
+    <div class="white-box">
+      <form th:action="@{/subproject/added-subproject}" th:object="${subproject}" method="post">
+
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input id="name" class="form-control" type="text" th:field="*{subprojectName}" placeholder="Enter subproject name..." required />
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input id="description" class="form-control" type="text" th:field="*{subprojectDescription}" placeholder="Enter subproject description..." required />
+        </div>
+
+      <input type="hidden" th:field="*{projectId}">
+
+        <button type="submit" class="action-button">Add Subproject</button>
+      </form>
+      <form action="/project/project-leader-overview" method="get">
+        <button type="submit" class="action-button">Regret</button>
+      </form>
+    </div>
+  </main>
+</div>
+</body>
+</html>
+
+
+
