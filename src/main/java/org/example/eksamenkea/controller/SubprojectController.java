@@ -41,13 +41,13 @@ public class SubprojectController {
         model.addAttribute("project", project);
         return "subproject/project-leader-subproject-overview";
     }
-    @GetMapping("/add-subproject")
+    @GetMapping("/add-subproject")//Amalie
     public String addSubproject(@RequestParam("projectId") int projectId, Model model) {
         Subproject subproject = new Subproject(projectId);
         model.addAttribute("subproject", subproject);
         return "subproject/add-subproject";
     }
-    @PostMapping("/added-subproject") //malthe
+    @PostMapping("/added-subproject") //Amalie
     public String addedSubproject(@ModelAttribute Subproject subproject) throws Errorhandling {
         subprojectService.addSubproject(subproject);
         return "redirect:/subproject/project-leader-subproject-overview?projectId=" + subproject.getProjectId();
