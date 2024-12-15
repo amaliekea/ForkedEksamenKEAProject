@@ -37,7 +37,6 @@ public class SubprojectRepository implements ISubprojectRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Failed to get subproject by subproject ID: " + e.getMessage());
         }
-        if (subproject == null) throw new Errorhandling("Failed to get subproject and related data ");
         return subproject;
     }
 
@@ -47,7 +46,6 @@ public class SubprojectRepository implements ISubprojectRepository {
 
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement preStat = con.prepareStatement(query)) {
-
             preStat.setString(1, subproject.getSubprojectName());
             preStat.setString(2, subproject.getSubprojectDescription());
             preStat.setInt(3, subproject.getProjectId());
@@ -81,7 +79,6 @@ public class SubprojectRepository implements ISubprojectRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Failed to get subprojects by project ID: " + e.getMessage());
         }
-        if (subprojects.isEmpty()) throw new Errorhandling("Failed to get subprojects and related data ");
         return subprojects;
     }
 }
