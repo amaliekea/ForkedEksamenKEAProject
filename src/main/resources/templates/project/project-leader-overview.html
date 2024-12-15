@@ -44,7 +44,6 @@
             </td>
             <td th:text="${project.employeeCost + ' DKK'}"></td>
             <td th:text="${project.estimatedTimeConsumption + ' hours'}"></td>
-
             <td>
                 <form action="/subproject/project-leader-subproject-overview" method="get">
                     <input type="hidden" name="projectId" th:value="${project.projectId}"/>
