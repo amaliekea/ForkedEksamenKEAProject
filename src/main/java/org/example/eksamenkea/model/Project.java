@@ -66,17 +66,5 @@ public class Project {
     public void setMaterialCost(int materialCost) {
         this.materialCost = materialCost;
     }
-
-    @Override
-    public String toString() {
-        return "Project{" +
-                "projectId=" + projectId +
-                ", projectName='" + projectName + '\'' +
-                ", budget=" + budget +
-                ", projectDescription='" + projectDescription + '\'' +
-                ", employeeId=" + employeeId +
-                ", materialCost=" + materialCost +
-                '}';
-    }
 }
 

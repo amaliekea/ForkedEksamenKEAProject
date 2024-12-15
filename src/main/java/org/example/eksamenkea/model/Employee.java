@@ -64,16 +64,4 @@ public class Employee {
     public void setMaxHours(int maxHours) {
         this.maxHours = maxHours;
     }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "employeeId=" + employeeId +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", role=" + role +
-                ", employeeRate=" + employeeRate +
-                ", maxHours=" + maxHours +
-                '}';
-    }
 }
