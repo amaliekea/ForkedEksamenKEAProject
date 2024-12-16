@@ -62,7 +62,7 @@ public class TaskRepository implements ITaskRepository {
 
             }
         } catch (SQLException e) {
-            throw new Errorhandling("Failed to fetch tasks for subproject ID " + subprojectId + ": " + e.getMessage());
+            throw new Errorhandling("Failed to get tasks for subproject ID " + subprojectId + ": " + e.getMessage());
         }
         return tasks;
     }
@@ -97,7 +97,7 @@ public class TaskRepository implements ITaskRepository {
                 ));
             }
         } catch (SQLException e) {
-            throw new Errorhandling("Failed to fetch tasks for employee ID " + employeeId + ": " + e.getMessage());
+            throw new Errorhandling("Failed to get tasks for employee ID " + employeeId + ": " + e.getMessage());
         }
         return taskList;
     }

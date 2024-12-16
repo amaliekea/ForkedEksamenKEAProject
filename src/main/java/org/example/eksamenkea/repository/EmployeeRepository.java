@@ -93,17 +93,14 @@ public class EmployeeRepository implements IEmployeeRepository {
              PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setInt(1, employeeId);
 
-            try (ResultSet resultSet = pstmt.executeQuery()) {
+            ResultSet resultSet = pstmt.executeQuery();
                 while (resultSet.next()) {
                     List<Object> row = new ArrayList<>();
                     row.add(resultSet.getDate("date_column"));
-                    double totalHours = resultSet.getDouble("total_hours_per_day");
-                    row.add(String.format("%.1f", totalHours)); // Formater tildecimal
-                    row.add(resultSet.getInt("employee_id"));
+                    row.add(resultSet.getDouble("total_hours_per_day"));
                     row.add(resultSet.getInt("max_hours_per_employee"));
                     workloadList.add(row);
                 }
-            }
         } catch (SQLException e) {
             throw new Errorhandling("Error retrieving workload for employee ID " + employeeId + ": " + e.getMessage());
         }
