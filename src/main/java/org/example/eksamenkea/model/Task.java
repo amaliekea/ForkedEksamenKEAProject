@@ -27,7 +27,6 @@ public class Task {
     }
 
     public Task() {
-
     }
 
     public int getTaskId() {
@@ -100,20 +99,5 @@ public class Task {
 
     public void setActualHours(int actualHours) {
         this.actualHours = actualHours;
-    }
-
-    @Override
-    public String toString() {
-        return "Task{" +
-                "taskId=" + taskId +
-                ", taskName='" + taskName + '\'' +
-                ", startdate=" + startdate +
-                ", enddate=" + enddate +
-                ", status=" + status +
-                ", subprojectId=" + subprojectId +
-                ", employeeId=" + employeeId +
-                ", estimatedHours=" + estimatedHours +
-                ", actualHours=" + actualHours +
-                '}';
     }
 }

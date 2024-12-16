@@ -1,4 +1,5 @@
 package org.example.eksamenkea.controller;
+
 import jakarta.servlet.http.HttpSession;
 import org.example.eksamenkea.model.Role;
 import org.example.eksamenkea.model.Employee;
@@ -73,5 +74,4 @@ public class EmployeeController { //Amalie
         session.invalidate(); //invaliderer sessionen for at logge ud
         return "redirect:/"; //return til front pagen
     }
-
 }

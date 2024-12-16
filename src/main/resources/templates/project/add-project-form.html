@@ -18,7 +18,6 @@
     <main class="form-page-main">
         <div class="white-box">
             <form th:action="@{/project/project-added}" th:object="${project}" method="post" class="form-container">
-                <!-- Project Name -->
                 <div class="form-group">
                     <label for="projectName">Project Name:</label>
                     <input id="projectName" class="form-control"
@@ -27,7 +26,6 @@
                            placeholder="Enter project name" required />
                 </div>
 
-                <!-- Project Description -->
                 <div class="form-group">
                     <label for="projectDescription">Description:</label>
                     <textarea id="projectDescription" class="form-control"
@@ -36,7 +34,6 @@
                               rows="4" required></textarea>
                 </div>
 
-                <!-- Budget -->
                 <div class="form-group">
                     <label for="budget">Budget (in DKK):</label>
                     <input id="budget" class="form-control"

@@ -16,7 +16,6 @@
     </form>
   </header>
   <main class="form-page-main">
-    <!-- Hvid boks omkring formularen -->
     <div class="white-box">
       <form th:action="@{/task/task-added}" th:object="${task}" method="post" class="form-container">
 
@@ -60,6 +59,11 @@
         <div class="form-actions">
           <button type="submit" class="action-button">Add Task</button>
         </div>
+
+      </form>
+      <form action="/task/project-leader-tasks" method="get">
+        <input type="hidden" name="subprojectId" th:value="${subprojectId}" />
+        <button type="submit" class="action-button">Regret</button>
       </form>
     </div>
   </main>

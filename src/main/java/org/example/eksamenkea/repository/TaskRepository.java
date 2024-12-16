@@ -28,7 +28,6 @@ public class TaskRepository implements ITaskRepository {
             statement.setInt(6, task.getEstimatedHours());
             statement.setInt(7, task.getSubprojectId());
             statement.setInt(8, 0);
-
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new Errorhandling("Failed to add task: " + e.getMessage());
@@ -38,8 +37,7 @@ public class TaskRepository implements ITaskRepository {
     @Override //AM-ZU
     public List<Task> getTaskBySubprojectId(int subprojectId) throws Errorhandling {
         List<Task> tasks = new ArrayList<>();
-        String query = "SELECT t.task_id, t.task_name, t.start_date, t.end_date, t.status, " +
-                "t.subproject_id, t.estimated_hours, t.actual_hours , t.employee_id " +
+        String query = "SELECT t.task_id, t.task_name, t.start_date, t.end_date, t.status, t.subproject_id, t.estimated_hours, t.actual_hours , t.employee_id " +
                 "FROM task t " +
                 "WHERE t.subproject_id = ? AND t.status != 'COMPLETE'";
 
@@ -48,33 +46,36 @@ public class TaskRepository implements ITaskRepository {
 
             preparedStatement.setInt(1, subprojectId);
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    tasks.add(new Task(
-                            resultSet.getInt("task_id"),
-                            resultSet.getString("task_name"),
-                            resultSet.getDate("start_date").toLocalDate(),
-                            resultSet.getDate("end_date").toLocalDate(),
-                            Status.valueOf(resultSet.getString("status").toUpperCase()),
-                            resultSet.getInt("subproject_id"),
-                            resultSet.getInt("estimated_hours"),
-                            resultSet.getInt("actual_hours"),
-                            resultSet.getInt("employee_id")
-                    ));
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                tasks.add(new Task(
+                        resultSet.getInt("task_id"),
+                        resultSet.getString("task_name"),
+                        resultSet.getDate("start_date").toLocalDate(),
+                        resultSet.getDate("end_date").toLocalDate(),
+                        Status.valueOf(resultSet.getString("status").toUpperCase()),
+                        resultSet.getInt("subproject_id"),
+                        resultSet.getInt("estimated_hours"),
+                        resultSet.getInt("actual_hours"),
+                        resultSet.getInt("employee_id")
+                ));
 
-                }
             }
         } catch (SQLException e) {
             throw new Errorhandling("Failed to fetch tasks for subproject ID " + subprojectId + ": " + e.getMessage());
         }
-        if (tasks.isEmpty()) throw new Errorhandling("Failed to get tasks and related data ");
         return tasks;
     }
 
-    @Override //Malthe
+    @Override //Malthe og Amalie
     public List<Task> getTasklistByEmployeeId(int employeeId) throws Errorhandling {
         List<Task> taskList = new ArrayList<>();
-        String query = "SELECT task_id, task_name, start_date, end_date, estimated_hours, status, actual_hours, subproject_id, employee_id FROM task WHERE employee_id = ?";
+        String query = "SELECT t.task_id, t.task_name, t.start_date, t.end_date, t.estimated_hours, t.status, " +
+                "t.actual_hours, t.subproject_id, t.employee_id " +
+                "FROM task t " +
+                "JOIN subproject s ON t.subproject_id = s.subproject_id " +
+                "JOIN project p ON s.project_id = p.project_id " +
+                "WHERE t.employee_id = ? AND p.is_archived = FALSE";
 
         try (Connection connection = ConnectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -98,7 +99,6 @@ public class TaskRepository implements ITaskRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Failed to fetch tasks for employee ID " + employeeId + ": " + e.getMessage());
         }
-        if (taskList.isEmpty()) throw new Errorhandling("Failed to get workerlist and related data ");
         return taskList;
     }
 
@@ -128,7 +128,6 @@ public class TaskRepository implements ITaskRepository {
         } catch (SQLException e) {
             throw new Errorhandling("Failed to get task: " + e.getMessage());
         }
-        if (task == null) throw new Errorhandling("Failed to get workerlist and related data ");
         return task;
     }
 

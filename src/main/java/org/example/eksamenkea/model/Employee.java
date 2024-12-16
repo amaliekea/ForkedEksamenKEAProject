@@ -2,9 +2,9 @@ package org.example.eksamenkea.model;
 
 public class Employee {
     private int employeeId;
-    private String email; // fungerer som username
+    private String email;
     private String password;
-    private Role role; // Enum type
+    private Role role; // Enum
     private int employeeRate;
     private int maxHours;
 
@@ -63,17 +63,5 @@ public class Employee {
 
     public void setMaxHours(int maxHours) {
         this.maxHours = maxHours;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "employeeId=" + employeeId +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", role=" + role +
-                ", employeeRate=" + employeeRate +
-                ", maxHours=" + maxHours +
-                '}';
     }
 }

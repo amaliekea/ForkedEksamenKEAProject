@@ -84,17 +84,4 @@ public class ProjectCostDTO {
     public void setEmployeeCost(int employeeCost) {
         this.employeeCost = employeeCost;
     }
-
-    @Override
-    public String toString() {
-        return "ProjectEmployeeCostDTO{" +
-                "projectId=" + projectId +
-                ", projectName='" + projectName + '\'' +
-                ", budget=" + budget +
-                ", projectDescription='" + projectDescription + '\'' +
-                ", employeeId=" + employeeId +
-                ", materialCost=" + materialCost +
-                ", employeeCost=" + employeeCost +
-                '}';
-    }
 }

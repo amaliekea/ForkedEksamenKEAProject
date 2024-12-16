@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ErrorHandleController { //Amalie
     @ExceptionHandler(Errorhandling.class) //metoden skal håndterer undtagelser af typen 'Errorhandling'
     public String handleError(Model model, Exception exception, HttpServletRequest request) { //HttpServletRequest request indeholder information om HTTP-forespørgslen
-        System.out.println("MESSAGE"+exception.getMessage());
-        System.out.println("Exception handler kaldt: " + exception.getMessage());
         model.addAttribute("message", exception.getMessage());
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE); //hentning af fejlkode
         if (status != null) {
@@ -28,6 +26,5 @@ public class ErrorHandleController { //Amalie
             }
         }
         return "error/error"; // Fallback error view
-        
     }
 }

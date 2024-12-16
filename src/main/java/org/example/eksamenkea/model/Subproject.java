@@ -12,8 +12,12 @@ public class Subproject {
         this.subprojectDescription = subprojectDescription;
         this.projectId = projectId;
     }
-    public Subproject() {
 
+    public Subproject() {
+    }
+
+    public Subproject(int projectId) {
+        this.projectId = projectId;
     }
 
     public int getSubprojectId() {
@@ -46,15 +50,5 @@ public class Subproject {
 
     public void setProjectId(int projectId) {
         this.projectId = projectId;
-    }
-
-    @Override
-    public String toString() {
-        return "Subproject{" +
-                "subprojectId=" + subprojectId +
-                ", subprojectName='" + subprojectName + '\'' +
-                ", subprojectDescription='" + subprojectDescription + '\'' +
-                ", projectId=" + projectId +
-                '}';
     }
 }
