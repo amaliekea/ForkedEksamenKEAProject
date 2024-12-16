@@ -36,7 +36,7 @@ class EmployeeControllerTest {
     @BeforeEach
     void setUp() {
         // Initialiserer mock-objektet
-        mockEmployee = new Employee(1, "zuzu@hotmail.com", "zuzu123", Role.PROJECTLEADER, 123, 37);
+        mockEmployee = new Employee(1, "kea@hotmail.com", "kea123", Role.PROJECTLEADER, 123, 37);
     }
 
     @Test
@@ -62,8 +62,8 @@ class EmployeeControllerTest {
     @Test
     void shouldRedirectToLoggedInWhenCorrect() throws Exception {
         // Arrange
-        String email = "zuzu@hotmail.com";
-        String password = "zuzu123";
+        String email = "kea@hotmail.com";
+        String password = "kea123";
 
         when(employeeService.signIn(email, password)).thenReturn(mockEmployee); // Mock signIn-kaldet
 
