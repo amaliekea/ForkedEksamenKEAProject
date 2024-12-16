@@ -8,10 +8,10 @@ public class Task {
     private LocalDate startdate;
     private LocalDate enddate;
     private Status status;
-    private int subprojectId; // FK
-    private int employeeId; // FK
     private int estimatedHours;
     private int actualHours;
+    private int subprojectId; // FK
+    private int employeeId; // FK
 
     public Task(int taskId, String taskName, LocalDate startdate, LocalDate enddate, Status status,
                 int subprojectId, int estimatedHours, int actualHours, int employeeId) {

@@ -4,7 +4,7 @@ public class Subproject {
     private int subprojectId;
     private String subprojectName;
     private String subprojectDescription;
-    private int projectId;
+    private int projectId; //FK
 
     public Subproject(int subprojectId, String subprojectName, String subprojectDescription, int projectId) {
         this.subprojectId = subprojectId;
