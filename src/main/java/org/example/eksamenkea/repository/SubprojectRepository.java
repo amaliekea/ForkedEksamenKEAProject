@@ -5,6 +5,7 @@ import org.example.eksamenkea.repository.interfaces.ISubprojectRepository;
 import org.example.eksamenkea.Errorhandling;
 import org.example.eksamenkea.util.ConnectionManager;
 import org.springframework.stereotype.Repository;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,7 +36,7 @@ public class SubprojectRepository implements ISubprojectRepository {
                 );
             }
         } catch (SQLException e) {
-            throw new Errorhandling("Failed to get subproject by subproject ID: " + e.getMessage());
+            throw new Errorhandling("Failed to get subproject by subproject ID: " + subprojectId + e.getMessage());
         }
         return subproject;
     }
@@ -66,15 +67,14 @@ public class SubprojectRepository implements ISubprojectRepository {
 
             preparedStatement.setInt(1, projectId);
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    subprojects.add(new Subproject(
-                            resultSet.getInt("subproject_id"),
-                            resultSet.getString("subproject_name"),
-                            resultSet.getString("subproject_description"),
-                            resultSet.getInt("project_id")
-                    ));
-                }
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                subprojects.add(new Subproject(
+                        resultSet.getInt("subproject_id"),
+                        resultSet.getString("subproject_name"),
+                        resultSet.getString("subproject_description"),
+                        resultSet.getInt("project_id")
+                ));
             }
         } catch (SQLException e) {
             throw new Errorhandling("Failed to get subprojects by project ID: " + e.getMessage());
