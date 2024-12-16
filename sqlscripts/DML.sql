@@ -4,10 +4,12 @@ VALUES
     ('zuzu', 'Zuhur1234', 'PROJECTLEADER', 200, 6),
     ('worker', 'Worker123', 'WORKER', 250, 7),
     ('worker2@example.com', 'Worker1234', 'WORKER', 500, 8),
-('adam@worker.dk', 'Password12345678', 'WORKER', 200, 8),
-('adam@projectleader.dk', 'Password12345678', 'PROJECTLEADER', 200, 8),
-('troels@worker.dk', 'Password12345678', 'WORKER', 200, 8),
-('troels@projectlead.dk', 'Password12345678', 'PROJECTLEADER', 200, 8);
+    ('adam@worker.dk', 'Password12345678', 'WORKER', 200, 8),
+    ('adam@projectleader.dk', 'Password12345678', 'PROJECTLEADER', 200, 8),
+    ('troels@worker.dk', 'Password12345678', 'WORKER', 200, 8),
+    ('troels@projectlead.dk', 'Password12345678', 'PROJECTLEADER', 200, 8),
+    ('martin@projectlead.dk', 'Password12345678', 'PROJECTLEADER', 200, 8),
+    ('martin@worker.dk', 'Password12345678', 'PROJECTLEADER', 200, 8);
 
 INSERT INTO project (project_name, budget, project_description, employee_id, material_cost, is_archived)
 VALUES
@@ -133,15 +135,15 @@ SELECT *
 FROM (
          WITH RECURSIVE date_generator AS (
              SELECT DATE('2023-01-01') AS date_column
-UNION ALL
-SELECT DATE_ADD(date_column, INTERVAL 1 DAY)
-FROM date_generator
-WHERE date_column < '2025-01-01'
-    )
-SELECT date_column
-FROM date_generator
-WHERE DAYOFWEEK(date_column) NOT IN (1, 7)
-    ) AS a;
+             UNION ALL
+             SELECT DATE_ADD(date_column, INTERVAL 1 DAY)
+             FROM date_generator
+             WHERE date_column < '2025-01-01'
+         )
+         SELECT date_column
+         FROM date_generator
+         WHERE DAYOFWEEK(date_column) NOT IN (1, 7)
+     ) AS a;
 
 DROP VIEW IF EXISTS employee_workload_pr_day;
 CREATE VIEW employee_workload_pr_day AS
