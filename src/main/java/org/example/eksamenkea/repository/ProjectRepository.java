@@ -38,17 +38,16 @@ public class ProjectRepository implements IProjectRepository {
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement preparedStatement = con.prepareStatement(query)) {
             preparedStatement.setInt(1, projectId);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    project = new Project(
-                            resultSet.getInt("project_id"),
-                            resultSet.getString("project_name"),
-                            resultSet.getDouble("budget"),
-                            resultSet.getString("project_description"),
-                            resultSet.getInt("employee_id"),
-                            resultSet.getInt("material_cost")
-                    );
-                }
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                project = new Project(
+                        resultSet.getInt("project_id"),
+                        resultSet.getString("project_name"),
+                        resultSet.getDouble("budget"),
+                        resultSet.getString("project_description"),
+                        resultSet.getInt("employee_id"),
+                        resultSet.getInt("material_cost")
+                );
             }
         } catch (SQLException e) {
             throw new Errorhandling("Failed to fetch project for project ID " + projectId + ": " + e.getMessage());
@@ -60,8 +59,8 @@ public class ProjectRepository implements IProjectRepository {
     public void updateProject(Project project) throws Errorhandling {
         String sqlAddProject = "UPDATE project SET project_name = ?, budget = ?, project_description = ?, employee_id = ?, material_cost = ? WHERE project_id = ?";
         try (Connection con = ConnectionManager.getConnection();
-             PreparedStatement statement = con.prepareStatement(sqlAddProject)) {
 
+             PreparedStatement statement = con.prepareStatement(sqlAddProject)) {
             statement.setString(1, project.getProjectName());
             statement.setDouble(2, project.getBudget());
             statement.setString(3, project.getProjectDescription());
@@ -90,7 +89,7 @@ public class ProjectRepository implements IProjectRepository {
             ResultSet resultSet = preparedStatement1.executeQuery();
             while (resultSet.next()) {
                 int projectId = resultSet.getInt("project_id");
-                int totalTime = calculateTimeConsumptionProject(connection, projectId);
+                int EstimatedTimeConsumption = calculateTimeConsumptionProject(connection, projectId);
 
                 projects.add(new ProjectCostDTO(
                         projectId,
@@ -100,7 +99,7 @@ public class ProjectRepository implements IProjectRepository {
                         resultSet.getInt("employee_id"),
                         resultSet.getInt("material_cost"),
                         resultSet.getInt("employee_cost"),
-                        totalTime
+                        EstimatedTimeConsumption
                 ));
             }
         } catch (SQLException e) {
@@ -169,7 +168,7 @@ public class ProjectRepository implements IProjectRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 int projectId = resultSet.getInt("project_id");
-                int totalTime = calculateTimeConsumptionProject(connection, projectId);  // Brug den eksisterende forbindelse til at beregne tid
+                int EstimatedTimeConsumption = calculateTimeConsumptionProject(connection, projectId);  // Brug den eksisterende forbindelse til at beregne tid
 
                 projects.add(new ProjectCostDTO(
                         projectId,
@@ -179,7 +178,7 @@ public class ProjectRepository implements IProjectRepository {
                         resultSet.getInt("employee_id"),
                         resultSet.getInt("material_cost"),
                         resultSet.getInt("employee_cost"),
-                        totalTime
+                        EstimatedTimeConsumption
                 ));
             }
             return projects;
@@ -189,7 +188,7 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     public int calculateTimeConsumptionProject(Connection connection, int projectId) throws Errorhandling {
-        int totalTime = 0;
+        int EstimatedTimeConsumption = 0;
         String query = "SELECT SUM(task.estimated_hours) AS total_hours FROM task JOIN subproject ON task.subproject_id = subproject.subproject_id " +
                 "WHERE subproject.project_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -197,13 +196,13 @@ public class ProjectRepository implements IProjectRepository {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                totalTime = resultSet.getInt("total_hours");
+                EstimatedTimeConsumption = resultSet.getInt("total_hours");
             }
 
         } catch (SQLException e) {
             throw new Errorhandling("Failed to calculate time for project ID " + projectId + ": " + e.getMessage());
         }
-        return totalTime;
+        return EstimatedTimeConsumption;
     }
 }
 
