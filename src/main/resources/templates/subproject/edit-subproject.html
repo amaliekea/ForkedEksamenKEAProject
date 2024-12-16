@@ -35,7 +35,8 @@
 
                 <button type="submit" class="action-button">Edit Subproject</button>
             </form>
-            <form action="/project/project-leader-overview" method="get">
+            <form action="/subproject/project-leader-subproject-overview" method="get">
+                <input type="hidden" th:field="${subproject.projectId}">
                 <button type="submit" class="action-button">Regret</button>
             </form>
         </div>
