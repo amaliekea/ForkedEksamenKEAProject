@@ -14,6 +14,7 @@ VALUES ('Website Overhaul', 120000, 'Redesign of the website.', 2, 18000.00, FAL
 INSERT INTO subproject (subproject_name, subproject_description, project_id, is_archived)
 VALUES ('UI Design', 'User interface design.', 1, FALSE),
        ('Backend Optimization', 'Optimization of backend systems.', 1, FALSE),
+       ('Android Optimization', 'Optimization of backend systems.', 1, FALSE),
        ('iOS Development', 'Development of iOS version.', 2, FALSE),
        ('Android Development', 'Development of Android version.', 2, FALSE),
        ('Data Migration', 'Migration of data to the cloud.', 3, FALSE),
@@ -25,6 +26,8 @@ VALUES ('UI Design', 'User interface design.', 1, FALSE),
 
 INSERT INTO task (task_name, start_date, end_date, status, employee_id, actual_hours, estimated_hours, subproject_id, is_archived)
 VALUES ('Frontend Design', '2024-11-01', '2024-11-03', 'INPROGRESS', 1, 0, 15, 1, FALSE),
+       ('Backend Design', '2024-11-01', '2024-11-03', 'INPROGRESS', 1, 0, 15, 1, FALSE),
+       ('UI test', '2024-11-01', '2024-11-03', 'NOTSTARTED', 1, 0, 15, 1, FALSE),
        ('Backend Optimization', '2024-11-06', '2024-11-09', 'NOTSTARTED', 1, 0, 6, 2, FALSE),
        ('Database Setup', '2024-11-11', '2024-11-12', 'INPROGRESS', 1, 16, 18, 3, FALSE),
        ('API Integration', '2024-11-16', '2024-11-20', 'INPROGRESS', 1, 16, 17, 4, FALSE),
