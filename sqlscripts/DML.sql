@@ -52,9 +52,9 @@ VALUES ('Frontend Design', '2024-11-01', '2024-11-03', 'INPROGRESS', 1, 10, 15, 
        ('Performance Test', '2024-11-16', '2024-11-18', 'NOTSTARTED', 3, 0, 7, 9, FALSE),
        ('Analysis Completion', '2024-11-21', '2024-11-23', 'INPROGRESS', 3, 6, 14, 10, FALSE),
        ('Database Cleanup', '2024-11-04', '2024-11-06', 'NOTSTARTED', 1, 0, 8, 2, FALSE),
-       ('API Testing', '2024-11-05', '2024-11-08', 'INPROGRESS', 1, 20, 10, 1, FALSE),
+       ('API Testing', '2024-11-05', '2024-11-08', 'INPROGRESS', 1, 0, 10, 1, FALSE),
        ('Performance Audit', '2024-11-07', '2024-11-10', 'NOTSTARTED', 2, 0, 12, 2, FALSE),
-       ('Security Patching', '2024-11-08', '2024-11-11', 'INPROGRESS', 2, 30, 15, 1, FALSE),
+       ('Security Patching', '2024-11-08', '2024-11-11', 'INPROGRESS', 2, 0, 15, 1, FALSE),
        ('Load Testing', '2024-11-09', '2024-11-12', 'NOTSTARTED', 1, 0, 10, 3, FALSE),
        ('Error Monitoring Setup', '2024-11-10', '2024-11-13', 'INPROGRESS', 2, 15, 9, 2, FALSE);
 

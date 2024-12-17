@@ -70,7 +70,7 @@ public class TaskRepository implements ITaskRepository {
     @Override //Malthe og Amalie
     public List<Task> getTasklistByEmployeeId(int employeeId) throws Errorhandling {
         List<Task> taskList = new ArrayList<>();
-        String query = "SELECT t.task_id, t.task_name, t.start_date, t.end_date, t.estimated_hours, t.status, " +
+        String query = "SELECT DISTINCT t.task_id, t.task_name, t.start_date, t.end_date, t.estimated_hours, t.status, " +
                 "t.actual_hours, t.subproject_id, t.employee_id " +
                 "FROM task t " +
                 "JOIN subproject s ON t.subproject_id = s.subproject_id " +
