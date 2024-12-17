@@ -9,7 +9,12 @@ VALUES ('Website Overhaul', 120000, 'Redesign of the website.', 2, 18000.00, FAL
        ('App Development', 80000, 'Development of a new app.', 2, 25000.00, FALSE),
        ('Cloud Setup', 90000, 'Setup of cloud services.', 4, 20000.00, FALSE),
        ('System Upgrade', 50000, 'Upgrading systems.', 4, 15000.00, FALSE),
-       ('Data Analysis', 60000, 'Analysis of customer data.', 4, 20000.00, TRUE);
+       ('Data Analysis', 60000, 'Analysis of customer data.', 4, 20000.00, TRUE),
+       ('SEO Optimization', 70000, 'Improving website SEO.', 2, 15000.00, FALSE),
+       ('Backend Migration', 95000, 'Migrating backend services to new platform.', 2, 22000.00, FALSE),
+       ('Mobile App Testing', 60000, 'Testing of mobile application.', 4, 18000.00, FALSE),
+       ('Cybersecurity Audit', 85000, 'Audit of security systems.', 4, 25000.00, FALSE),
+       ('Customer Portal', 75000, 'Building a customer self-service portal.', 4, 20000.00, TRUE);
 
 INSERT INTO subproject (subproject_name, subproject_description, project_id, is_archived)
 VALUES ('UI Design', 'User interface design.', 1, FALSE),
@@ -22,22 +27,36 @@ VALUES ('UI Design', 'User interface design.', 1, FALSE),
        ('API Integration', 'Integration of API.', 4, FALSE),
        ('Reporting', 'Create reports.', 5, FALSE),
        ('Security Optimization', 'Increase security level.', 5, FALSE),
-       ('Analysis Design', 'Analyze results.', 5, FALSE);
+       ('Analysis Design', 'Analyze results.', 5, FALSE),
+       ('Database Optimization', 'Optimizing database performance.', 1, FALSE),
+       ('API Enhancements', 'Improving backend API efficiency.', 1, FALSE),
+       ('UI Enhancements', 'Enhancements to the iOS app UI.', 2, FALSE),
+       ('Feature Testing', 'Testing Android app features.', 2, FALSE),
+       ('Security Improvements', 'Implementing security fixes.', 1, FALSE),
+       ('Push Notifications', 'Adding push notifications for Android.', 2, FALSE);
 
 INSERT INTO task (task_name, start_date, end_date, status, employee_id, actual_hours, estimated_hours, subproject_id, is_archived)
-VALUES ('Frontend Design', '2024-11-01', '2024-11-03', 'INPROGRESS', 1, 0, 15, 1, FALSE),
-       ('Backend Design', '2024-11-01', '2024-11-03', 'INPROGRESS', 1, 0, 15, 1, FALSE),
+VALUES ('Frontend Design', '2024-11-01', '2024-11-03', 'INPROGRESS', 1, 10, 15, 1, FALSE),
+       ('Backend Design', '2024-11-01', '2024-11-03', 'INPROGRESS', 1, 3, 11, 1, FALSE),
        ('UI test', '2024-11-01', '2024-11-03', 'NOTSTARTED', 1, 0, 15, 1, FALSE),
+       ('end-to-end test', '2024-11-01', '2024-11-03', 'NOTSTARTED', 1, 0, 12, 1, FALSE),
        ('Backend Optimization', '2024-11-06', '2024-11-09', 'NOTSTARTED', 1, 0, 6, 2, FALSE),
-       ('Database Setup', '2024-11-11', '2024-11-12', 'INPROGRESS', 1, 16, 18, 3, FALSE),
-       ('API Integration', '2024-11-16', '2024-11-20', 'INPROGRESS', 1, 16, 17, 4, FALSE),
+       ('Database Setup', '2024-11-11', '2024-11-12', 'INPROGRESS', 1, 0, 18, 3, FALSE),
+       ('API Integration', '2024-11-16', '2024-11-20', 'INPROGRESS', 1, 0, 17, 4, FALSE),
+       ('deploy web app', '2024-11-16', '2024-11-20', 'INPROGRESS', 1, 0, 17, 1, FALSE),
        ('System Test', '2024-11-21', '2024-11-24', 'NOTSTARTED', 1, 0, 20, 5, FALSE),
 
        ('UI Components', '2024-11-01', '2024-11-02', 'INPROGRESS', 3, 5, 8, 6, FALSE),
-       ('Cloud Setup', '2024-11-06', '2024-11-08', 'NOTSTARTED', 3, 0, 23, 7, FALSE),
-       ('Security Check', '2024-11-11', '2024-11-12', 'INPROGRESS', 3, 3, 22, 8, FALSE),
+       ('Cloud Setup', '2024-11-06', '2024-11-08', 'NOTSTARTED', 3, 0, 17, 7, FALSE),
+       ('Security Check', '2024-11-11', '2024-11-12', 'INPROGRESS', 3, 3, 10, 8, FALSE),
        ('Performance Test', '2024-11-16', '2024-11-18', 'NOTSTARTED', 3, 0, 7, 9, FALSE),
-       ('Analysis Completion', '2024-11-21', '2024-11-23', 'INPROGRESS', 3, 6, 24, 10, FALSE);
+       ('Analysis Completion', '2024-11-21', '2024-11-23', 'INPROGRESS', 3, 6, 14, 10, FALSE),
+       ('Database Cleanup', '2024-11-04', '2024-11-06', 'NOTSTARTED', 1, 0, 8, 2, FALSE),
+       ('API Testing', '2024-11-05', '2024-11-08', 'INPROGRESS', 1, 20, 10, 1, FALSE),
+       ('Performance Audit', '2024-11-07', '2024-11-10', 'NOTSTARTED', 2, 0, 12, 2, FALSE),
+       ('Security Patching', '2024-11-08', '2024-11-11', 'INPROGRESS', 2, 30, 15, 1, FALSE),
+       ('Load Testing', '2024-11-09', '2024-11-12', 'NOTSTARTED', 1, 0, 10, 3, FALSE),
+       ('Error Monitoring Setup', '2024-11-10', '2024-11-13', 'INPROGRESS', 2, 15, 9, 2, FALSE);
 
 DROP TABLE IF EXISTS all_dates;
 CREATE TABLE all_dates (
