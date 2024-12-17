@@ -24,14 +24,14 @@ VALUES ('UI Design', 'Brugergrænseflade design.', 1, FALSE),
        ('Analyse Design', 'Analyse af resultater.', 5, FALSE);
 
 INSERT INTO task (task_name, start_date, end_date, status, employee_id, actual_hours, estimated_hours, subproject_id, is_archived)
-VALUES ('Frontend Design', '2024-11-01', '2024-11-05', 'INPROGRESS', 1, 10, 8, 1, FALSE),  -- Over max_hours
+VALUES ('Frontend Design', '2024-11-01', '2024-11-05', 'INPROGRESS', 1, 10, 15, 1, FALSE),  -- Over max_hours
        ('Backend Optimering', '2024-11-06', '2024-11-10', 'NOTSTARTED', 1, 5, 6, 2, FALSE),
-       ('Database Setup', '2024-11-11', '2024-11-15', 'INPROGRESS', 1, 6, 6, 3, FALSE),
-       ('API Integration', '2024-11-16', '2024-11-20', 'COMPLETE', 1, 7, 7, 4, FALSE),
-       ('System Test', '2024-11-21', '2024-11-25', 'NOTSTARTED', 1, 4, 5, 5, FALSE),
+       ('Database Setup', '2024-11-11', '2024-11-15', 'INPROGRESS', 1, 6, 18, 3, FALSE),
+       ('API Integration', '2024-11-16', '2024-11-20', 'COMPLETE', 1, 7, 17, 4, FALSE),
+       ('System Test', '2024-11-21', '2024-11-25', 'NOTSTARTED', 1, 4, 20, 5, FALSE),
 
        ('UI Komponenter', '2024-11-01', '2024-11-05', 'INPROGRESS', 3, 10, 8, 6, FALSE),  -- Over max_hours
        ('Cloud Opsætning', '2024-11-06', '2024-11-10', 'NOTSTARTED', 3, 5, 6, 7, FALSE),
-       ('Sikkerhedstjek', '2024-11-11', '2024-11-15', 'COMPLETE', 3, 6, 6, 8, FALSE),
+       ('Sikkerhedstjek', '2024-11-11', '2024-11-15', 'COMPLETE', 3, 6, 22, 8, FALSE),
        ('Performance Test', '2024-11-16', '2024-11-20', 'NOTSTARTED', 3, 7, 7, 9, FALSE),
        ('Analyse Afslutning', '2024-11-21', '2024-11-25', 'INPROGRESS', 3, 5, 5, 10, FALSE);
