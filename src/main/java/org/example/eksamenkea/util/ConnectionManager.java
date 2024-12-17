@@ -12,18 +12,15 @@ public class ConnectionManager {
     private static Connection connection;
 
     private ConnectionManager() {
-
     }
 
     public static Connection getConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            synchronized (ConnectionManager.class) { //sikrer, at kun én tråd ad gangen kan oprette en ny forbindelse
-                if (connection == null || connection.isClosed()) {
-                    connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-                }
+        synchronized (ConnectionManager.class) { //sikrer, at kun én tråd ad gangen kan oprette en ny forbindelse
+            if (connection == null || connection.isClosed()) {
+                connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             }
+            return connection;
         }
-        return connection;
     }
 }
 
