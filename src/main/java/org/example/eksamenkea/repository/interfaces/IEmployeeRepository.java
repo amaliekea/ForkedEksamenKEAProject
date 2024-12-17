@@ -12,5 +12,4 @@ public interface IEmployeeRepository {
     Employee getEmployeeByEmail(String email) throws Errorhandling;
 
     List<List<Object>> getWorkloadByEmployeeId(int employeeId) throws Errorhandling;
-
 }
