@@ -66,10 +66,10 @@ VALUES ('UI/UX Design', 'Design an intuitive user interface for the website.', 1
 
 INSERT INTO task (task_name, start_date, end_date, status, employee_id, actual_hours, estimated_hours, subproject_id,
                   is_archived)
-VALUES ('Wireframe Creation', '2024-11-01', '2024-11-05', 'INPROGRESS', 3, 5, 10, 1, FALSE),
+VALUES ('Wireframe Creation', '2024-11-01', '2024-11-05', 'INPROGRESS', 3, 5, 18, 1, FALSE),
        ('Database Optimization', '2024-11-02', '2024-11-06', 'NOTSTARTED', 4, 10, 20, 2, FALSE),
        ('iOS Feature Implementation', '2024-11-03', '2024-11-07', 'COMPLETE', NULL, 15, 15, 3, FALSE),
-       ('Android Testing', '2024-11-06', '2024-11-10', 'NOTSTARTED', 4, 100, 15, 4, FALSE),
+       ('Android Testing', '2024-11-06', '2024-11-10', 'NOTSTARTED', 4, 100, 22, 4, FALSE),
        ('Cloud Configuration', '2024-11-11', '2024-11-15', 'COMPLETE', NULL, 10, 20, 5, FALSE),
        ('Wireframe Creation', '2024-11-01', '2024-11-05', 'INPROGRESS', 3, 5, 10, 1, FALSE),
        ('Database Optimization', '2024-11-02', '2024-11-06', 'NOTSTARTED', 4, 10, 20, 2, FALSE),
