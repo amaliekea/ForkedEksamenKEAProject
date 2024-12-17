@@ -31,7 +31,7 @@ VALUES ('Frontend Design', '2024-11-01', '2024-11-05', 'INPROGRESS', 1, 0, 15, 1
        ('System Test', '2024-11-21', '2024-11-25', 'NOTSTARTED', 1, 0, 20, 5, FALSE),
 
        ('UI Komponenter', '2024-11-01', '2024-11-05', 'INPROGRESS', 3, 0, 8, 6, FALSE),
-       ('Cloud Opsætning', '2024-11-06', '2024-11-10', 'NOTSTARTED', 3, 0, 6, 7, FALSE),
+       ('Cloud Opsætning', '2024-11-06', '2024-11-10', 'NOTSTARTED', 3, 0, 23, 7, FALSE),
        ('Sikkerhedstjek', '2024-11-11', '2024-11-15', 'COMPLETE', 3, 0, 22, 8, FALSE),
        ('Performance Test', '2024-11-16', '2024-11-20', 'NOTSTARTED', 3, 0, 7, 9, FALSE),
-       ('Analyse Afslutning', '2024-11-21', '2024-11-25', 'INPROGRESS', 3, 0, 5, 10, FALSE);
+       ('Analyse Afslutning', '2024-11-21', '2024-11-25', 'INPROGRESS', 3, 0, 24, 10, FALSE);
