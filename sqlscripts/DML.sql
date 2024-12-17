@@ -1,8 +1,8 @@
 INSERT INTO employee (email, password, role, employee_rate, max_hours)
-VALUES ('patrick@worker.dk', 'Password12345678', 'WORKER', 200, 8),
-       ('patrick@projectleader.dk', 'Password12345678', 'PROJECTLEADER', 200, 7),
-       ('mads@worker.dk', 'Password12345678', 'WORKER', 200, 9),
-       ('mads@projectleader.dk', 'Password12345678', 'PROJECTLEADER', 200, 8);
+VALUES ('patrick@worker.dk', 'Password14389', 'WORKER', 200, 8),
+       ('patrick@projectleader.dk', 'Password1692', 'PROJECTLEADER', 200, 7),
+       ('mads@worker.dk', 'Password1262278', 'WORKER', 200, 9),
+       ('mads@projectleader.dk', 'Password1288', 'PROJECTLEADER', 200, 8);
 
 INSERT INTO project (project_name, budget, project_description, employee_id, material_cost, is_archived)
 VALUES ('Website Overhaul', 120000, 'Redesign of the website.', 2, 18000.00, FALSE),
@@ -36,27 +36,24 @@ VALUES ('UI Design', 'User interface design.', 1, FALSE),
        ('Push Notifications', 'Adding push notifications for Android.', 2, FALSE);
 
 INSERT INTO task (task_name, start_date, end_date, status, employee_id, actual_hours, estimated_hours, subproject_id, is_archived)
-VALUES ('Frontend Design', '2024-11-01', '2024-11-03', 'INPROGRESS', 1, 10, 15, 1, FALSE),
-       ('Backend Design', '2024-11-01', '2024-11-03', 'INPROGRESS', 1, 3, 11, 1, FALSE),
-       ('UI test', '2024-11-01', '2024-11-03', 'NOTSTARTED', 1, 0, 15, 1, FALSE),
-       ('end-to-end test', '2024-11-01', '2024-11-03', 'NOTSTARTED', 1, 0, 12, 1, FALSE),
+VALUES ('Frontend Design', '2024-11-01', '2024-11-03', 'INPROGRESS', 1, 7, 10, 1, FALSE),
+       ('Backend Design', '2024-12-04', '2024-12-05', 'INPROGRESS', 1, 3, 11, 1, FALSE),
+       ('UI test', '2024-11-18', '2024-11-19', 'NOTSTARTED', 1, 0, 10, 1, FALSE),
+       ('end-to-end test', '2024-11-05', '2024-11-06', 'NOTSTARTED', 1, 0, 12, 1, FALSE),
        ('Backend Optimization', '2024-11-06', '2024-11-09', 'NOTSTARTED', 1, 0, 6, 2, FALSE),
-       ('Database Setup', '2024-11-11', '2024-11-12', 'INPROGRESS', 1, 0, 18, 3, FALSE),
+       ('Database Setup', '2024-11-11', '2024-11-12', 'INPROGRESS', 1, 0, 13, 3, FALSE),
        ('API Integration', '2024-11-16', '2024-11-20', 'INPROGRESS', 1, 0, 17, 4, FALSE),
        ('deploy web app', '2024-11-16', '2024-11-20', 'INPROGRESS', 1, 0, 17, 1, FALSE),
        ('System Test', '2024-11-21', '2024-11-24', 'NOTSTARTED', 1, 0, 20, 5, FALSE),
 
-       ('UI Components', '2024-11-01', '2024-11-02', 'INPROGRESS', 3, 5, 8, 6, FALSE),
+       ('UI Components', '2024-11-02', '2024-11-03', 'INPROGRESS', 3, 5, 8, 6, FALSE),
        ('Cloud Setup', '2024-11-06', '2024-11-08', 'NOTSTARTED', 3, 0, 17, 7, FALSE),
-       ('Security Check', '2024-11-11', '2024-11-12', 'INPROGRESS', 3, 3, 10, 8, FALSE),
+       ('Security Check', '2024-11-11', '2024-11-12', 'INPROGRESS', 3, 0, 10, 8, FALSE),
        ('Performance Test', '2024-11-16', '2024-11-18', 'NOTSTARTED', 3, 0, 7, 9, FALSE),
        ('Analysis Completion', '2024-11-21', '2024-11-23', 'INPROGRESS', 3, 6, 14, 10, FALSE),
-       ('Database Cleanup', '2024-11-04', '2024-11-06', 'NOTSTARTED', 1, 0, 8, 2, FALSE),
-       ('API Testing', '2024-11-05', '2024-11-08', 'INPROGRESS', 1, 0, 10, 1, FALSE),
-       ('Performance Audit', '2024-11-07', '2024-11-10', 'NOTSTARTED', 2, 0, 12, 2, FALSE),
-       ('Security Patching', '2024-11-08', '2024-11-11', 'INPROGRESS', 2, 0, 15, 1, FALSE),
-       ('Load Testing', '2024-11-09', '2024-11-12', 'NOTSTARTED', 1, 0, 10, 3, FALSE),
-       ('Error Monitoring Setup', '2024-11-10', '2024-11-13', 'INPROGRESS', 2, 15, 9, 2, FALSE);
+       ('Performance Audit', '2024-11-07', '2024-11-10', 'NOTSTARTED', 3, 0, 12, 2, FALSE),
+       ('Security Patching', '2024-11-08', '2024-11-11', 'INPROGRESS', 3, 0, 15, 1, FALSE),
+       ('Error Monitoring Setup', '2024-11-10', '2024-11-13', 'INPROGRESS', 3, 0, 9, 2, FALSE);
 
 DROP TABLE IF EXISTS all_dates;
 CREATE TABLE all_dates (
