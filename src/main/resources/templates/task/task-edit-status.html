@@ -17,11 +17,11 @@
     </header>
     <main>
         <section class="status-update-section">
-            <h2 th:text="${task.taskName}"></h2>
+
             <table class="styled-table">
                 <thead>
                 <tr>
-                    <th>Status</th>
+                    <th>Status for <span th:text="${task.taskName}"></span></th>
                 </tr>
                 </thead>
                 <tbody>
