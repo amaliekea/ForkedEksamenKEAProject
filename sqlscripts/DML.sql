@@ -33,11 +33,11 @@ VALUES ('Frontend Design', '2024-11-01', '2024-11-03', 'INPROGRESS', 1, 0, 15, 1
        ('API Integration', '2024-11-16', '2024-11-20', 'INPROGRESS', 1, 16, 17, 4, FALSE),
        ('System Test', '2024-11-21', '2024-11-24', 'NOTSTARTED', 1, 0, 20, 5, FALSE),
 
-       ('UI Components', '2024-11-01', '2024-11-04', 'INPROGRESS', 3, 5, 8, 6, FALSE),
-       ('Cloud Setup', '2024-11-06', '2024-11-09', 'NOTSTARTED', 3, 0, 23, 7, FALSE),
-       ('Security Check', '2024-11-11', '2024-11-14', 'INPROGRESS', 3, 3, 22, 8, FALSE),
-       ('Performance Test', '2024-11-16', '2024-11-19', 'NOTSTARTED', 3, 0, 7, 9, FALSE),
-       ('Analysis Completion', '2024-11-21', '2024-11-25', 'INPROGRESS', 3, 6, 24, 10, FALSE);
+       ('UI Components', '2024-11-01', '2024-11-02', 'INPROGRESS', 3, 5, 8, 6, FALSE),
+       ('Cloud Setup', '2024-11-06', '2024-11-08', 'NOTSTARTED', 3, 0, 23, 7, FALSE),
+       ('Security Check', '2024-11-11', '2024-11-12', 'INPROGRESS', 3, 3, 22, 8, FALSE),
+       ('Performance Test', '2024-11-16', '2024-11-18', 'NOTSTARTED', 3, 0, 7, 9, FALSE),
+       ('Analysis Completion', '2024-11-21', '2024-11-23', 'INPROGRESS', 3, 6, 24, 10, FALSE);
 
 DROP TABLE IF EXISTS all_dates;
 CREATE TABLE all_dates (
