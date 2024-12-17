@@ -1,8 +1,8 @@
 INSERT INTO employee (email, password, role, employee_rate, max_hours)
-VALUES ('patrick@worker.dk', 'Password14389', 'WORKER', 200, 8),
-       ('patrick@projectleader.dk', 'Password1692', 'PROJECTLEADER', 200, 7),
-       ('mads@worker.dk', 'Password1262278', 'WORKER', 200, 9),
-       ('mads@projectleader.dk', 'Password1288', 'PROJECTLEADER', 200, 8);
+VALUES ('patrick@worker.dk', 'Password14361189', 'WORKER', 200, 8),
+       ('patrick@projectleader.dk', 'Password12819692', 'PROJECTLEADER', 200, 7),
+       ('mads@worker.dk', 'Password126227378', 'WORKER', 200, 9),
+       ('mads@projectleader.dk', 'Password12827938', 'PROJECTLEADER', 200, 8);
 
 INSERT INTO project (project_name, budget, project_description, employee_id, material_cost, is_archived)
 VALUES ('Website Overhaul', 120000, 'Redesign of the website.', 2, 18000.00, FALSE),
