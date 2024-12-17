@@ -1,7 +1,7 @@
 INSERT INTO employee (email, password, role, employee_rate, max_hours)
 VALUES ('patrick@worker.dk', 'Password12345678', 'WORKER', 200, 8),
-       ('patrick@projectleader.dk', 'Password12345678', 'PROJECTLEADER', 200, 8),
-       ('mads@worker.dk', 'Password12345678', 'WORKER', 200, 8),
+       ('patrick@projectleader.dk', 'Password12345678', 'PROJECTLEADER', 200, 7),
+       ('mads@worker.dk', 'Password12345678', 'WORKER', 200, 9),
        ('mads@projectleader.dk', 'Password12345678', 'PROJECTLEADER', 200, 8);
 
 INSERT INTO project (project_name, budget, project_description, employee_id, material_cost, is_archived)
@@ -35,3 +35,61 @@ VALUES ('Frontend Design', '2024-11-01', '2024-11-05', 'INPROGRESS', 1, 0, 15, 1
        ('Sikkerhedstjek', '2024-11-11', '2024-11-15', 'COMPLETE', 3, 0, 22, 8, FALSE),
        ('Performance Test', '2024-11-16', '2024-11-20', 'NOTSTARTED', 3, 0, 7, 9, FALSE),
        ('Analyse Afslutning', '2024-11-21', '2024-11-25', 'INPROGRESS', 3, 0, 24, 10, FALSE);
+
+DROP TABLE IF EXISTS all_dates;
+CREATE TABLE all_dates (
+                           date_column DATE NOT NULL PRIMARY KEY
+);
+
+DROP TABLE IF EXISTS DateRange;
+CREATE TABLE DateRange AS
+SELECT *
+FROM (
+         WITH RECURSIVE date_generator AS (
+             SELECT DATE('2023-01-01') AS date_column
+             UNION ALL
+             SELECT DATE_ADD(date_column, INTERVAL 1 DAY)
+             FROM date_generator
+             WHERE date_column < '2025-01-01'
+         )
+         SELECT date_column
+         FROM date_generator
+         WHERE DAYOFWEEK(date_column) NOT IN (1, 7)
+     ) AS a;
+
+DROP VIEW IF EXISTS employee_workload_pr_day;
+CREATE VIEW employee_workload_pr_day AS
+SELECT
+    date_column,
+    SUM(hours_per_day) AS total_hours_per_day,
+    employee_id,
+    MAX(max_hours) AS max_hours_per_employee
+FROM (
+         SELECT
+             task_employee.*,
+             DateRange.date_column
+         FROM (
+                  SELECT
+                      task.*,
+                      employee.max_hours,
+                      estimated_hours / COUNT(DateRange.date_column) AS hours_per_day
+                  FROM
+                      task
+                          JOIN
+                      employee
+                      ON task.employee_id = employee.employee_id
+                          JOIN
+                      DateRange
+                      ON task.start_date <= DateRange.date_column
+                          AND task.end_date >= DateRange.date_column
+                  WHERE DAYOFWEEK(DateRange.date_column) NOT IN (1, 7)
+                  GROUP BY task.task_id, employee.employee_id
+              ) AS task_employee
+                  JOIN DateRange
+                       ON task_employee.start_date <= DateRange.date_column
+                           AND task_employee.end_date >= DateRange.date_column
+                           AND DAYOFWEEK(DateRange.date_column) NOT IN (1, 7)
+     ) AS h
+GROUP BY
+    employee_id,
+    date_column;
