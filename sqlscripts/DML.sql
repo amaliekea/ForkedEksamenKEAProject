@@ -8,7 +8,7 @@ VALUES ('adam@worker.dk', 'Password12345678', 'WORKER', 200, 8),
        ('mads@worker.dk', 'Password12345678', 'WORKER', 200, 8),
        ('mads@projectleader.dk', 'Password12345678', 'PROJECTLEADER', 200, 8),
        ('censor@worker.dk', 'Password12345678', 'WORKER', 200, 8),
-       ('censor@projectleader', 'Password12345678', 'PROJECTLEADER', 200, 8);
+       ('censor@projectleader.dk', 'Password12345678', 'PROJECTLEADER', 200, 8);
 
 INSERT INTO project (project_name, budget, project_description, employee_id, material_cost, is_archived)
 VALUES ('Corporate Website Overhaul', 120000, 'Redesign and optimize the corporate website for better UX.', 1, 18000.00,
