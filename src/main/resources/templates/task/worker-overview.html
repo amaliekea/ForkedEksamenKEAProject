@@ -28,10 +28,11 @@
                 <tbody>
                 <tr th:each="row : ${Workload}">
                     <td th:text="${row[0]}"></td> <!-- Date -->
-                    <td th:text="${#numbers.formatDecimal(row[1], 1, 'COMMA', 2, 'POINT')}"></td> <!-- required hours med kun 2 decimaler-->
+                    <td th:text="${#numbers.formatDecimal(row[1], 1, 'COMMA', 2, 'POINT')} + ' hours'"></td><!-- required hours med kun 2 decimaler-->
+
                     <td>
                         <span th:text="${row[2]}"></span> <!-- Max Hours -->
-                        <span th:if="${row[2] < row[1]}"
+                        <span th:if="${row[2] < row[1]}+ ' hours'"
                               class="label not-sustainable">Work time exceeded</span>
                     </td>
                 </tr>
