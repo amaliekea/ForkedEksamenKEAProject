@@ -25,16 +25,16 @@ VALUES ('UI Design', 'User interface design.', 1, FALSE),
 
 INSERT INTO task (task_name, start_date, end_date, status, employee_id, actual_hours, estimated_hours, subproject_id, is_archived)
 VALUES ('Frontend Design', '2024-11-01', '2024-11-05', 'INPROGRESS', 1, 0, 15, 1, FALSE),
-       ('Backend Optimization', '2024-11-06', '2024-11-10', 'NOTSTARTED', 1, 10, 6, 2, FALSE),
+       ('Backend Optimization', '2024-11-06', '2024-11-10', 'NOTSTARTED', 1, 0, 6, 2, FALSE),
        ('Database Setup', '2024-11-11', '2024-11-15', 'INPROGRESS', 1, 16, 18, 3, FALSE),
-       ('API Integration', '2024-11-16', '2024-11-20', 'COMPLETE', 1, 0, 17, 4, FALSE),
-       ('System Test', '2024-11-21', '2024-11-25', 'NOTSTARTED', 1, 15, 20, 5, FALSE),
+       ('API Integration', '2024-11-16', '2024-11-20', 'INPROGRESS', 1, 16, 17, 4, FALSE),
+       ('System Test', '2024-11-21', '2024-11-25', 'NOTSTARTED', 1, 0, 20, 5, FALSE),
 
-       ('UI Components', '2024-11-01', '2024-11-05', 'INPROGRESS', 3, 0, 8, 6, FALSE),
-       ('Cloud Setup', '2024-11-06', '2024-11-10', 'NOTSTARTED', 3, 14, 23, 7, FALSE),
-       ('Security Check', '2024-11-11', '2024-11-15', 'COMPLETE', 3, 0, 22, 8, FALSE),
-       ('Performance Test', '2024-11-16', '2024-11-20', 'NOTSTARTED', 3, 12, 7, 9, FALSE),
-       ('Analysis Completion', '2024-11-21', '2024-11-25', 'INPROGRESS', 3, 0, 24, 10, FALSE);
+       ('UI Components', '2024-11-01', '2024-11-05', 'INPROGRESS', 3, 5, 8, 6, FALSE),
+       ('Cloud Setup', '2024-11-06', '2024-11-10', 'NOTSTARTED', 3, 0, 23, 7, FALSE),
+       ('Security Check', '2024-11-11', '2024-11-15', 'INPROGRESS', 3, 3, 22, 8, FALSE),
+       ('Performance Test', '2024-11-16', '2024-11-20', 'NOTSTARTED', 3, 0, 7, 9, FALSE),
+       ('Analysis Completion', '2024-11-21', '2024-11-25', 'INPROGRESS', 3, 6, 24, 10, FALSE);
 
 DROP TABLE IF EXISTS all_dates;
 CREATE TABLE all_dates (
