@@ -10,7 +10,7 @@ CREATE TABLE employee (
                           employee_rate INT DEFAULT 0,
                           max_hours INT DEFAULT 0,
                           CONSTRAINT chk_password CHECK (
-                              LENGTH(password) >= 8 AND -- passwordet er mindst 8 tegn langt.
+                              LENGTH(password) >= 16 AND -- passwordet er mindst 16 tegn langt.
                               password REGEXP '.*[A-Z].*' AND -- passwordet skal indeholde mindst et stort bogstav
                               password REGEXP '.*[0-9].*' -- Tjekker, at passwordet indeholder mindst et tal
 )
