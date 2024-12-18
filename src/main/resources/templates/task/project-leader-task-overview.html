@@ -8,7 +8,7 @@
 <body>
 <div class="overview-container">
     <header class="header">
-        <h1>Tasks list for Subproject: <span th:text="${subproject.subprojectName}"></span></h1>
+        <h1>Project Leader Overview - tasks</h1>
         <form action="/logout" method="get">
             <button type="submit" class="logout-button">
                 <img src="/pictures/log-out-icon.svg" alt="Log out icon" class="logout-icon"> Log out
@@ -16,6 +16,20 @@
         </form>
     </header>
     <main>
+        <section class="project-section">
+            <table class="styled-table">
+                <thead>
+                <tr>
+                    <th>Belongs to subproject:</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:text="${subproject.subprojectName}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
         <section class="tasks-section">
             <table class="styled-table">
                 <thead>
