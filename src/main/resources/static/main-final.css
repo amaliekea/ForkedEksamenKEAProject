@@ -1,162 +1,161 @@
 /* Generet af chat gpt */
 * {
-    margin: 0;/* Fjerner standard margin fra alle elementer */
-    padding: 0;/* Fjerner standard padding fra alle elementer */
-    box-sizing: border-box;/* Inkluderer padding og kant i elementets totale størrelse */
-    font-family: 'Roboto', Arial, sans-serif; /* Anvender en ren og moderne skrifttype */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', Arial, sans-serif;
 }
 
 /* Body styling */
 body {
-    height: 100vh; /* Sikrer, at body fylder hele viewportens højde */
-    background: url('pictures/background.jpg') no-repeat center center fixed;/* Tilføjer et fast baggrundsbillede centreret på viewporten */
-    background-size: cover;/* Skalerer baggrunden til at dække hele viewporten */
-    display: flex;/* Aktiverer fleksibelt layout */
-    justify-content: center; /* Centrerer indhold horisontalt */
+    height: 100vh;
+    background: url('pictures/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
     overflow: auto; /* Tillader scrolling af indholdet */
 }
 
 /* Login container */
 .login-container {
-    display: flex;/* Aktiverer fleksibelt layout */
-    align-items: center;/* Justerer elementer vertikalt i midten */
-    justify-content: center;/* Justerer elementer horisontalt i midten */
-    height: 100%;/* Fylder hele højden af forælderen */
-    width: 100%;/* Fylder hele bredden af forælderen */
-    background: rgba(255, 255, 255, 0.6); /* Tilføjer et halvgennemsigtigt hvidt overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.6); /* Semi-transparent overlay */
 }
 
-/* Styling af login-boksen */
+/* Login box */
 .login-box {
-    background: rgb(151 164 164 / 61%); /* Lys grå baggrund med gennemsigtighed */
-    border-radius: 10px;/* Runde hjørner */
-    padding: 20px 30px; /* Indvendig afstand */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);/* Tilføjer en subtil skygge */
-    max-width: 400px;/* Begrænser bredden af boksen */
-    width: 100%; /* Gør boksen responsiv */
-    text-align: center;/* Centrerer tekst inde i boksen */
+    background: rgb(151 164 164 / 61%);
+    border-radius: 10px;
+    padding: 20px 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
 }
-/* Styling af overskriften i login-boksen */
+
 .login-box h1 {
-    font-size: 24px;/* Sætter størrelsen på overskriften */
-    color: #333;/* Anvender en mørk grå farve */
-    margin-bottom: 20px;/* Tilføjer afstand under overskriften */
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
 }
 
-/* Styling af labels til inputfelter */
+/* Inputfelter */
 .login-box label {
-    display: block;/* Sikrer, at labels fylder hele bredden */
-    font-size: 14px;/* Sætter en mindre skrifttype */
-    color: #555;/* Medium grå farve */
-    margin: 10px 0 5px; /* Tilføjer afstand omkring label */
+    display: block;
+    font-size: 14px;
+    color: #555;
+    margin: 10px 0 5px;
 }
-/* Styling af inputfelter */
+
 .login-box input {
-    width: 100%; /* Strækker inputfelter til at fylde boksen */
-    padding: 10px; /* Tilføjer indvendig afstand */
-    border: 1px solid #ccc;/* Lys grå kant */
-    border-radius: 5px;/* Runde hjørner */
-    font-size: 14px; /* Sætter skrifttypens størrelse */
-    margin-bottom: 20px; /* Tilføjer afstand under hvert input */
-    outline: none; /* Fjerner standardkontur */
-    transition: border-color 0.3s ease;/* Glidende overgang for kantfarve ved fokus */
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    outline: none;
+    transition: border-color 0.3s ease;
 }
-/* Fokus-effekt for inputfelter */
+
 .login-box input:focus {
-    border-color: #4A90E2;/* Ændrer kantfarve til blå */
+    border-color: #4A90E2;
 }
 
-/* Styling af login-knappen */
+/* Login-knap */
 .login-box button {
-    width: 100%;/* Strækker knappen til at fylde boksen */
-    padding: 10px; /* Tilføjer indvendig afstand */
-    background-color: #4A90E2; /* Sætter baggrundsfarven til blå */
-    border: none;/* Fjerner kanten */
-    border-radius: 5px;/* Runde hjørner */
-    color: #fff; /* Hvid tekstfarve */
-    font-size: 16px; /* Sætter skrifttypens størrelse */
-    cursor: pointer; /* Ændrer markøren til hånd ved hover */
-    transition: background-color 0.3s ease; /* Glidende overgang for baggrundsfarve ved hover */
+    width: 100%;
+    padding: 10px;
+    background-color: #4A90E2;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-/* Hover-effekt for login-knappen */
 .login-box button:hover {
-    background-color: #357ABD; /* Mørkere blå baggrund ved hover */
+    background-color: #357ABD;
 }
 
-/* Styling af tabeller */
+/* Tabellen */
 .styled-table {
-    width: 100%; /* Strækker tabellen til fuld bredde */
-    border-collapse: collapse; /* Fjerner mellemrum mellem tabelceller */
-    margin: 20px 0; /* Tilføjer lodret afstand omkring tabellen */
-    margin-top: 130px; /* Ekstra afstand under headeren */
-    font-size: 16px; /* Sætter skrifttypens størrelse */
-    text-align: left; /* Justerer tekst til venstre */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Tilføjer en subtil skygge */
-    border-radius: 10px; /* Runde kanter på tabellen */
-    max-height: 200px; /* Begrænser højden af tabellen */
-    overflow-y: initial; /* Sikrer vertikal scroll, hvis indholdet flyder over */
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    margin-top: 130px; /* Skaber afstand under headeren */
+    font-size: 16px;
+    text-align: left;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    max-height: 200px; /* Sætter en maksimal højde på tabellen */
+    overflow-y: initial; /* Aktiverer vertikal rulle, hvis højden overskrides */
+    flex-grow: 1;
 }
 
-/* Styling af tabel-header */
 .styled-table thead tr {
-    background-color: #4A90E2; /* Sætter blå baggrund til headeren */
-    color: #ffffff; /* Hvid tekstfarve */
-    font-weight: bold; /* Gør teksten fed */
-    border-radius: 10px; /* Runde kanter på headeren */
+    background-color: #4A90E2;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 10px; /* Rounded edges */
+
 }
 
-/* Styling af tabelceller */
 .styled-table th,
 .styled-table td {
-    padding: 12px 15px; /* Tilføjer padding i cellerne */
-    border: 1px solid #ddd; /* Tilføjer en lys grå kant */
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+
 }
 
+.styled-table tbody tr {
+    background-color: #f9f9f9;
+}
 
-/* Alternativ baggrundsfarve for rækker */
 .styled-table tbody tr:nth-child(even) {
-    background-color: #f2f2f2; /* Lys grå baggrund til lige rækker */
+    background-color: #f2f2f2;
 }
 
-/* Hover-effekt for rækker */
 .styled-table tbody tr:hover {
-    background-color: #f1f1f1; /* Let mørkere grå ved hover */
+    background-color: #f1f1f1;
 }
-
 
 /* Knapper */
 button,
 .action-button {
-    display: inline-block;/* Gør knapperne til inline-blok-elementer */
-    width: 150px; /* Sætter en fast bredde */
-    padding: 10px;/* Tilføjer indvendig afstand */
-    background-color: #4A90E2; /* Sætter blå baggrund */
-    color: white; /* Hvid tekstfarve */
-    border: none; /* Fjerner kanten */
-    border-radius: 5px; /* Runde hjørner */
-    font-size: 14px; /* Sætter skrifttypens størrelse */
-    cursor: pointer; /* Ændrer markøren til hånd ved hover */
-    text-align: center; /* Centrerer tekst inde i knapperne */
-    transition: background-color 0.3s ease, transform 0.2s ease;/* Tilføjer glidende overgang for hover-effekter */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Tilføjer subtil skygge */
-    margin: 5px 0;/* Tilføjer lodret afstand */
+    display: inline-block;
+    width: 150px;
+    padding: 10px;
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 5px 0;
 }
-/* Hover-effekt for knapper */
+
 button:hover,
 .action-button:hover {
-    background-color: #357ABD;/* Mørkere blå baggrund */
-    transform: scale(1.05);/* Forstørrer knappen en smule */
+    background-color: #357ABD;
+    transform: scale(1.05);
 }
 
 /* Knap-gruppe */
 .button-group {
     display: flex;
     justify-content: space-between;
-    margin: 20px 0; /* Giver luft omkring knap-gruppen */
+    margin: 20px 0;
 }
 
-/* Styling til individuelle formularer i knap-gruppen */
 .button-group form {
     margin: 0 5px;
 }
@@ -164,72 +163,60 @@ button:hover,
 
 /* Formular layout */
 .status-update-form .form-group {
-    margin-bottom: 15px; /* Giver lidt afstand mellem formulargrupper */
-    display: flex; /* Flex container til fleksibel layout */
-    flex-direction: column; /* Arrangerer elementer i en lodret retning */
-    align-items: flex-start; /* Justerer elementer til venstre */
-    width: 100%; /* Sikrer, at formulargruppen strækker sig over hele bredden */
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
 }
 
-
-/* Formular kontrol */
-/* Styling for inputfelter og tekstområder i formularen */
 .status-update-form .form-control {
-    width: 100%; /* Strækker sig over hele bredden af containeren */
-    padding: 8px; /* Indvendig afstand for bedre læsbarhed */
-    font-size: 14px; /* Tekststørrelse for læsbarhed */
-    border: 1px solid #ccc; /* Lysegrå kant for et neutralt look */
-    border-radius: 5px; /* Afrundede hjørner for et blødere design */
-    margin-top: 5px; /* Lidt afstand over inputfeltet */
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
 }
 
-/* Handlingsknap */
-/* Styling til knappen i formularen */
 .status-update-form .action-button {
-    width: auto; /* Automatisk bredde afhængig af indhold */
-    align-self: flex-start; /* Justerer knappen til venstre i flex-containeren */
-    background-color: #4A90E2; /* Primær baggrundsfarve */
-    color: white; /* Tekstfarve for kontrast */
-    border: none; /* Fjerner standard kant */
-    padding: 10px 20px; /* Indvendig afstand for større klikområde */
-    font-size: 16px; /* Større tekst for synlighed */
-    border-radius: 5px; /* Afrundede hjørner */
-    cursor: pointer; /* Viser pegefinger for klikbare elementer */
-    transition: background-color 0.3s ease; /* Glidende overgangseffekt ved hover */
+    width: auto;
+    align-self: flex-start;
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-/* Hover-effekt på knappen */
-/* Ændrer baggrundsfarve, når musen holdes over knappen */
 .status-update-form .action-button:hover {
-    background-color: #357ABD; /* Mørkere nuance af blå */
+    background-color: #357ABD;
 }
 
-/* Generel container til hjemmesiden */
-/* Bruges til at centrere indhold både lodret og vandret */
+/* Generel container */
 .homepage-container {
-    display: flex; /* Flexbox layout til fleksibel organisering */
-    flex-direction: column; /* Arrangerer elementer i en lodret retning */
-    align-items: center; /* Justerer elementer horisontalt til midten */
-    justify-content: center; /* Centrerer elementer lodret */
-    padding: 20px; /* Indvendig afstand for at give luft omkring indholdet */
-    text-align: center; /* Centrerer tekst */
-    height: 100vh; /* Fylder hele browserens højde */
-    position: absolute; /* Placering relativt til det nærmeste positionerede forfader */
-    top: 50%; /* Flytter containeren 50% ned fra toppen af viewport */
-    left: 50%; /* Flytter containeren 50% ind fra venstre */
-    transform: translate(-50%, -50%); /* Justerer for at centrere nøjagtigt */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centers the container vertically */
+    padding: 20px;
+    text-align: center;
+    height: 100vh; /* Ensures the container takes the full height of the viewport */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
-
-/* Generel container til sider */
-/* Simpel container til centrering og padding */
 .page-container {
-    display: flex; /* Flexbox layout */
-    flex-direction: column; /* Arrangerer elementer i en lodret retning */
-    align-items: center; /* Justerer elementer til midten horisontalt */
-    padding: 20px; /* Indvendig afstand omkring indhold */
-    text-align: center; /* Centrerer tekst */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
 }
-
 
 /* Header */
 .header {
@@ -270,79 +257,67 @@ button:hover,
     left: 50%;
     transform: translate(-50%, -50%);
 }
-/* Overskrift på forsiden */
-/* Styling til hovedoverskriften på forsiden */
+
 .homepage-header h1 {
-    font-size: 24px; /* Størrelse på teksten */
-    color: #333; /* Mørkegrå farve for kontrast */
-    margin: 0 20px; /* Vandret afstand for at skabe balance */
+    font-size: 24px;
+    color: #333;
+    margin: 0 20px;
 }
 
 /* Logo container */
-/* Indpakning til logoet med baggrund, kant og skygge */
 .logo-container {
-    background-color: rgb(151 164 164 / 61%); /* Halvgennemsigtig lysegrå baggrund */
-    padding: 20px; /* Indvendig afstand omkring logoet */
-    border-radius: 8px; /* Afrundede hjørner for blødere design */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Let skygge for dybdeeffekt */
+    background-color: rgb(151 164 164 / 61%);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Logo styling */
-/* Dimensioner og tilpasning af logoet */
 .logo {
-    max-height: 100px; /* Maksimal højde for logoet */
-    max-width: 200px; /* Maksimal bredde for logoet */
-    width: auto; /* Justerer bredden automatisk efter dimensionerne */
-    height: auto; /* Justerer højden automatisk efter dimensionerne */
-    object-fit: contain; /* Bevarer billedets proportioner */
-    margin: 10px; /* Lidt luft omkring logoet */
+    max-height: 100px;
+    max-width: 200px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    margin: 10px;
 }
+
 /* Main sektion */
-/* Styling til hovedindhold på forsiden */
 .homepage-main {
-    margin-top: 20px; /* Giver lidt afstand til toppen */
+    margin-top: 20px;
 }
 
-/* Knap container */
-/* Centrerer knappen i både horisontal og vertikal retning */
 .button-container {
-    display: flex; /* Flexbox layout */
-    justify-content: center; /* Centrerer indhold horisontalt */
-    align-items: center; /* Centrerer indhold vertikalt */
-    height: 100vh; /* Sørger for, at containeren fylder hele højden af viewporten */
+    display: flex;
+    justify-content: center; /* Centrerer knappen horisontalt */
+    align-items: center; /* Centrerer knappen vertikalt */
+    height: 100vh; /* Sørger for, at containeren fylder hele højden af skærmen */
 }
 
-/* Action-knap */
-/* Styling til knap for handlinger */
 .action-button {
-    padding: 10px 20px; /* Indvendig afstand for bedre klikområde */
-    color: #fff; /* Hvid tekst for kontrast */
-    background-color: #4A90E2; /* Blå baggrund */
-    border: none; /* Fjerner standard kant */
-    border-radius: 5px; /* Afrundede hjørner */
-    font-size: 16px; /* Let læsbar tekststørrelse */
-    cursor: pointer; /* Indikator for klikbare elementer */
-    transition: background-color 0.3s ease; /* Glidende overgangseffekt ved hover */
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #4A90E2;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-/* Hover-effekt på knappen */
-/* Ændrer farven ved hover for en interaktiv oplevelse */
 .action-button:hover {
-    background-color: #357ABD; /* Mørkere blå nuance */
+    background-color: #357ABD;
 }
 
 /* Hvid boks for formularen */
-/* Stilfuld container til at fremhæve formularen */
 .white-box {
-    background: rgba(255, 255, 255, 0.9); /* Let gennemsigtig hvid baggrund */
-    padding: 30px; /* Indvendig afstand for rummeligt layout */
-    border-radius: 10px; /* Afrundede hjørner for et blødt design */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtil skygge for dybdeeffekt */
-    width: 100%; /* Fylder hele containerens bredde */
-    margin: 0 auto; /* Centrerer boksen i containeren */
-    max-height: fit-content; /* Sikrer, at boksen tilpasser sig indholdets højde */
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin: 0 auto;
+    max-height: fit-content;
 }
-
 /* Formularens container */
 .form-container {
     display: flex; /* Gør containeren fleksibel */
@@ -511,6 +486,3 @@ button:hover,
         font-size: 18px; /* Justering af header-størrelse */
     }
 }
-
-
-
