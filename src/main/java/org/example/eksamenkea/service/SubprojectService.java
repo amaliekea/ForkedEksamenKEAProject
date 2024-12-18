@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 @Service
 public class SubprojectService {
     private final ISubprojectRepository iSubprojectRepository;
@@ -29,6 +28,7 @@ public class SubprojectService {
     public List<Subproject> getSubjectsByProjectId(int projectId) throws Errorhandling {
         return iSubprojectRepository.getSubjectsByProjectId(projectId);
     }
+
     public void addSubproject(Subproject subproject) throws Errorhandling{
          iSubprojectRepository.addSubproject(subproject);
     }

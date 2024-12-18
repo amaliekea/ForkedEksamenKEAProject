@@ -59,7 +59,6 @@ public class TaskRepository implements ITaskRepository {
                         resultSet.getInt("actual_hours"),
                         resultSet.getInt("employee_id")
                 ));
-
             }
         } catch (SQLException e) {
             throw new Errorhandling("Failed to get tasks for subproject ID " + subprojectId + ": " + e.getMessage());
@@ -123,7 +122,6 @@ public class TaskRepository implements ITaskRepository {
                         resultSet.getInt("actual_hours"),
                         resultSet.getInt("employee_id")
                 );
-
             }
         } catch (SQLException e) {
             throw new Errorhandling("Failed to get task: " + e.getMessage());

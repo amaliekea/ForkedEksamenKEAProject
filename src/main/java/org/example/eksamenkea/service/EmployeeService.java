@@ -27,6 +27,7 @@ public class EmployeeService  {
     public Employee getEmployeeByEmail(String email) throws Errorhandling{
         return iEmployeeRepository.getEmployeeByEmail(email);
     }
+
     public List<List<Object>> getWorkloadByEmployeeId(int employeeId) throws Errorhandling {
         return iEmployeeRepository.getWorkloadByEmployeeId(employeeId);
     }
