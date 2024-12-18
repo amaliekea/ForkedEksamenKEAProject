@@ -198,7 +198,6 @@ public class ProjectRepository implements IProjectRepository {
             if (resultSet.next()) {
                 EstimatedTimeConsumption = resultSet.getInt("total_hours");
             }
-
         } catch (SQLException e) {
             throw new Errorhandling("Failed to calculate time for project ID " + projectId + ": " + e.getMessage());
         }
