@@ -9,14 +9,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+
 @RequestMapping("/")
 @Controller
 public class EmployeeController { //Amalie
 
     private EmployeeService employeeService;
 
-    public EmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
+    public EmployeeController(EmployeeService employeeService) { //her ses inversion of control princippet vha. dependency injection
+        this.employeeService = employeeService; //dependency injection vha. konstruktør
     }
 
     @GetMapping("/login")
@@ -24,7 +25,7 @@ public class EmployeeController { //Amalie
         return "employee/login";
     }
 
-    @GetMapping("/")
+    @GetMapping("/") //når brugeren sender en get forespørgsel til roden
     public String index(Model model, HttpSession session) {
         if (session.getAttribute("employee") != null) { //tjekker om en bruger er logget ind
             model.addAttribute("employeeAvaliable", true); //angiver at brugeren er tilgængelig
@@ -71,7 +72,7 @@ public class EmployeeController { //Amalie
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        session.invalidate(); //invaliderer sessionen for at logge ud
+        session.invalidate(); //invaliderer sessionen for at logge ud, fjerner de data der er gemt i sessionen
         return "redirect:/"; //return til front pagen
     }
 }

@@ -14,7 +14,7 @@ public class ErrorHandleController { //Amalie
         model.addAttribute("message", exception.getMessage());
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE); //hentning af fejlkode
         if (status != null) {
-            int statusCode = Integer.parseInt(status.toString());
+            int statusCode = Integer.parseInt(status.toString()); //konvertering til int
             if (statusCode == HttpStatus.NOT_FOUND.value()) {
                 return "error/404";
             } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {

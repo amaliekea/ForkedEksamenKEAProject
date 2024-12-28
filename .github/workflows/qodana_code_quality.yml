@@ -13,7 +13,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      checks: write
+      checks: write # Tillader skrivning
     steps:
       - uses: actions/checkout@v3
         with:
@@ -24,5 +24,5 @@ jobs:
         with:
           pr-mode: false
         env:
-          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN_1826263860 }}
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN_1826263860 }} # API-token til autentificering med Qodana
           QODANA_ENDPOINT: 'https://qodana.cloud'

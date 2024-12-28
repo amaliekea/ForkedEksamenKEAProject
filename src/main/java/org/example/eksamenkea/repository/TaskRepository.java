@@ -36,7 +36,7 @@ public class TaskRepository implements ITaskRepository {
 
     @Override //AM-ZU
     public List<Task> getTaskBySubprojectId(int subprojectId) throws Errorhandling {
-        List<Task> tasks = new ArrayList<>();
+        List<Task> tasks = new ArrayList<>(); //programmering op i mod et interface
         String query = "SELECT t.task_id, t.task_name, t.start_date, t.end_date, t.status, t.subproject_id, t.estimated_hours, t.actual_hours , t.employee_id " +
                 "FROM task t " +
                 "WHERE t.subproject_id = ? AND t.status != 'COMPLETE'";

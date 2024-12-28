@@ -13,7 +13,7 @@ import java.util.List;
 public class ProjectController {
     private ProjectService projectService;
 
-    public ProjectController(ProjectService projectService) {
+    public ProjectController(ProjectService projectService) { //inversion of control ses ved konstruktør injection
         this.projectService = projectService;
     }
 
@@ -21,8 +21,8 @@ public class ProjectController {
     public String showProjectLeaderOverview(HttpSession session, Model model) throws Errorhandling {
         Employee employee = (Employee) session.getAttribute("employee");
         List<ProjectCostDTO> projects = projectService.getProjectsDTOByEmployeeId(employee.getEmployeeId());
-        model.addAttribute("projects", projects);
-        return "project/project-leader-overview";
+        model.addAttribute("projects", projects); //tilføjer det til spring container
+        return "project/project-leader-overview"; //retunerer vores view
     }
 
     @GetMapping("/add-project") //Amalie
@@ -30,7 +30,7 @@ public class ProjectController {
         Project project = new Project();
         Employee employee = (Employee) session.getAttribute("employee");
         model.addAttribute("project", project);
-        model.addAttribute("employeeId", employee.getEmployeeId());
+        model.addAttribute("employeeId", employee.getEmployeeId()); //da et projekt har en fk employeeid skal dette sendes med
         return "project/add-project-form";
     }
 
