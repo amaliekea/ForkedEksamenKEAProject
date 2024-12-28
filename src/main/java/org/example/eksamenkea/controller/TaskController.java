@@ -11,8 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@RequestMapping("/task")
-@Controller
+@RequestMapping("/task") // definerer en baserute
+@Controller //Fortæller Spring, at klassen indeholder metoder, der skal håndtere HTTP-anmodninger (GET, POST osv.)
 public class TaskController {
     private final TaskService taskService;
     private final SubprojectService subprojectService;
@@ -35,7 +35,7 @@ public class TaskController {
     }
 
     @PostMapping("/task-added") //Amalie
-    public String addedTask(@RequestParam("subprojectId") int subprojectId, @ModelAttribute Task task) throws Errorhandling {
+    public String addedTask(@RequestParam("subprojectId") int subprojectId, @ModelAttribute Task task) throws Errorhandling { //binder input data fra formen som task object
         taskService.createTask(task);
         return "redirect:/task/project-leader-tasks?subprojectId=" + subprojectId;
     }
@@ -55,7 +55,7 @@ public class TaskController {
     public String showWorkerOverview(HttpSession session, Model model) throws Errorhandling {
         Employee employee = (Employee) session.getAttribute("employee");
         List<Task> taskList = taskService.getTasklistByEmployeeId(employee.getEmployeeId());
-        List<List<Object>> getWorkloadByEmployeeId = employeeService.getWorkloadByEmployeeId(employee.getEmployeeId());
+        List<List<Object>> getWorkloadByEmployeeId = employeeService.getWorkloadByEmployeeId(employee.getEmployeeId()); //Returtypen er en liste af lister med elementer af typen Object.Ydre liste repræsenterer rækker, og hver indre liste repræsenterer celler i en række.
         model.addAttribute("tasklist", taskList);
         model.addAttribute("Workload", getWorkloadByEmployeeId);
         return "task/worker-overview";

@@ -13,7 +13,7 @@ import java.util.List;
 @Controller
 public class SubprojectController {
     private final SubprojectService subprojectService;
-    private final ProjectService projectService;
+    private final ProjectService projectService; //da dennecontroller også viser data fra project tages servicelaget ind
 
     public SubprojectController(SubprojectService subprojectService, ProjectService projectService){
         this.subprojectService = subprojectService;
@@ -42,13 +42,13 @@ public class SubprojectController {
         return "subproject/project-leader-subproject-overview";
     }
     @GetMapping("/add-subproject")//Amalie
-    public String addSubproject(@RequestParam("projectId") int projectId, Model model) {
+    public String addSubproject(@RequestParam("projectId") int projectId, Model model) { //requester et projectid
         Subproject subproject = new Subproject(projectId);
         model.addAttribute("subproject", subproject);
         return "subproject/add-subproject";
     }
     @PostMapping("/added-subproject") //Amalie
-    public String addedSubproject(@ModelAttribute Subproject subproject) throws Errorhandling {
+    public String addedSubproject(@ModelAttribute Subproject subproject) throws Errorhandling { //binder input data fra formen som subproject object
         subprojectService.addSubproject(subproject);
         return "redirect:/subproject/project-leader-subproject-overview?projectId=" + subproject.getProjectId();
     }
