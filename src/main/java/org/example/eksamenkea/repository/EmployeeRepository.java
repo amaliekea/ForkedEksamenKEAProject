@@ -19,7 +19,7 @@ public class EmployeeRepository implements IEmployeeRepository {
         Employee employee = null;
         try (Connection con = ConnectionManager.getConnection()) {
             String SQLUser = "SELECT * FROM employee WHERE email = ? AND password = ?;";
-            PreparedStatement pstmt = con.prepareStatement(SQLUser);
+            PreparedStatement pstmt = con.prepareStatement(SQLUser); //da vores forspørgsel tager parametre bruger vi preps for at undgå sql injection
             pstmt.setString(1, email);
             pstmt.setString(2, password);
             ResultSet resultSet = pstmt.executeQuery();
@@ -39,7 +39,7 @@ public class EmployeeRepository implements IEmployeeRepository {
 
     @Override //Malthe
     public List<Employee> getAllWorkers() throws Errorhandling {
-        List<Employee> workerList = new java.util.ArrayList<>();
+        List<Employee> workerList = new java.util.ArrayList<>(); //programmering op mod interface, mindre afhæning af specifikke implementeringer
         String query = "SELECT * FROM employee WHERE role = 'Worker'";
 
         try (Connection con = ConnectionManager.getConnection();
@@ -87,21 +87,21 @@ public class EmployeeRepository implements IEmployeeRepository {
 
     @Override//Amalie
     public List<List<Object>> getWorkloadByEmployeeId(int employeeId) throws Errorhandling {
-        List<List<Object>> workloadList = new ArrayList<>();
+        List<List<Object>> workloadList = new ArrayList<>(); //en liste af lister der holder på object
         String query = "SELECT * FROM employee_workload_pr_day WHERE employee_id = ?";
 
-        try (Connection con = ConnectionManager.getConnection();
+        try (Connection con = ConnectionManager.getConnection(); //opretter forbindelse til databasen
              PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setInt(1, employeeId);
 
             ResultSet resultSet = pstmt.executeQuery();
-                while (resultSet.next()) {
-                    List<Object> row = new ArrayList<>();
-                    row.add(resultSet.getDate("date_column"));
-                    row.add(resultSet.getDouble("total_hours_per_day"));
-                    row.add(resultSet.getInt("max_hours_per_employee"));
-                    workloadList.add(row);
-                }
+            while (resultSet.next()) {
+                List<Object> row = new ArrayList<>(); // Opretter en ny liste til at holde data for én række (en dag)
+                row.add(resultSet.getDate("date_column"));
+                row.add(resultSet.getDouble("total_hours_per_day"));
+                row.add(resultSet.getInt("max_hours_per_employee"));
+                workloadList.add(row); // Tilføjer rækken (som en liste) til workloadList
+            }
         } catch (SQLException e) {
             throw new Errorhandling("Error retrieving workload for employee ID " + employeeId + ": " + e.getMessage());
         }

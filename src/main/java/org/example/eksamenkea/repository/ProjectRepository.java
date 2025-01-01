@@ -25,7 +25,7 @@ public class ProjectRepository implements IProjectRepository {
             statement.setInt(4, project.getEmployeeId());
             statement.setDouble(5, project.getMaterialCost());
             statement.setBoolean(6, false);
-            statement.executeUpdate();
+            statement.executeUpdate(); //excecuteupdate da vi ændrer data i databasen
         } catch (SQLException e) {
             throw new Errorhandling("Failed to add project: " + e.getMessage());
         }
@@ -33,12 +33,12 @@ public class ProjectRepository implements IProjectRepository {
 
     @Override //Malthe
     public Project getProjectFromProjectId(int projectId) throws Errorhandling {
-        Project project = null;
+        Project project = null; //projektet er tilgængeligt i hele metoden
         String query = "SELECT * FROM project WHERE project_id = ?";
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement preparedStatement = con.prepareStatement(query)) {
             preparedStatement.setInt(1, projectId);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery(); //executequery da vi gerne vil have retuneret date
             if (resultSet.next()) {
                 project = new Project(
                         resultSet.getInt("project_id"),
@@ -113,7 +113,7 @@ public class ProjectRepository implements IProjectRepository {
         String archiveProjectQuery = "UPDATE project SET is_archived = TRUE WHERE project_id = ?";
         String archiveSubprojectQuery = "UPDATE subproject SET is_archived = TRUE WHERE project_id = ?";
         String archiveTaskQuery = "UPDATE task t JOIN subproject sp ON t.subproject_id = sp.subproject_id SET t.is_archived = TRUE WHERE sp.project_id = ?";
-        Statement statement = null;
+        Statement statement = null; //opretter statement til transaktionsstyring
         try (Connection connection = ConnectionManager.getConnection()) {
             statement = connection.createStatement();
             statement.execute("START TRANSACTION");
@@ -130,7 +130,7 @@ public class ProjectRepository implements IProjectRepository {
             taskStmt.setInt(1, projectId);
             taskStmt.executeUpdate();
 
-            statement.execute("COMMIT");
+            statement.execute("COMMIT"); //hvis alle forespørgsler er lykkedes gemmes de i databasen
         } catch (SQLException e) {
             if (statement != null) {
                 try {
@@ -141,7 +141,7 @@ public class ProjectRepository implements IProjectRepository {
             }
         } finally {
             try {
-                if (statement != null) statement.close();
+                if (statement != null) statement.close();  // Lukker statement for at frigive ressourcer
             } catch (SQLException e) {
                 e.printStackTrace();
             }

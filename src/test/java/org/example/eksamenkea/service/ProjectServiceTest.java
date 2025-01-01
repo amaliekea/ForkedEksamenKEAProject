@@ -14,11 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(MockitoExtension.class) // Gør det muligt at bruge Mockito i denne testklasse
 class ProjectServiceTest {
 
     @Mock
-    private ApplicationContext context; // Mock ApplicationContext
+    private ApplicationContext context; // Mocket ApplicationContext, som normalt håndterer beans i Spring
 
     @Mock
     private IProjectRepository iProjectRepository; // Mock IProjectRepository

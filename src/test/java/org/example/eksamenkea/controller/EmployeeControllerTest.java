@@ -25,8 +25,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(EmployeeController.class)
 class EmployeeControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+    @Autowired //sikrer, at Spring automatisk injicerer den nødvendige konfiguration
+    private MockMvc mockMvc; //tester weblaget
 
     @MockBean
     private EmployeeService employeeService; // Mocket service-layer afhængighed
