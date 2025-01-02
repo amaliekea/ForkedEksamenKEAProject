@@ -21,12 +21,12 @@ class ProjectServiceTest {
     private ApplicationContext context; // Mocket ApplicationContext, som normalt håndterer beans i Spring
 
     @Mock
-    private IProjectRepository iProjectRepository; // Mock IProjectRepository
+    private IProjectRepository iProjectRepository; // Mock IProjectRepository til at simulere databaseoperationer
 
     @InjectMocks
     private ProjectService projectService; // Inject mocks
 
-    private Project project;
+    private Project project; //testinstans
     private ProjectCostDTO projectCostDTO;
 
     @BeforeEach
@@ -34,6 +34,7 @@ class ProjectServiceTest {
 
         when(context.getBean("IPROJECTREPOSITORY")).thenReturn(iProjectRepository);
 
+        // Initialiserer ProjectService med det mockede ApplicationContext og repository-navn
         projectService = new ProjectService(context, "IPROJECTREPOSITORY");
 
         //projekter til at teste på
